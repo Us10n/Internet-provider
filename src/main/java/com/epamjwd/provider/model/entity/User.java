@@ -2,28 +2,28 @@ package com.epamjwd.provider.model.entity;
 
 public class User implements Identifiable {
     private long userId;
-    private String login;
-    private String password;
     private String email;
+    private String password;
     private String name;
     private String surname;
-    private long roleId;
-    private long statusId;
-    private long bankAccountId;
+    private Role role; // key roleId
+    private UserStatus status;
+    private BankAccount bankAccount; //key bankAccountId
 
     public User() {
     }
 
-    public User(long id, String login, String password, String email, String name, String surname, long roleId, long statusId, long bankAccountId) {
-        this.userId = id;
-        this.login = login;
+    public User(long userId, String password,
+                String email, String name, String surname,
+                Role role, UserStatus status, BankAccount bankAccount) {
+        this.userId = userId;
         this.password = password;
         this.email = email;
         this.name = name;
         this.surname = surname;
-        this.roleId = roleId;
-        this.statusId = statusId;
-        this.bankAccountId = bankAccountId;
+        this.role = role;
+        this.status = status;
+        this.bankAccount = bankAccount;
     }
 
     @Override
@@ -33,15 +33,7 @@ public class User implements Identifiable {
 
     @Override
     public void setId(long id) {
-        userId = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
+        this.userId = id;
     }
 
     public String getPassword() {
@@ -76,73 +68,71 @@ public class User implements Identifiable {
         this.surname = surname;
     }
 
-    public long getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(long roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public long getStatusId() {
-        return statusId;
+    public UserStatus getStatus() {
+        return status;
     }
 
-    public void setStatusId(long statusId) {
-        this.statusId = statusId;
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
-    public long getBankAccountId() {
-        return bankAccountId;
+    public BankAccount getBankAccount() {
+        return bankAccount;
     }
 
-    public void setBankAccountId(long bankAccountId) {
-        this.bankAccountId = bankAccountId;
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
 
         User user = (User) o;
 
-        if (roleId != user.roleId) return false;
-        if (statusId != user.statusId) return false;
-        if (bankAccountId != user.bankAccountId) return false;
-        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (userId != user.userId) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        return surname != null ? surname.equals(user.surname) : user.surname == null;
+        if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
+        if (role != null ? !role.equals(user.role) : user.role != null) return false;
+        if (status != user.status) return false;
+        return bankAccount != null ? bankAccount.equals(user.bankAccount) : user.bankAccount == null;
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (login != null ? login.hashCode() : 0);
+        int result = (int) (userId ^ (userId >>> 32));
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + (int) (roleId ^ (roleId >>> 32));
-        result = 31 * result + (int) (statusId ^ (statusId >>> 32));
-        result = 31 * result + (int) (bankAccountId ^ (bankAccountId >>> 32));
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (bankAccount != null ? bankAccount.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
-        sb.append("login='").append(login).append('\'');
+        sb.append("userId=").append(userId);
         sb.append(", password='").append(password).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", surname='").append(surname).append('\'');
-        sb.append(", roleId=").append(roleId);
-        sb.append(", statusId=").append(statusId);
-        sb.append(", bankAccountId=").append(bankAccountId);
+        sb.append(", role=").append(role);
+        sb.append(", status=").append(status);
+        sb.append(", bankAccount=").append(bankAccount);
         sb.append('}');
         return sb.toString();
     }

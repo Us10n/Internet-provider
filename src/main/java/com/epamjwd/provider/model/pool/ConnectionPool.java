@@ -41,8 +41,6 @@ public class ConnectionPool {
             logger.error("DB properties load error", e);
             throw new RuntimeException(e);
         }
-        availableConnections = new LinkedBlockingDeque<>();
-        usedConnections = new LinkedBlockingDeque<>();
     }
 
     public static ConnectionPool getInstance() {
@@ -67,6 +65,7 @@ public class ConnectionPool {
             usedConnections.put(proxyConnection);
         } catch (InterruptedException e) {
             logger.error("Get connection error");
+            Thread.currentThread().interrupt();
             throw new ConnectionException(e);
         }
         return proxyConnection;

@@ -5,15 +5,15 @@ import java.math.BigDecimal;
 public class BankAccount implements Identifiable {
     private long bankAccountId;
     private BigDecimal balance;
-    private long tariffId;
+    private Tariff tariff;
 
     public BankAccount() {
     }
 
-    public BankAccount(long bankAccountId, BigDecimal balance, long tariffId) {
+    public BankAccount(long bankAccountId, BigDecimal balance, Tariff tariff) {
         this.bankAccountId = bankAccountId;
         this.balance = balance;
-        this.tariffId = tariffId;
+        this.tariff = tariff;
     }
 
     @Override
@@ -34,12 +34,12 @@ public class BankAccount implements Identifiable {
         this.balance = balance;
     }
 
-    public long getTariffId() {
-        return tariffId;
+    public Tariff getTariff() {
+        return tariff;
     }
 
-    public void setTariffId(long tariffId) {
-        this.tariffId = tariffId;
+    public void setTariff(Tariff tariff) {
+        this.tariff = tariff;
     }
 
     @Override
@@ -50,15 +50,15 @@ public class BankAccount implements Identifiable {
         BankAccount that = (BankAccount) o;
 
         if (bankAccountId != that.bankAccountId) return false;
-        if (tariffId != that.tariffId) return false;
-        return balance != null ? balance.equals(that.balance) : that.balance == null;
+        if (balance != null ? !balance.equals(that.balance) : that.balance != null) return false;
+        return tariff != null ? tariff.equals(that.tariff) : that.tariff == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (bankAccountId ^ (bankAccountId >>> 32));
         result = 31 * result + (balance != null ? balance.hashCode() : 0);
-        result = 31 * result + (int) (tariffId ^ (tariffId >>> 32));
+        result = 31 * result + (tariff != null ? tariff.hashCode() : 0);
         return result;
     }
 
@@ -67,7 +67,7 @@ public class BankAccount implements Identifiable {
         final StringBuilder sb = new StringBuilder("BankAccount{");
         sb.append("bankAccountId=").append(bankAccountId);
         sb.append(", balance=").append(balance);
-        sb.append(", tariffId=").append(tariffId);
+        sb.append(", tariff=").append(tariff);
         sb.append('}');
         return sb.toString();
     }

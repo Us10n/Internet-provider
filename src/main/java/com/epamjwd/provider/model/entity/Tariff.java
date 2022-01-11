@@ -1,5 +1,7 @@
 package com.epamjwd.provider.model.entity;
 
+import java.util.List;
+
 public class Tariff implements Identifiable {
     private long tariffId;
     private String name;
@@ -8,22 +10,19 @@ public class Tariff implements Identifiable {
     private TariffStatus status;
     private double internetSpeed;
     private String image;
-    private long specialOfferId;
+    private SpecialOffer specialOffer; //key specialOfferId
 
     public Tariff() {
     }
 
-    public Tariff(long tariffId, String name, String description,
-                  double price, TariffStatus status, double internetSpeed,
-                  String image, long specialOfferId) {
-        this.tariffId = tariffId;
+    public Tariff(String name, String description, double price, TariffStatus status, double internetSpeed, String image, SpecialOffer specialOffer) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.status = status;
         this.internetSpeed = internetSpeed;
         this.image = image;
-        this.specialOfferId = specialOfferId;
+        this.specialOffer = specialOffer;
     }
 
     @Override
@@ -84,12 +83,12 @@ public class Tariff implements Identifiable {
         this.image = image;
     }
 
-    public long getSpecialOfferId() {
-        return specialOfferId;
+    public SpecialOffer getSpecialOffer() {
+        return specialOffer;
     }
 
-    public void setSpecialOfferId(long specialOfferId) {
-        this.specialOfferId = specialOfferId;
+    public void setSpecialOffer(SpecialOffer specialOffer) {
+        this.specialOffer = specialOffer;
     }
 
     @Override
@@ -102,11 +101,11 @@ public class Tariff implements Identifiable {
         if (tariffId != tariff.tariffId) return false;
         if (Double.compare(tariff.price, price) != 0) return false;
         if (Double.compare(tariff.internetSpeed, internetSpeed) != 0) return false;
-        if (specialOfferId != tariff.specialOfferId) return false;
         if (name != null ? !name.equals(tariff.name) : tariff.name != null) return false;
         if (description != null ? !description.equals(tariff.description) : tariff.description != null) return false;
         if (status != tariff.status) return false;
-        return image != null ? image.equals(tariff.image) : tariff.image == null;
+        if (image != null ? !image.equals(tariff.image) : tariff.image != null) return false;
+        return specialOffer != null ? specialOffer.equals(tariff.specialOffer) : tariff.specialOffer == null;
     }
 
     @Override
@@ -122,7 +121,7 @@ public class Tariff implements Identifiable {
         temp = Double.doubleToLongBits(internetSpeed);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (image != null ? image.hashCode() : 0);
-        result = 31 * result + (int) (specialOfferId ^ (specialOfferId >>> 32));
+        result = 31 * result + (specialOffer != null ? specialOffer.hashCode() : 0);
         return result;
     }
 
@@ -136,7 +135,7 @@ public class Tariff implements Identifiable {
         sb.append(", status=").append(status);
         sb.append(", internetSpeed=").append(internetSpeed);
         sb.append(", image='").append(image).append('\'');
-        sb.append(", specialOfferId=").append(specialOfferId);
+        sb.append(", specialOffer=").append(specialOffer);
         sb.append('}');
         return sb.toString();
     }

@@ -4,18 +4,18 @@ public class Feedback implements Identifiable {
     private long feedbackId;
     private int rating;
     private String feedbackBody;
-    private long userId;
-    private long tariffPlanId;
+    private User feedbackAuthor; //key userId
+    private Tariff tariff; //key tariffId
 
     public Feedback() {
     }
 
-    public Feedback(long id, int rating, String feedbackBody, long userId, long tariffPlanId) {
-        this.feedbackId=id;
+    public Feedback(long feedbackId, int rating, String feedbackBody, User feedbackAuthor, Tariff tariff) {
+        this.feedbackId = feedbackId;
         this.rating = rating;
         this.feedbackBody = feedbackBody;
-        this.userId = userId;
-        this.tariffPlanId = tariffPlanId;
+        this.feedbackAuthor = feedbackAuthor;
+        this.tariff = tariff;
     }
 
     @Override
@@ -40,26 +40,25 @@ public class Feedback implements Identifiable {
         return feedbackBody;
     }
 
-    public void setFeedbackBody(String feedBackBody) {
-        this.feedbackBody = feedBackBody;
+    public void setFeedbackBody(String feedbackBody) {
+        this.feedbackBody = feedbackBody;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getFeedbackAuthor() {
+        return feedbackAuthor;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setFeedbackAuthor(User feedbackAuthor) {
+        this.feedbackAuthor = feedbackAuthor;
     }
 
-    public long getTariffPlanId() {
-        return tariffPlanId;
+    public Tariff getTariff() {
+        return tariff;
     }
 
-    public void setTariffPlanId(long tariffPlanId) {
-        this.tariffPlanId = tariffPlanId;
+    public void setTariff(Tariff tariff) {
+        this.tariff = tariff;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -70,9 +69,11 @@ public class Feedback implements Identifiable {
 
         if (feedbackId != feedback.feedbackId) return false;
         if (rating != feedback.rating) return false;
-        if (userId != feedback.userId) return false;
-        if (tariffPlanId != feedback.tariffPlanId) return false;
-        return feedbackBody != null ? feedbackBody.equals(feedback.feedbackBody) : feedback.feedbackBody == null;
+        if (feedbackBody != null ? !feedbackBody.equals(feedback.feedbackBody) : feedback.feedbackBody != null)
+            return false;
+        if (feedbackAuthor != null ? !feedbackAuthor.equals(feedback.feedbackAuthor) : feedback.feedbackAuthor != null)
+            return false;
+        return tariff != null ? tariff.equals(feedback.tariff) : feedback.tariff == null;
     }
 
     @Override
@@ -80,8 +81,8 @@ public class Feedback implements Identifiable {
         int result = (int) (feedbackId ^ (feedbackId >>> 32));
         result = 31 * result + rating;
         result = 31 * result + (feedbackBody != null ? feedbackBody.hashCode() : 0);
-        result = 31 * result + (int) (userId ^ (userId >>> 32));
-        result = 31 * result + (int) (tariffPlanId ^ (tariffPlanId >>> 32));
+        result = 31 * result + (feedbackAuthor != null ? feedbackAuthor.hashCode() : 0);
+        result = 31 * result + (tariff != null ? tariff.hashCode() : 0);
         return result;
     }
 
@@ -91,8 +92,8 @@ public class Feedback implements Identifiable {
         sb.append("feedbackId=").append(feedbackId);
         sb.append(", rating=").append(rating);
         sb.append(", feedbackBody='").append(feedbackBody).append('\'');
-        sb.append(", userId=").append(userId);
-        sb.append(", tariffPlanId=").append(tariffPlanId);
+        sb.append(", feedbackAuthor=").append(feedbackAuthor);
+        sb.append(", tariff=").append(tariff);
         sb.append('}');
         return sb.toString();
     }
