@@ -1,5 +1,6 @@
 package com.epamjwd.provider.model.dao.mapper.imp;
 
+import com.epamjwd.provider.model.dao.mapper.ColumnName;
 import com.epamjwd.provider.model.dao.mapper.RowMapper;
 import com.epamjwd.provider.model.entity.BankAccount;
 
@@ -9,6 +10,12 @@ import java.sql.SQLException;
 public class BankAccountMapper implements RowMapper<BankAccount> {
     @Override
     public BankAccount map(ResultSet resultSet) throws SQLException {
-        return null;
+        BankAccount bankAccount=new BankAccount();
+        bankAccount.setId(resultSet.getLong(ColumnName.ID));
+        bankAccount.setBalance(resultSet.getBigDecimal(ColumnName.BANK_ACCOUNT_BALANCE));
+        bankAccount.setUserId(resultSet.getLong(ColumnName.BANK_ACCOUNT_USER_ID));
+        bankAccount.setTariffId(resultSet.getLong(ColumnName.BANK_ACCOUNT_TARIFF_ID));
+
+        return bankAccount;
     }
 }

@@ -2,23 +2,15 @@ CREATE DATABASE IF NOT EXISTS internetProvider;
 
 USE internetProvider;
 
-
-CREATE TABLE IF NOT EXISTS Roles
-(
-	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE,
-	role VARCHAR(15) NOT NULL UNIQUE,
-	PRIMARY KEY (id)
-);
-
 CREATE TABLE IF NOT EXISTS Users
 (
 	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE,
-    roles_id BIGINT UNSIGNED NOT NULL,
+    role ENUM('Admin','User') NOT NULL,
     password VARCHAR(20) NOT NULL,
     email VARCHAR(25) NOT NULL UNIQUE,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(20) NOT NULL,
-    status ENUM("Unconfirmed", "Active", "Blocked", "Deleted") NOT NULL,
+    status ENUM("Unverified", "Verified", "Blocked", "Deleted") NOT NULL DEFAULT 'Unverified',
 	PRIMARY KEY (id),
     FOREIGN KEY (roles_id) REFERENCES Roles (id)
 );
@@ -41,7 +33,7 @@ CREATE TABLE IF NOT EXISTS Tariffs
     special_offers_id BIGINT UNSIGNED,
 	name VARCHAR(15) NOT NULL UNIQUE,
     description TEXT(2048) NOT NULL,
-    state ENUM("Active","Archive", "Deactivated") NOT NULL,
+    status ENUM("Active","Archive", "Deactivated") NOT NULL,
 	internet_speed DECIMAL(10,2) NOT NULL,
     rating DECIMAL(10,1) NOT NULL,
     image_url VARCHAR(45) NOT NULL,

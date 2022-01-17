@@ -1,21 +1,23 @@
 package com.epamjwd.provider.model.entity;
 
+import java.math.BigDecimal;
+
 public class User implements Identifiable {
     private long userId;
     private String email;
     private String password;
     private String name;
     private String surname;
-    private Role role; // key roleId
+    private Role role;
     private UserStatus status;
-    private BankAccount bankAccount; //key bankAccountId
+    private String token;
 
     public User() {
     }
 
     public User(long userId, String password,
                 String email, String name, String surname,
-                Role role, UserStatus status, BankAccount bankAccount) {
+                Role role, UserStatus status, String token) {
         this.userId = userId;
         this.password = password;
         this.email = email;
@@ -23,7 +25,7 @@ public class User implements Identifiable {
         this.surname = surname;
         this.role = role;
         this.status = status;
-        this.bankAccount = bankAccount;
+        this.token = token;
     }
 
     @Override
@@ -84,12 +86,12 @@ public class User implements Identifiable {
         this.status = status;
     }
 
-    public BankAccount getBankAccount() {
-        return bankAccount;
+    public String getToken() {
+        return token;
     }
 
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
@@ -100,25 +102,25 @@ public class User implements Identifiable {
         User user = (User) o;
 
         if (userId != user.userId) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
-        if (role != null ? !role.equals(user.role) : user.role != null) return false;
+        if (role != user.role) return false;
         if (status != user.status) return false;
-        return bankAccount != null ? bankAccount.equals(user.bankAccount) : user.bankAccount == null;
+        return token != null ? token.equals(user.token) : user.token == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (userId ^ (userId >>> 32));
-        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (bankAccount != null ? bankAccount.hashCode() : 0);
+        result = 31 * result + (token != null ? token.hashCode() : 0);
         return result;
     }
 
@@ -126,13 +128,13 @@ public class User implements Identifiable {
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("userId=").append(userId);
-        sb.append(", password='").append(password).append('\'');
         sb.append(", email='").append(email).append('\'');
+        sb.append(", password='").append(password).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", surname='").append(surname).append('\'');
         sb.append(", role=").append(role);
         sb.append(", status=").append(status);
-        sb.append(", bankAccount=").append(bankAccount);
+        sb.append(", token='").append(token).append('\'');
         sb.append('}');
         return sb.toString();
     }

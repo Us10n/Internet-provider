@@ -1,6 +1,6 @@
 package com.epamjwd.provider.model.pool;
 
-import com.epamjwd.provider.exception.ConnectionException;
+import com.epamjwd.provider.exception.PoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -61,7 +61,7 @@ public class ProxyConnection implements Connection {
     public void close() {
         try {
             ConnectionPool.getInstance().releaseConnection(this);
-        } catch (ConnectionException e) {
+        } catch (PoolException e) {
             logger.error("Release ProxyConnection error");
         }
     }

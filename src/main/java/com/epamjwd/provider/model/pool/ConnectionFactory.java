@@ -1,6 +1,6 @@
 package com.epamjwd.provider.model.pool;
 
-import com.epamjwd.provider.exception.ConnectionException;
+import com.epamjwd.provider.exception.PoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +15,7 @@ public class ConnectionFactory {
     private static final String DATABASE_PASSWORD = "db.password";
     private static final String DATABASE_DRIVER = "db.driver";
 
-    public static ProxyConnection createConnection(ResourceBundle dbBundle) throws ConnectionException {
+    public static ProxyConnection createConnection(ResourceBundle dbBundle) throws PoolException {
         ProxyConnection proxyConnection = null;
         try {
             String dbUrl = dbBundle.getString(DATABASE_URL);
@@ -24,11 +24,11 @@ public class ConnectionFactory {
             Class.forName(dbBundle.getString(DATABASE_DRIVER));
             proxyConnection = new ProxyConnection(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
         } catch (SQLException e) {
-            logger.error("DB connection error", e);
-            throw new ConnectionException(e);
+            logger.error("Database connection error", e);
+            throw new PoolException("Database connection error",e);
         } catch (ClassNotFoundException e) {
             logger.error("MYSQL driver not found", e);
-            throw new ConnectionException(e);
+            throw new PoolException("MYSQL driver not found",e);
         }
         return proxyConnection;
     }

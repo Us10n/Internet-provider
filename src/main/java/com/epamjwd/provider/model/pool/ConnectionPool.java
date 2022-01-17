@@ -1,11 +1,10 @@
 package com.epamjwd.provider.model.pool;
 
 
-import com.epamjwd.provider.exception.ConnectionException;
+import com.epamjwd.provider.exception.PoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingDeque;
@@ -51,41 +50,41 @@ public class ConnectionPool {
                     instance = new ConnectionPool();
                     isPoolCreated.set(true);
                 }
-            }finally {
+            } finally {
                 createPoolLock.unlock();
             }
         }
         return instance;
     }
 
-    public Connection getConnection() throws ConnectionException {
+    public ProxyConnection getConnection() throws PoolException {
         ProxyConnection proxyConnection;
         try {
-            proxyConnection=availableConnections.take();
+            proxyConnection = availableConnections.take();
             usedConnections.put(proxyConnection);
         } catch (InterruptedException e) {
-            logger.error("Get connection error");
+            logger.error("Get connection error", e);
             Thread.currentThread().interrupt();
-            throw new ConnectionException(e);
+            throw new PoolException("Get connection error", e);
         }
         return proxyConnection;
     }
 
-    public boolean releaseConnection(ProxyConnection proxyConnection) throws ConnectionException {
-        if(proxyConnection!=null){
+    public boolean releaseConnection(ProxyConnection proxyConnection) throws PoolException {
+        if (proxyConnection != null) {
             usedConnections.remove(proxyConnection);
             try {
                 availableConnections.put(proxyConnection);
             } catch (InterruptedException e) {
-                logger.error("Release connection error");
-                throw new ConnectionException(e);
+                logger.error("Release connection error", e);
+                throw new PoolException("Release connection error", e);
             }
             return true;
         }
         return false;
     }
 
-    public void destroyPool() throws ConnectionException {
+    public void destroyPool() throws PoolException {
         try {
             for (ProxyConnection availableConnection : availableConnections) {
                 availableConnection.reallyClose();
@@ -94,8 +93,8 @@ public class ConnectionPool {
                 usedConnection.reallyClose();
             }
         } catch (SQLException e) {
-            logger.error("Connection connections error");
-            throw new ConnectionException(e);
+            logger.error("Close connections error", e);
+            throw new PoolException("Close connections error", e);
         }
     }
 }

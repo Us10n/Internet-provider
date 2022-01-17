@@ -6,7 +6,6 @@ import com.epamjwd.provider.model.entity.*;
 public class RowMapperFactory {
     private static RowMapperFactory instance;
     private final RowMapper<User> userRowMapper = new UserMapper();
-    private final RowMapper<Role> roleRowMapper = new RoleMapper();
     private final RowMapper<BankAccount> bankAccountRowMapper = new BankAccountMapper();
     private final RowMapper<Tariff> tariffRowMapper = new TariffMapper();
     private final RowMapper<SpecialOffer> specialOfferRowMapper = new SpecialOfferMapper();
@@ -24,10 +23,6 @@ public class RowMapperFactory {
 
     public RowMapper getUserRowMapper() {
         return userRowMapper;
-    }
-
-    public RowMapper getRoleRowMapper() {
-        return roleRowMapper;
     }
 
     public RowMapper getBankAccountRowMapper() {

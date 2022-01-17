@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface FeedbackDao extends Dao<Feedback> {
 
     List<Feedback> findByUserId(long userId) throws DaoException;
+
     List<Feedback> findByTariffId(long tariffId) throws DaoException;
 }

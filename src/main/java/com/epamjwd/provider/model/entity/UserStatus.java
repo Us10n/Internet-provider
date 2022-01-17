@@ -1,8 +1,8 @@
 package com.epamjwd.provider.model.entity;
 
 public enum UserStatus {
-    Unconfirmed,
-    Active,
+    Unverified,
+    Verified,
     Blocked,
     Deleted
 }

@@ -1,28 +1,34 @@
 package com.epamjwd.provider.model.entity;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public class Tariff implements Identifiable {
     private long tariffId;
     private String name;
     private String description;
-    private double price;
+    private BigDecimal price;
     private TariffStatus status;
     private double internetSpeed;
+    private double rating;
     private String image;
-    private SpecialOffer specialOffer; //key specialOfferId
+    private Optional<SpecialOffer> specialOffer;
 
     public Tariff() {
     }
 
-    public Tariff(String name, String description, double price, TariffStatus status, double internetSpeed, String image, SpecialOffer specialOffer) {
+    public Tariff(String name, String description, BigDecimal price,
+                  TariffStatus status, double internetSpeed, String image,
+                  double rating, SpecialOffer specialOffer) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.status = status;
         this.internetSpeed = internetSpeed;
         this.image = image;
-        this.specialOffer = specialOffer;
+        this.rating = rating;
+        this.specialOffer = Optional.ofNullable(specialOffer);
     }
 
     @Override
@@ -51,11 +57,11 @@ public class Tariff implements Identifiable {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -83,12 +89,20 @@ public class Tariff implements Identifiable {
         this.image = image;
     }
 
-    public SpecialOffer getSpecialOffer() {
+    public Optional<SpecialOffer> getSpecialOffer() {
         return specialOffer;
     }
 
     public void setSpecialOffer(SpecialOffer specialOffer) {
-        this.specialOffer = specialOffer;
+        this.specialOffer = Optional.ofNullable(specialOffer);
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
     @Override
@@ -99,13 +113,14 @@ public class Tariff implements Identifiable {
         Tariff tariff = (Tariff) o;
 
         if (tariffId != tariff.tariffId) return false;
-        if (Double.compare(tariff.price, price) != 0) return false;
         if (Double.compare(tariff.internetSpeed, internetSpeed) != 0) return false;
+        if (Double.compare(tariff.rating, rating) != 0) return false;
         if (name != null ? !name.equals(tariff.name) : tariff.name != null) return false;
         if (description != null ? !description.equals(tariff.description) : tariff.description != null) return false;
+        if (price != null ? !price.equals(tariff.price) : tariff.price != null) return false;
         if (status != tariff.status) return false;
         if (image != null ? !image.equals(tariff.image) : tariff.image != null) return false;
-        return specialOffer != null ? specialOffer.equals(tariff.specialOffer) : tariff.specialOffer == null;
+        return specialOffer.isPresent() ? specialOffer.equals(tariff.specialOffer) : !tariff.specialOffer.isPresent();
     }
 
     @Override
@@ -115,13 +130,14 @@ public class Tariff implements Identifiable {
         result = (int) (tariffId ^ (tariffId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         temp = Double.doubleToLongBits(internetSpeed);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(rating);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (image != null ? image.hashCode() : 0);
-        result = 31 * result + (specialOffer != null ? specialOffer.hashCode() : 0);
+        result = 31 * result + (specialOffer.isPresent() ? specialOffer.hashCode() : 0);
         return result;
     }
 
@@ -134,6 +150,7 @@ public class Tariff implements Identifiable {
         sb.append(", price=").append(price);
         sb.append(", status=").append(status);
         sb.append(", internetSpeed=").append(internetSpeed);
+        sb.append(", rating=").append(rating);
         sb.append(", image='").append(image).append('\'');
         sb.append(", specialOffer=").append(specialOffer);
         sb.append('}');

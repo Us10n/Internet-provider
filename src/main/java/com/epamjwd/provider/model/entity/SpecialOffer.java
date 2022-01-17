@@ -1,24 +1,21 @@
 package com.epamjwd.provider.model.entity;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SpecialOffer implements Identifiable {
     private long specialOfferId;
     private String title;
     private String description;
     private int discount;
-    private SimpleDateFormat startDate;
-    private SimpleDateFormat expirationDate;
+    private Date startDate;
+    private Date expirationDate;
     private String image;
 
-    public SpecialOffer() {
+    public SpecialOffer(){
     }
 
-    public SpecialOffer(long specialOfferId, String title,
-                        String description, int discount,
-                        SimpleDateFormat startDate,
-                        SimpleDateFormat expirationDate, String image) {
-        this.specialOfferId = specialOfferId;
+    public SpecialOffer(String title, String description, int discount,
+                        Date startDate, Date expirationDate, String image) {
         this.title = title;
         this.description = description;
         this.discount = discount;
@@ -61,19 +58,19 @@ public class SpecialOffer implements Identifiable {
         this.discount = discount;
     }
 
-    public SimpleDateFormat getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(SimpleDateFormat startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public SimpleDateFormat getExpirationDate() {
+    public Date getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(SimpleDateFormat expirationDate) {
+    public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
 
