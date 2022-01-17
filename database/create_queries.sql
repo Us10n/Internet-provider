@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS Users
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(20) NOT NULL,
     status ENUM("Unverified", "Verified", "Blocked", "Deleted") NOT NULL DEFAULT 'Unverified',
-	PRIMARY KEY (id),
-    FOREIGN KEY (roles_id) REFERENCES Roles (id)
+    token VARCHAR(16) NOT NULL UNIQUE,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS SpecialOffers
