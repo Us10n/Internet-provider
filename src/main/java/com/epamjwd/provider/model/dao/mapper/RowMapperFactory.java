@@ -3,7 +3,7 @@ package com.epamjwd.provider.model.dao.mapper;
 import com.epamjwd.provider.model.dao.mapper.imp.*;
 import com.epamjwd.provider.model.entity.*;
 
-public class RowMapperFactory {
+public final class RowMapperFactory {
     private static RowMapperFactory instance;
     private final RowMapper<User> userRowMapper = new UserMapper();
     private final RowMapper<BankAccount> bankAccountRowMapper = new BankAccountMapper();

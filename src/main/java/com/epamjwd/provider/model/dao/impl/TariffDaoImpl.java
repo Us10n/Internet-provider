@@ -15,22 +15,58 @@ public class TariffDaoImpl extends AbstractQueryExecutor<Tariff> implements Tari
 
     private static final String FIND_ALL_TARIFF_QUERY = """
             SELECT  tariffs.id, tariffs.special_offers_id, tariffs.name,tariffs.description,
-                    tariffs.state, tariffs.internet_speed,tariffs.rating,tariffs.image_url,tariffs.price,
+                    tariffs.status, tariffs.internet_speed,tariffs.rating,tariffs.image_url,tariffs.price,
                     specialoffers.title,specialoffers.description, specialoffers.start_date,
                     specialoffers.expiration_date,specialoffers.discount,specialoffers.image_url
             FROM internetprovider.tariffs
             LEFT JOIN internetprovider.specialoffers
             ON tariffs.special_offers_id=specialoffers.id;""";
+    private static final String FIND_ALL_TARIFF_QUERY_SORT_BY_NAME = """
+            SELECT  tariffs.id, tariffs.special_offers_id, tariffs.name,tariffs.description,
+                    tariffs.status, tariffs.internet_speed,tariffs.rating,tariffs.image_url,tariffs.price,
+                    specialoffers.title,specialoffers.description, specialoffers.start_date,
+                    specialoffers.expiration_date,specialoffers.discount,specialoffers.image_url
+            FROM internetprovider.tariffs
+            LEFT JOIN internetprovider.specialoffers
+            ON tariffs.special_offers_id=specialoffers.id ORDER BY tariffs.name ASC;""";
+    private static final String FIND_ALL_TARIFF_QUERY_SORT_BY_PRICE = """
+            SELECT  tariffs.id, tariffs.special_offers_id, tariffs.name,tariffs.description,
+                    tariffs.status, tariffs.internet_speed,tariffs.rating,tariffs.image_url,tariffs.price,
+                    specialoffers.title,specialoffers.description, specialoffers.start_date,
+                    specialoffers.expiration_date,specialoffers.discount,specialoffers.image_url
+            FROM internetprovider.tariffs
+            LEFT JOIN internetprovider.specialoffers
+            ON tariffs.special_offers_id=specialoffers.id ORDER BY tariffs.price ASC;""";
+    private static final String FIND_ALL_TARIFF_QUERY_SORT_BY_INTERNET_SPEED = """
+            SELECT  tariffs.id, tariffs.special_offers_id, tariffs.name,tariffs.description,
+                    tariffs.status, tariffs.internet_speed,tariffs.rating,tariffs.image_url,tariffs.price,
+                    specialoffers.title,specialoffers.description, specialoffers.start_date,
+                    specialoffers.expiration_date,specialoffers.discount,specialoffers.image_url
+            FROM internetprovider.tariffs
+            LEFT JOIN internetprovider.specialoffers
+            ON tariffs.special_offers_id=specialoffers.id ORDER BY tariffs.internet_speed ASC;""";
+    private static final String FIND_ALL_TARIFF_QUERY_SORT_BY_RATING = """
+            SELECT  tariffs.id, tariffs.special_offers_id, tariffs.name,tariffs.description,
+                    tariffs.status, tariffs.internet_speed,tariffs.rating,tariffs.image_url,tariffs.price,
+                    specialoffers.title,specialoffers.description, specialoffers.start_date,
+                    specialoffers.expiration_date,specialoffers.discount,specialoffers.image_url
+            FROM internetprovider.tariffs
+            LEFT JOIN internetprovider.specialoffers
+            ON tariffs.special_offers_id=specialoffers.id ORDER BY tariffs.rating ASC;""";
     private static final String FIND_TARIFF_BY_ID_QUERY = """
             SELECT tariffs.id, tariffs.special_offers_id, tariffs.name,tariffs.description,
-                    tariffs.state, tariffs.internet_speed,tariffs.rating,tariffs.image_url,tariffs.price,
+                    tariffs.status, tariffs.internet_speed,tariffs.rating,tariffs.image_url,tariffs.price,
                     specialoffers.title,specialoffers.description, specialoffers.start_date,
                     specialoffers.expiration_date,specialoffers.discount,specialoffers.image_url
             FROM internetprovider.tariffs LEFT JOIN internetprovider.specialoffers
             ON tariffs.special_offers_id=specialoffers.id
             WHERE tariffs.id=?""";
     private static final String FIND_TARIFFS_BY_NAME_QUERY = """
-            SELECT * FROM internetprovider.tariffs LEFT JOIN internetprovider.specialoffers
+            SELECT tariffs.id, tariffs.special_offers_id, tariffs.name,tariffs.description,
+                    tariffs.status, tariffs.internet_speed,tariffs.rating,tariffs.image_url,tariffs.price,
+                    specialoffers.title,specialoffers.description, specialoffers.start_date,
+                    specialoffers.expiration_date,specialoffers.discount,specialoffers.image_url
+            FROM internetprovider.tariffs LEFT JOIN internetprovider.specialoffers
             ON tariffs.special_offers_id=specialoffers.id
             WHERE tariffs.name=?""";
     private static final String INSERT_TARIFF_QUERY = """
@@ -50,6 +86,26 @@ public class TariffDaoImpl extends AbstractQueryExecutor<Tariff> implements Tari
     @Override
     public List<Tariff> findAll() throws DaoException {
         return executeQuery(FIND_ALL_TARIFF_QUERY);
+    }
+
+    @Override
+    public List<Tariff> findAllSortByName() throws DaoException {
+        return executeQuery(FIND_ALL_TARIFF_QUERY_SORT_BY_NAME);
+    }
+
+    @Override
+    public List<Tariff> findAllSortByInternetSpeed() throws DaoException {
+        return executeQuery(FIND_ALL_TARIFF_QUERY_SORT_BY_INTERNET_SPEED);
+    }
+
+    @Override
+    public List<Tariff> findAllSortByPrice() throws DaoException {
+        return executeQuery(FIND_ALL_TARIFF_QUERY_SORT_BY_PRICE);
+    }
+
+    @Override
+    public List<Tariff> findAllSortByRating() throws DaoException {
+        return executeQuery(FIND_ALL_TARIFF_QUERY_SORT_BY_RATING);
     }
 
     @Override

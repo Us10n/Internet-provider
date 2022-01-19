@@ -1,7 +1,8 @@
 package com.epamjwd.provider.controller;
 
 import com.epamjwd.provider.controller.command.Command;
-import com.epamjwd.provider.controller.command.PagePath;
+import com.epamjwd.provider.controller.command.constants.CommandType;
+import com.epamjwd.provider.controller.command.constants.CommandName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +17,8 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String COMMAND = "command";
+    private static final String commandRedirectPath = "/provider/controller?command=";
+    private static final String commandParameterString = "command";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,14 +33,13 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String commandParameter = request.getParameter(COMMAND);
-
-        if (commandParameter == null || commandParameter.equals("")) {
-            response.sendRedirect(PagePath.ERROR_PAGE);
+        String pageParameter = request.getParameter(commandParameterString);
+        if (pageParameter == null || pageParameter.equals("")) {
+            response.sendRedirect(commandRedirectPath + CommandName.HOME);
         } else {
-            Command command = CommandHolder.getInstance().getCommand(commandParameter);
+            Command command = CommandHolder.getInstance().getCommand(pageParameter);
             CommandResult commandResult = command.execute(request);
-            if (commandResult.getCommandType() == CommandType.Redirect) {
+            if (commandResult.getCommandType() == CommandType.REDIRECT) {
                 response.sendRedirect(commandResult.getPage());
             } else {
                 request.getRequestDispatcher(commandResult.getPage()).forward(request, response);

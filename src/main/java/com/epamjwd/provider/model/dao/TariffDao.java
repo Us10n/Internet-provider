@@ -12,6 +12,10 @@ import java.util.Optional;
 public interface TariffDao extends Dao<Tariff> {
 
     Optional<Tariff> findByName(String tariff) throws DaoException;
+    List<Tariff> findAllSortByName() throws DaoException;
+    List<Tariff> findAllSortByInternetSpeed() throws DaoException;
+    List<Tariff> findAllSortByPrice() throws DaoException;
+    List<Tariff> findAllSortByRating() throws DaoException;
     void updateSpecialOfferId(long tariffId,long specialOfferId) throws DaoException;
     void deleteSpecialOfferId(long tariffId) throws DaoException;
     void updateStatus(long tariffId, TariffStatus tariffStatus) throws DaoException;

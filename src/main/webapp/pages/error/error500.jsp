@@ -6,6 +6,6 @@
 <body>
 <h1 align="center" style="color:red">500 ERROR</h1>
 <hr align="center" width="70%">
-<h4 align="center">Oops, smth went wrong.</h4>
+<h4 align="center">Server internal error/</h4>
 </body>
 </html>

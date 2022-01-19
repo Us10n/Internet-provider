@@ -5,12 +5,14 @@ INSERT INTO internetprovider.users (roles_id, login, password, email, first_name
 VALUES ('1','admin','admin', 'cron96@list.ru', 'Stas', 'Rabinin', 'Verified');
 INSERT INTO internetprovider.users (roles_id, login, password, email, first_name, last_name, status)
 VALUES ('2','user','user', 'cron96@list.ru', 'Петр', 'Петров', 'Verified');
+INSERT INTO internetprovider.users (roles_id, login, password, email, first_name, last_name, status)
+VALUES ('3','user','user', 'cron96@list.ru', 'Петр', 'Петров', 'Verified');
 
 # Special Offers #######
 INSERT INTO internetprovider.specialoffers (title, description, start_date, expiration_date, discount)
 VALUES ('New Year & Christmas', 'Holidays are coming. Have time to get good internet tariff with a 20% discount on all tariffs.', '2021-12-01','2022-01-31', '40','offers/winter.png');
 INSERT INTO internetprovider.specialoffers (title, description, start_date, expiration_date, discount)
-VALUES ('Winter Ends', 'Winter is ending thus it`s time to get spring discounts on "Spring" tariffs.', '2021-02-20','2022-03-31', '15','offers/spring.png');
+VALUES ('Winter Ends', 'Winter is ending thus it`s time to get spring discounts on "Spring" tariffs.', '2022-02-20','2022-03-31', '15','offers/spring.png');
 
 # Tariff #######
 INSERT INTO internetprovider.tariffs (special_offers_id, name, description, status, internet_speed, rating, image_url)

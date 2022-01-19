@@ -1,7 +1,21 @@
 package com.epamjwd.provider.model.entity;
 
 public enum TariffStatus {
-    Active,
-    Archive,
-    Deactivated
+    ACTIVE("Active"),
+    ARCHIVE("Archive"),
+    DEACTIVATED("Deactivated");
+
+    private final String status;
+
+    TariffStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public boolean isValid() {
+        return this == ACTIVE;
+    }
 }

@@ -22,7 +22,7 @@ public class UserMapperTest {
     @Test
     public void testMap() throws DaoException {
         UserDaoImpl userDao = new UserDaoImpl();
-        userDao.updateStatus(3, UserStatus.Blocked);
+        userDao.updateStatus(3, UserStatus.BLOCKED);
 
     }
 }
