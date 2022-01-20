@@ -10,21 +10,24 @@ import java.util.Map;
 public class CommandHolder {
 
     private static final Map<String, Command> commandMap = new HashMap<>();
-    private static CommandHolder instance;
+
+    private static class InstanceHolder {
+        static final CommandHolder instance = new CommandHolder();
+    }
 
     public CommandHolder() {
         commandMap.put(CommandName.ERROR, new DefaultCommand());
         commandMap.put(CommandName.HOME, new ShowHomePageCommand());
-        commandMap.put(CommandName.LOG_IN, new ShowLongInPageCommand());
+        commandMap.put(CommandName.LOG_IN, new ShowLogInPageCommand());
         commandMap.put(CommandName.SIGN_UP, new ShowSignUpPageCommand());
-        commandMap.put(CommandName.TARIFFS, new TariffPageCommand());
+        commandMap.put(CommandName.TARIFFS, new ShowTariffListPageCommand());
+        commandMap.put(CommandName.PROMOTIONS, new ShowSpecialOfferPageCommand());
+        commandMap.put(CommandName.SINGLE_TARIFF, new ShowSingleTariffPageCommand());
+        commandMap.put(CommandName.CHANGE_LOCALE, new ChangeLocaleCommand());
     }
 
     public static CommandHolder getInstance() {
-        if (instance == null) {
-            instance = new CommandHolder();
-        }
-        return instance;
+        return InstanceHolder.instance;
     }
 
     public Command getCommand(String commandName) {

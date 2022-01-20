@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ShowHomePageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
+        request.getSession().setAttribute("currentPage","?command=home");
         return new CommandResult(PagePath.HOME_PAGE, CommandType.FORWARD);
     }
 }

@@ -6,7 +6,7 @@ public class SpecialOffer implements Identifiable {
     private long specialOfferId;
     private String title;
     private String description;
-    private int discount;
+    private byte discount;
     private Date startDate;
     private Date expirationDate;
     private String image;
@@ -14,7 +14,7 @@ public class SpecialOffer implements Identifiable {
     public SpecialOffer(){
     }
 
-    public SpecialOffer(String title, String description, int discount,
+    public SpecialOffer(String title, String description, byte discount,
                         Date startDate, Date expirationDate, String image) {
         this.title = title;
         this.description = description;
@@ -50,11 +50,11 @@ public class SpecialOffer implements Identifiable {
         this.description = description;
     }
 
-    public int getDiscount() {
+    public byte getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(byte discount) {
         this.discount = discount;
     }
 

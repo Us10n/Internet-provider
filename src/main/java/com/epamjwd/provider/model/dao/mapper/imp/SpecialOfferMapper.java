@@ -18,7 +18,7 @@ public class SpecialOfferMapper implements RowMapper<SpecialOffer> {
         }
         specialOffer.setTitle(resultSet.getString(ColumnName.SPECIAL_OFFER_TITLE));
         specialOffer.setDescription(resultSet.getString(ColumnName.SPECIAL_OFFER_DESCRIPTION));
-        specialOffer.setDiscount(resultSet.getInt(ColumnName.SPECIAL_OFFER_DISCOUNT));
+        specialOffer.setDiscount(resultSet.getByte(ColumnName.SPECIAL_OFFER_DISCOUNT));
         specialOffer.setStartDate(resultSet.getDate(ColumnName.SPECIAL_OFFER_START_DATE));
         specialOffer.setExpirationDate(resultSet.getDate(ColumnName.SPECIAL_OFFER_EXPIRATION_DATE));
         specialOffer.setImage(resultSet.getString(ColumnName.SPECIAL_OFFER_IMAGE));

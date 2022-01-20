@@ -4,15 +4,25 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
-<!--    <error-page>-->
-<!--        <error-code>500</error-code>-->
-<!--        <location>/pages/error/error500.jsp</location>-->
-<!--    </error-page>-->
+    <!--    <error-page>-->
+    <!--        <error-code>500</error-code>-->
+    <!--        <location>/pages/error/error500.jsp</location>-->
+    <!--    </error-page>-->
 
     <error-page>
         <error-code>404</error-code>
         <location>/pages/error/error404.jsp</location>
     </error-page>
+
+    <filter>
+        <filter-name>LocaleFilter</filter-name>
+        <filter-class>com.epamjwd.provider.controller.filter.LocaleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LocaleFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <request-character-encoding>UTF-8</request-character-encoding>
 </web-app>

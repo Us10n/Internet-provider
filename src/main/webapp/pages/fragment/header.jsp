@@ -6,7 +6,7 @@
 <header class="p-2 bg-info text-white">
 
     <div class="container">
-        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start">
+        <div class="d-flex flex-wrap justify-content-center align-self-center justify-content-lg-start">
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="${pageContext.request.contextPath}/controller?command=home"
@@ -17,17 +17,68 @@
                        class="nav-link px-2 text-white"><fmt:message key="lang.promotions"/></a></li>
                 <li><a href="${pageContext.request.contextPath}/controller?command=about"
                        class="nav-link px-2 text-white"><fmt:message key="lang.about"/></a></li>
-                <li><a href="#" class="nav-link px-2 text-white"><fmt:message key="lang.users"/></a></li>
+                <div class="dropdown">
+                    <button class="btn bg-info text-white dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <fmt:message key="lang.admin.panel"/>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item"
+                               href="${pageContext.request.contextPath}/controller?command=usersPanel">
+                            <fmt:message key="lang.users.control"/></a></li>
+                        <li><a class="dropdown-item"
+                               href="${pageContext.request.contextPath}/controller?command=tariffsPanel">
+                            <fmt:message key="lang.tariff.control"/> </a></li>
+                        <li><a class="dropdown-item"
+                               href="${pageContext.request.contextPath}/controller?command=promotionsPanel">
+                            <fmt:message key="lang.promotions.control"/></a></li>
+                    </ul>
+                </div>
             </ul>
 
             <ul class="nav col-12 col-lg-auto ml-lg-auto mb-2 justify-content-center mb-md-0">
 
+                <div class="dropdown">
+                    <form action="${pageContext.request.contextPath}/controller?command=changeLocale" method="post">
+                        <c:choose>
+                            <c:when test="${cookie['lang'].value eq 'ru-RU'}">
+                                <button class="btn bg-info text-white dropdown-toggle" type="button"
+                                        id="dropdownMenuButton2"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <fmt:message key="lang.ru"/>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                    <button class="dropdown-item" name="cookieLocale" value="en-US" type="submit">
+                                        <fmt:message key="lang.en"/>
+                                    </button>
+                                </ul>
+                            </c:when>
+                            <c:when test="${cookie['lang'].value eq 'en-US'}">
+                                <button class="btn bg-info text-white dropdown-toggle" type="button"
+                                        id="dropdownMenuButton2"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <fmt:message key="lang.en"/>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                    <button class="dropdown-item" name="cookieLocale" value="ru-RU" type="submit">
+                                        <fmt:message key="lang.ru"/>
+                                    </button>
+                                </ul>
+                            </c:when>
+                        </c:choose>
+                    </form>
+
+                </div>
                 <li><a href="#" class="nav-link px-2 text-black-50 bg-white"><fmt:message key="lang.balance"/>:
                     234324</a></li>
                 <li><a href="?command=login" class="nav-link px-2 text-white"><fmt:message key="lang.log.in"/></a></li>
                 <li><a href="?command=signup" class="nav-link px-2 text-white"><fmt:message key="lang.sign.up"/></a>
                 </li>
-                <li><a href="123" class="nav-link px-2 text-white"><fmt:message key="lang.log.out"/></a></li>
+                <form action="${pageContext.request.contextPath}/controller?command=logoutUser" method="post">
+                    <button class="btn bg-info text-white" type="submit">
+                        <fmt:message key="lang.log.out"/>
+                    </button></li>
+                </form>
             </ul>
         </div>
     </div>

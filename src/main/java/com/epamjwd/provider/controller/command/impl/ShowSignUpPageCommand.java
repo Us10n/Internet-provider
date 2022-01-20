@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ShowSignUpPageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
-
+        request.getSession().setAttribute("currentPage","?command=signup");
         return new CommandResult(PagePath.SIGN_UP_PAGE, CommandType.FORWARD);
     }
 }

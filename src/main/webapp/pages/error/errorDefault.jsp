@@ -7,5 +7,6 @@
 <h1 align="center" style="color:red">ERROR</h1>
 <hr align="center" width="70%">
 <h4 align="center">Oops, smth went wrong.</h4>
+<h4 align="center">Maybe this page isn't available for you.</h4>
 </body>
 </html>

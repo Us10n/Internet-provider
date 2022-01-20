@@ -10,7 +10,7 @@
 
     <tag>
         <name>copyright</name>
-        <tag-class>com.epamjwd.provider.util.tag.CopyrightTag</tag-class>
+        <tag-class>com.epamjwd.provider.model.util.tag.CopyrightTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>year</name>

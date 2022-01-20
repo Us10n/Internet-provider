@@ -8,7 +8,9 @@ public class PagePath {
     public static String HOME_PAGE = "/pages/home.jsp";
     public static String LOG_IN_PAGE = "/pages/login.jsp";
     public static String SIGN_UP_PAGE = "/pages/signup.jsp";
-    public static String TARIFF_PAGE = "/pages/tariff.jsp";
+    public static String TARIFF_LIST_PAGE = "/pages/tariffs.jsp";
+    public static String SINGLE_TARIFF_PAGE = "/pages/singleTariff.jsp";
+    public static String PROMOTION_LIST_PAGE = "/pages/promotions.jsp";
 
     private PagePath() {
     }
