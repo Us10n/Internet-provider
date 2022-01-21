@@ -12,14 +12,27 @@ import java.util.Optional;
 public class FeedbackDaoImpl extends AbstractQueryExecutor<Feedback> implements FeedbackDao {
 
     private static final String FIND_ALL_FEEDBACK_QUERY = """
-            SELECT feedbacks.id, feedbacks.users_id, feedbacks.tariffs_id, feedbacks.rating, feedbacks.body FROM internetprovider.feedbacks""";
+            SELECT feedbacks.id, feedbacks.users_id, feedbacks.tariffs_id, feedbacks.rating, feedbacks.body, users.first_name 
+            FROM internetprovider.feedbacks 
+            INNER JOIN internetprovider.users 
+            ON feedbacks.users_id=users.id;""";
     private static final String FIND_FEEDBACK_BY_FEEDBACK_ID_QUERY = """
-            SELECT feedbacks.id, feedbacks.users_id, feedbacks.tariffs_id, feedbacks.rating, feedbacks.body FROM internetprovider.feedbacks""";
+            SELECT feedbacks.id, feedbacks.users_id, feedbacks.tariffs_id, feedbacks.rating, feedbacks.body, users.first_name 
+            FROM internetprovider.feedbacks
+            INNER JOIN internetprovider.users 
+            ON feedbacks.users_id=users.id
+            WHERE feedbacks.id=?""";
     private static final String FIND_FEEDBACK_BY_USER_ID_QUERY = """
-            SELECT feedbacks.id, feedbacks.users_id, feedbacks.tariffs_id, feedbacks.rating, feedbacks.body FROM internetprovider.feedbacks
+            SELECT feedbacks.id, feedbacks.users_id, feedbacks.tariffs_id, feedbacks.rating, feedbacks.body, users.first_name 
+            FROM internetprovider.feedbacks
+            INNER JOIN internetprovider.users 
+            ON feedbacks.users_id=users.id
             WHERE feedbacks.users_id=?""";
     private static final String FIND_FEEDBACK_BY_TARIFF_ID_QUERY = """
-            SELECT feedbacks.id, feedbacks.users_id, feedbacks.tariffs_id, feedbacks.rating, feedbacks.body FROM internetprovider.feedbacks
+            SELECT feedbacks.id, feedbacks.users_id, feedbacks.tariffs_id, feedbacks.rating, feedbacks.body, users.first_name 
+            FROM internetprovider.feedbacks
+            INNER JOIN internetprovider.users 
+            ON feedbacks.users_id=users.id
             WHERE feedbacks.tariffs_id=?""";
     private static final String INSERT_FEEDBACK_QUERY = """
             INSERT INTO internetprovider.feedbacks (users_id, tariffs_id, rating, body)

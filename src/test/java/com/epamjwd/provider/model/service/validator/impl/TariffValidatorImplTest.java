@@ -22,11 +22,11 @@ public class TariffValidatorImplTest {
 
     @Test
     public void testIsImageUrlValid() {
-        String imageUri="tariff/start";
-        TariffValidator tariffValidator=new TariffValidatorImpl();
-        boolean actual= tariffValidator.isImageUrlValid(imageUri);
-        boolean expected=true;
-        Assert.assertEquals(actual,expected);
+        String imageUri = "tariff/start";
+        TariffValidator tariffValidator = TariffValidatorImpl.getInstance();
+        boolean actual = tariffValidator.isImageUrlValid(imageUri);
+        boolean expected = true;
+        Assert.assertEquals(actual, expected);
     }
 
     @Test

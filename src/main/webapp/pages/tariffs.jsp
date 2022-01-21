@@ -18,10 +18,10 @@
         <div class="col-4">
             <form action="${pageContext.request.contextPath}/controller?command=tariffs" method="post">
                 <select class="form-select" name="sort" aria-label="Default select example">
-                    <option value="name">Sort by name</option>
-                    <option value="speed">Sort by speed</option>
-                    <option value="price">Sort by price</option>
-                    <option value="rating">Sort by rating</option>
+                    <option value="name"><fmt:message key="lang.sort.by.name"/></option>
+                    <option value="speed"><fmt:message key="lang.sort.by.speed"/></option>
+                    <option value="price"><fmt:message key="lang.sort.by.price"/></option>
+                    <option value="rating"><fmt:message key="lang.sort.by.rating"/></option>
                 </select>
                 <button type="submit" class="btn btn-outline-success btn-sm">
                     <fmt:message key="lang.sort.button"/></button>

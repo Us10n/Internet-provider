@@ -12,6 +12,12 @@ public class BankAccount implements Identifiable {
     public BankAccount() {
     }
 
+    public BankAccount(BigDecimal balance, long userId, Long tariffId) {
+        this.balance = balance;
+        this.userId = userId;
+        this.tariffId = Optional.ofNullable(tariffId);
+    }
+
     public BankAccount(long bankAccountId, BigDecimal balance,
                        long userId, Long tariffId) {
         this.bankAccountId = bankAccountId;

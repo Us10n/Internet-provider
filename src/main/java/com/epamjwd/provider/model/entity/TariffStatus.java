@@ -15,7 +15,4 @@ public enum TariffStatus {
         return status;
     }
 
-    public boolean isValid() {
-        return this == ACTIVE;
-    }
 }

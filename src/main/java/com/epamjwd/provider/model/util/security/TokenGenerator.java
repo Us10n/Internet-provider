@@ -11,7 +11,7 @@ public class TokenGenerator {
         secureRandom = new SecureRandom();
     }
 
-    public TokenGenerator getInstance() {
+    public static TokenGenerator getInstance() {
         if (instance == null) {
             instance = new TokenGenerator();
         }

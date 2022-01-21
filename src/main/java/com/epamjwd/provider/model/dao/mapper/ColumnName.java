@@ -1,9 +1,5 @@
 package com.epamjwd.provider.model.dao.mapper;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-
 public final class ColumnName {
 
     public static final String ID = "id";

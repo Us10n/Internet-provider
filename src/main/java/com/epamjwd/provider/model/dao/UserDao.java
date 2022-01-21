@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface UserDao extends Dao<User> {
 
     Optional<User> findByEmailAndPassword(String email, String password) throws DaoException;
+    Optional<User> findByEmail(String email) throws DaoException;
+    Optional<User> findByToken(String token) throws DaoException;
     void updateName(long userId, String newName) throws DaoException;
     void updateSurname(long userId, String newSurname) throws DaoException;
     void updateStatus(long userId, UserStatus userStatus) throws DaoException;

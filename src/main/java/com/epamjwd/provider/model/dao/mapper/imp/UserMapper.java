@@ -22,12 +22,10 @@ public class UserMapper implements RowMapper<User> {
             user.setId(resultSet.getLong(ColumnName.ID));
         }
         user.setEmail(resultSet.getString(ColumnName.USER_EMAIL));
-        user.setPassword(resultSet.getString(ColumnName.USER_PASSWORD));
         user.setName(resultSet.getString(ColumnName.USER_FIRST_NAME));
         user.setSurname(resultSet.getString(ColumnName.USER_LAST_NAME));
         user.setRole(Role.valueOf(resultSet.getString(ColumnName.USER_ROLE)));
         user.setStatus(UserStatus.valueOf(resultSet.getString(ColumnName.USER_STATUS)));
-        user.setToken(resultSet.getString(ColumnName.USER_TOKEN));
         return user;
     }
 }

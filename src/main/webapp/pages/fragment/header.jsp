@@ -17,23 +17,25 @@
                        class="nav-link px-2 text-white"><fmt:message key="lang.promotions"/></a></li>
                 <li><a href="${pageContext.request.contextPath}/controller?command=about"
                        class="nav-link px-2 text-white"><fmt:message key="lang.about"/></a></li>
-                <div class="dropdown">
-                    <button class="btn bg-info text-white dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                        <fmt:message key="lang.admin.panel"/>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item"
-                               href="${pageContext.request.contextPath}/controller?command=usersPanel">
-                            <fmt:message key="lang.users.control"/></a></li>
-                        <li><a class="dropdown-item"
-                               href="${pageContext.request.contextPath}/controller?command=tariffsPanel">
-                            <fmt:message key="lang.tariff.control"/> </a></li>
-                        <li><a class="dropdown-item"
-                               href="${pageContext.request.contextPath}/controller?command=promotionsPanel">
-                            <fmt:message key="lang.promotions.control"/></a></li>
-                    </ul>
-                </div>
+                <c:if test="${user!=null && user.role=='ADMIN'}">
+                    <div class="dropdown">
+                        <button class="btn bg-info text-white dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <fmt:message key="lang.admin.panel"/>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/controller?command=usersPanel">
+                                <fmt:message key="lang.users.control"/></a></li>
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/controller?command=tariffsPanel">
+                                <fmt:message key="lang.tariff.control"/> </a></li>
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/controller?command=promotionsPanel">
+                                <fmt:message key="lang.promotions.control"/></a></li>
+                        </ul>
+                    </div>
+                </c:if>
             </ul>
 
             <ul class="nav col-12 col-lg-auto ml-lg-auto mb-2 justify-content-center mb-md-0">
@@ -69,16 +71,24 @@
                     </form>
 
                 </div>
-                <li><a href="#" class="nav-link px-2 text-black-50 bg-white"><fmt:message key="lang.balance"/>:
-                    234324</a></li>
-                <li><a href="?command=login" class="nav-link px-2 text-white"><fmt:message key="lang.log.in"/></a></li>
-                <li><a href="?command=signup" class="nav-link px-2 text-white"><fmt:message key="lang.sign.up"/></a>
-                </li>
-                <form action="${pageContext.request.contextPath}/controller?command=logoutUser" method="post">
-                    <button class="btn bg-info text-white" type="submit">
-                        <fmt:message key="lang.log.out"/>
-                    </button></li>
-                </form>
+                <c:if test="${user!=null}">
+                    <li><a href="#" class="nav-link px-2 text-black-50 bg-white"><fmt:message key="lang.balance"/>:
+                        234324</a></li>
+                </c:if>
+                <c:if test="${user eq null}">
+                    <li><a href="?command=login" class="nav-link px-2 text-white"><fmt:message key="lang.log.in"/></a>
+                    </li>
+                    <li><a href="?command=signup" class="nav-link px-2 text-white"><fmt:message key="lang.sign.up"/></a>
+                    </li>
+                </c:if>
+                <c:if test="${user!=null}">
+                    <form action="${pageContext.request.contextPath}/controller?command=logoutUser" method="post">
+                        <button class="btn bg-info text-white" type="submit">
+                            <fmt:message key="lang.log.out"/>
+                        </button>
+                        </li>
+                    </form>
+                </c:if>
             </ul>
         </div>
     </div>

@@ -14,13 +14,19 @@ import java.util.Optional;
 public class UserDaoImpl extends AbstractQueryExecutor<User> implements UserDao {
 
     private static final String FIND_ALL_USERS_QUERY = """
-            SELECT users.id, users.password, users.email, users.first_name, users.last_name, users.role, users.token FROM users""";
+            SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status FROM users""";
     private static final String FIND_USER_BY_ID_QUERY = """
-            SELECT users.id, users.password, users.email, users.first_name, users.last_name, users.role, users.token FROM users
+            SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status FROM users
             WHERE id=?""";
+    private static final String FIND_USER_BY_TOKEN_QUERY = """
+            SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status FROM users
+            WHERE token=?""";
     private static final String FIND_USER_BY_EMAIL_AND_PASSWORD_QUERY = """
-            SELECT users.id, users.password, users.email, users.first_name, users.last_name, users.role, users.token FROM users
+            SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status FROM users
             WHERE email=? AND password=?""";
+    private static final String FIND_USER_BY_EMAIL_QUERY = """
+            SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status FROM users 
+            WHERE email=?""";
     private static final String INSERT_USER_QUERY = """
             INSERT INTO internetprovider.users (role, email, password, first_name, last_name,token) 
             VALUES (?, ?, ?, ?, ?, ?)""";
@@ -58,12 +64,25 @@ public class UserDaoImpl extends AbstractQueryExecutor<User> implements UserDao 
     @Override
     public long create(User user) throws DaoException {
         return executeInsertQuery(INSERT_USER_QUERY,
-                user.getRole(), user.getEmail(), user.getPassword(), user.getName(), user.getSurname());
+                user.getRole().toString(), user.getEmail(), user.getPassword(),
+                user.getName(), user.getSurname(), user.getToken());
     }
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) throws DaoException {
         List<User> userList = executeQuery(FIND_USER_BY_EMAIL_AND_PASSWORD_QUERY, email, password);
+        return userList.size() != 1 ? Optional.empty() : Optional.of(userList.get(0));
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) throws DaoException {
+        List<User> userList = executeQuery(FIND_USER_BY_EMAIL_QUERY, email);
+        return userList.size() != 1 ? Optional.empty() : Optional.of(userList.get(0));
+    }
+
+    @Override
+    public Optional<User> findByToken(String token) throws DaoException {
+        List<User> userList = executeQuery(FIND_USER_BY_TOKEN_QUERY, token);
         return userList.size() != 1 ? Optional.empty() : Optional.of(userList.get(0));
     }
 

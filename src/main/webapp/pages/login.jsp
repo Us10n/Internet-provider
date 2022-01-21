@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${cookie['lang'].value}"/>
 <fmt:setBundle basename="language"/>
-
 <html>
 <head>
     <jsp:include page="fragment/links.jsp"/>
@@ -36,12 +35,17 @@
             <button class="w-100 btn btn-lg btn-info" type="submit">Sign in</button>
 
             <c:choose>
-                <c:when test="${banError eq 'true'}">
+                <c:when test="${deleteError eq 'true'}">
                     <div class="alert alert-danger fade show " role="alert">
-                        <fmt:message key="lang.ban.error"/>
+                        <fmt:message key="lang.delete.error"/>
                     </div>
                 </c:when>
                 <c:when test="${loginError eq 'true'}">
+                    <div class="alert alert-danger fade show " role="alert">
+                        <fmt:message key="lang.login.error"/>
+                    </div>
+                </c:when>
+                <c:when test="${unverifiedError eq 'true'}">
                     <div class="alert alert-danger fade show " role="alert">
                         <fmt:message key="lang.login.error"/>
                     </div>

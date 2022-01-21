@@ -30,7 +30,7 @@ public class LocaleFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        logger.info("do locale filter"+ request.getRequestURL());
+        logger.info("do locale filter");
 
         String locale = request.getParameter(LOCALE_PARAMETER);
 

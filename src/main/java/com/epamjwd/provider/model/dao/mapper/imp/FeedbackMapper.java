@@ -16,6 +16,7 @@ public class FeedbackMapper implements RowMapper<Feedback> {
         feedback.setRating(resultSet.getInt(ColumnName.FEEDBACK_RATING));
         feedback.setTariffId(resultSet.getLong(ColumnName.FEEDBACK_TARIFF_ID));
         feedback.setAuthorId(resultSet.getLong(ColumnName.FEEDBACK_USER_ID));
+        feedback.setAuthorName(resultSet.getString(ColumnName.USER_FIRST_NAME));
         return feedback;
     }
 }

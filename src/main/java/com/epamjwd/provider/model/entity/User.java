@@ -1,7 +1,5 @@
 package com.epamjwd.provider.model.entity;
 
-import java.math.BigDecimal;
-
 public class User implements Identifiable {
     private long userId;
     private String email;
@@ -13,6 +11,17 @@ public class User implements Identifiable {
     private String token;
 
     public User() {
+    }
+
+    public User(String email, String password,
+                String name, String surname,
+                Role role, String token) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.role = role;
+        this.token = token;
     }
 
     public User(long userId, String password,
@@ -134,7 +143,7 @@ public class User implements Identifiable {
         sb.append(", surname='").append(surname).append('\'');
         sb.append(", role=").append(role);
         sb.append(", status=").append(status);
-        sb.append(", token='").append(token).append('\'');
+        sb.append(", token=").append(token);
         sb.append('}');
         return sb.toString();
     }
