@@ -5,5 +5,5 @@ public interface SpecialOfferValidator {
     boolean isDescriptionValid(String description);
     boolean isDateValid(String date);
     boolean isDiscountValid(String discount);
-    boolean isImageUrlValid(String url);
+    boolean isImageNameValid(String image);
 }

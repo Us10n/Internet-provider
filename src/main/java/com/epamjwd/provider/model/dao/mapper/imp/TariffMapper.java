@@ -24,7 +24,7 @@ public class TariffMapper implements RowMapper<Tariff> {
         tariff.setDescription(resultSet.getString(ColumnName.TARIFF_DESCRIPTION));
         tariff.setPrice(resultSet.getBigDecimal(ColumnName.TARIFF_PRICE));
         tariff.setStatus(TariffStatus.valueOf(resultSet.getString(ColumnName.TARIFF_STATUS)));
-        tariff.setInternetSpeed(resultSet.getDouble(ColumnName.TARIFF_INTERNET_SPEED));
+        tariff.setInternetSpeed(resultSet.getLong(ColumnName.TARIFF_INTERNET_SPEED));
         tariff.setRating(resultSet.getDouble(ColumnName.TARIFF_RATING));
         tariff.setImage(resultSet.getString(ColumnName.TARIFF_IMAGE));
 

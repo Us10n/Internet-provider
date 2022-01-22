@@ -4,5 +4,5 @@ public enum UserStatus {
     UNVERIFIED,
     VERIFIED,
     BLOCKED,
-    DELETED
+    BANNED
 }

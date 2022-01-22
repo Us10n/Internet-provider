@@ -5,12 +5,12 @@ USE internetProvider;
 CREATE TABLE IF NOT EXISTS Users
 (
 	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE,
-    role ENUM('Admin','User') NOT NULL,
+    role ENUM('ADMIN','USER') NOT NULL,
     password VARCHAR(20) NOT NULL,
     email VARCHAR(25) NOT NULL UNIQUE,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(20) NOT NULL,
-    status ENUM("Unverified", "Verified", "Blocked", "Deleted") NOT NULL DEFAULT 'Unverified',
+    status ENUM("UNVERIFIED", "VERIFIED", "BLOCKED", "BANNED") NOT NULL DEFAULT 'Unverified',
     token VARCHAR(16) NOT NULL UNIQUE,
 	PRIMARY KEY (id)
 );
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS Tariffs
     special_offers_id BIGINT UNSIGNED,
 	name VARCHAR(15) NOT NULL UNIQUE,
     description TEXT(2048) NOT NULL,
-    status ENUM("Active","Archive", "Deactivated") NOT NULL,
+    status ENUM("ACTIVE","ARCHIEVE", "DEACTIVATED") NOT NULL,
 	internet_speed DECIMAL(10,2) NOT NULL,
     rating DECIMAL(10,1) NOT NULL,
     image_url VARCHAR(45) NOT NULL,

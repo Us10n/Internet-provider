@@ -17,7 +17,7 @@
             <c:forEach var="offer" items="${offers}">
                 <div class="col">
                     <div class="card shadow-sm">
-                        <img src="static/images/<c:out value="${offer.image}"/>" class="img-fluid" width="100%"
+                        <img src="static/images/offer/<c:out value="${offer.image}"/>" class="img-fluid" width="100%"
                              height="200">
 
                         <div class="card-body">

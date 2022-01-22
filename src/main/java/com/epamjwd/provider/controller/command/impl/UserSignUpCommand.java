@@ -24,7 +24,6 @@ public class UserSignUpCommand implements Command {
     private static final String SIGN_UP_ERROR_ATTRIBUTE = "signupError";
     private static final String USER_EXISTS_ERROR_ATTRIBUTE = "existsError";
     private static final String LOG_IN_PAGE = "?command=login";
-    private static final String SIGN_UP_PAGE = "?command=signup";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
@@ -40,11 +39,11 @@ public class UserSignUpCommand implements Command {
             if (!registrationStatus) {
                 Optional<User> user = userService.findUserByEmail(email);
                 if (user.isEmpty()) {
-                    request.getSession().setAttribute(SIGN_UP_ERROR_ATTRIBUTE, true);
+                    request.setAttribute(SIGN_UP_ERROR_ATTRIBUTE, true);
                 } else {
-                    request.getSession().setAttribute(USER_EXISTS_ERROR_ATTRIBUTE, true);
+                    request.setAttribute(USER_EXISTS_ERROR_ATTRIBUTE, true);
                 }
-                return new CommandResult(SIGN_UP_PAGE, CommandType.REDIRECT);
+                return new CommandResult(PagePath.SIGN_UP_PAGE, CommandType.FORWARD);
             }
         } catch (ServiceException e) {
             logger.error("Registration user error", e);

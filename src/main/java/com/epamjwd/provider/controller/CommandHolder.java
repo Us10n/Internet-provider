@@ -30,6 +30,12 @@ public class CommandHolder {
         commandMap.put(CommandName.VERIFY, new ShowVerificationPageCommand());
         commandMap.put(CommandName.PROFILE, new ShowProfilePageCommand());
         commandMap.put(CommandName.LOG_OUT_USER, new UserLogOutCommand());
+        commandMap.put(CommandName.FORBIDDEN_ERROR, new ShowForbiddenPageCommand());
+        commandMap.put(CommandName.PAGE_NOT_FOUND_ERROR, new ShowPageNotFoundCommand());
+        commandMap.put(CommandName.TARIFF_PANEL, new ShowTariffPanelPageCommand());
+        commandMap.put(CommandName.TARIFF_ADD_PAGE, new ShowTariffAddPageCommand());
+        commandMap.put(CommandName.TARIFF_ADD, new AddTariffCommand());
+        commandMap.put(CommandName.TARIFF_EDIT_PAGE, new ShowTariffEditPageCommand());
     }
 
     public static CommandHolder getInstance() {
@@ -38,6 +44,6 @@ public class CommandHolder {
 
     public Command getCommand(String commandName) {
         return commandMap.get(commandName) == null ?
-                commandMap.get(CommandName.INTERNAL_ERROR) : commandMap.get(commandName);
+                commandMap.get(CommandName.PAGE_NOT_FOUND_ERROR) : commandMap.get(commandName);
     }
 }

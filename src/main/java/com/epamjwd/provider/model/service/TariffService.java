@@ -12,4 +12,5 @@ public interface TariffService {
     List<Tariff> findTariffsAndSortBySpeed() throws ServiceException;
     List<Tariff> findTariffsAndSortByRating() throws ServiceException;
     Optional<Tariff> findTariffByName(String tariffName) throws ServiceException;
+    boolean createNewTariff(String name, String internetSpeed, String price, String image, String description) throws ServiceException;
 }

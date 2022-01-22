@@ -42,7 +42,8 @@ public class Controller extends HttpServlet {
             if (commandResult.getCommandType() == CommandType.REDIRECT) {
                 response.sendRedirect(commandResult.getPage());
             } else {
-                request.getRequestDispatcher(commandResult.getPage()).forward(request, response);
+                request.getRequestDispatcher(commandResult.getPage())
+                        .forward(request, response);
             }
         }
     }

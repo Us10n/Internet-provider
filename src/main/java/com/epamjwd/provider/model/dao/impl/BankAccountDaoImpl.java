@@ -5,7 +5,6 @@ import com.epamjwd.provider.model.dao.AbstractQueryExecutor;
 import com.epamjwd.provider.model.dao.BankAccountDao;
 import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
 import com.epamjwd.provider.model.entity.BankAccount;
-import com.epamjwd.provider.model.entity.Feedback;
 
 import java.util.List;
 import java.util.Optional;

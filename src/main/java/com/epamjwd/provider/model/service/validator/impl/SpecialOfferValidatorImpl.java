@@ -9,9 +9,9 @@ import java.text.SimpleDateFormat;
 
 public class SpecialOfferValidatorImpl implements SpecialOfferValidator {
 
-    private static final String VALID_TITLE_REGEX = "^[A-Za-zА-Яа-я0-9]{1,44}$";
+    private static final String VALID_TITLE_REGEX = "^[A-Za-zА-Я а-я0-9]{1,45}$";
     private static final String VALID_DATE_REGEX = "^\\d{4}-(02-(0[1-9]|[12][0-9])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))$";
-    private static final String VALID_IMAGE_URL_REGEX = "^offer/[a-zA-Z.]{1,38}$";
+    private static final String VALID_IMAGE_REGEX = "^[\\w_]+\\.[A-Za-z]{3}$";
     private static final String VALID_DISCOUNT_REGEX = "^[0-9][0-9]?$|^100$";
     private static SpecialOfferValidatorImpl instance;
 
@@ -56,9 +56,11 @@ public class SpecialOfferValidatorImpl implements SpecialOfferValidator {
     }
 
     @Override
-    public boolean isImageUrlValid(String url) {
-        String baseUrl = "src/main/webapp/static/images/";
-        return url != null && new File(baseUrl + url).isFile() &&
-                url.matches(VALID_IMAGE_URL_REGEX);
+    public boolean isImageNameValid(String name) {
+        String baseUrl = "src/main/webapp/static/images/offer/";
+//        return name != null && name.matches(VALID_IMAGE_REGEX)
+//                && name.length() <= 45 && new File(baseUrl + name).isFile();
+        return name != null && name.matches(VALID_IMAGE_REGEX)
+                && name.length() <= 45;
     }
 }

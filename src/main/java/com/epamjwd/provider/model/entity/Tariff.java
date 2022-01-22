@@ -11,7 +11,7 @@ public class Tariff implements Identifiable {
     private BigDecimal price;
     private BigDecimal newPrice;
     private TariffStatus status;
-    private double internetSpeed;
+    private long internetSpeed;
     private double rating;
     private String image;
     private Optional<SpecialOffer> specialOffer;
@@ -19,8 +19,16 @@ public class Tariff implements Identifiable {
     public Tariff() {
     }
 
+    public Tariff(String name, String description, BigDecimal price, long internetSpeed, String image) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.internetSpeed = internetSpeed;
+        this.image = image;
+    }
+
     public Tariff(String name, String description, BigDecimal price,
-                  TariffStatus status, double internetSpeed, String image,
+                  TariffStatus status, long internetSpeed, String image,
                   double rating, SpecialOffer specialOffer) {
         this.name = name;
         this.description = description;
@@ -33,7 +41,7 @@ public class Tariff implements Identifiable {
     }
 
     public Tariff(long tariffId, String name, String description, BigDecimal price,
-                  TariffStatus status, double internetSpeed, String image,
+                  TariffStatus status, long internetSpeed, String image,
                   double rating, SpecialOffer specialOffer) {
         this.tariffId = tariffId;
         this.name = name;
@@ -88,11 +96,11 @@ public class Tariff implements Identifiable {
         this.status = status;
     }
 
-    public double getInternetSpeed() {
+    public long getInternetSpeed() {
         return internetSpeed;
     }
 
-    public void setInternetSpeed(double internetSpeed) {
+    public void setInternetSpeed(long internetSpeed) {
         this.internetSpeed = internetSpeed;
     }
 

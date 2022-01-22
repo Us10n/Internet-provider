@@ -4,6 +4,8 @@ import com.epamjwd.provider.model.service.validator.TariffValidator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.File;
+
 import static org.testng.Assert.*;
 
 public class TariffValidatorImplTest {
@@ -21,10 +23,19 @@ public class TariffValidatorImplTest {
     }
 
     @Test
-    public void testIsImageUrlValid() {
-        String imageUri = "tariff/start";
+    public void testIsImageValidRegex() {
+        String imageName = "default.png";
         TariffValidator tariffValidator = TariffValidatorImpl.getInstance();
-        boolean actual = tariffValidator.isImageUrlValid(imageUri);
+        boolean actual = tariffValidator.isImageNameValid(imageName);
+        boolean expected = true;
+        Assert.assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testIsImageValidFileExists() {
+        String baseUrl = "src/main/webapp/static/images/tariff/";
+        String imageName = "default.png";
+        boolean actual = new File(baseUrl+imageName).isFile();
         boolean expected = true;
         Assert.assertEquals(actual, expected);
     }

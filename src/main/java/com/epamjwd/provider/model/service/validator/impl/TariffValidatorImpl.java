@@ -6,9 +6,10 @@ import java.io.File;
 
 public class TariffValidatorImpl implements TariffValidator {
 
-    private static final String VALID_NAME_REGEX = "^[A-Za-zА-Яа-я0-9]{1,15}$";
-    private static final String VALID_IMAGE_URL_REGEX = "^tariff/[a-zA-Z.]{1,38}$";
-    private static final String VALID_DOUBLE_REGEX = "^\\d+.\\d+$";
+    private static final String VALID_TITLE_REGEX = "^[A-Za-zА-Я а-я0-9]{1,15}$";
+    private static final String VALID_IMAGE_REGEX = "^[\\w_]+\\.[A-Za-z]{3}$";
+    private static final String VALID_SPEED_REGEX = "^\\d+$";
+    private static final String VALID_PRICE_REGEX = "^[0-9]+(\\.[0-9]{1,2})?$";
     private static TariffValidatorImpl instance;
 
     private TariffValidatorImpl() {
@@ -23,7 +24,7 @@ public class TariffValidatorImpl implements TariffValidator {
 
     @Override
     public boolean isNameValid(String name) {
-        return name != null && name.matches(VALID_NAME_REGEX);
+        return name != null && name.matches(VALID_TITLE_REGEX);
     }
 
     @Override
@@ -33,18 +34,20 @@ public class TariffValidatorImpl implements TariffValidator {
 
     @Override
     public boolean isInternetSpeedValid(String speed) {
-        return speed != null && speed.matches(VALID_DOUBLE_REGEX) && speed.length() <= 10;
+        return speed != null && speed.matches(VALID_SPEED_REGEX) && speed.length() < 5;
     }
 
     @Override
-    public boolean isImageUrlValid(String url) {
-        String baseUrl = "src/main/webapp/static/images/";
-        return url != null && new File(baseUrl + url).isFile() &&
-                url.matches(VALID_IMAGE_URL_REGEX);
+    public boolean isImageNameValid(String name) {
+        String baseUrl = "src/main/webapp/static/images/tariff/";
+//        return name != null && name.matches(VALID_IMAGE_REGEX) &&
+//                name.length() <= 45 && new File(baseUrl + name).isFile(); //todo
+        return name != null && name.matches(VALID_IMAGE_REGEX) &&
+                name.length() <= 45;
     }
 
     @Override
     public boolean isPriceValid(String price) {
-        return price != null && price.matches(VALID_DOUBLE_REGEX) && price.length() < 13;
+        return price != null && price.matches(VALID_PRICE_REGEX) && price.length() <= 11;
     }
 }

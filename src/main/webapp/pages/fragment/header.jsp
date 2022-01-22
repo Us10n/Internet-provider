@@ -71,9 +71,9 @@
                     </form>
 
                 </div>
-                <c:if test="${user!=null}">
+                <c:if test="${user!=null && bankAccount!=null}">
                     <li><a href="#" class="nav-link px-2 text-black-50 bg-white"><fmt:message key="lang.balance"/>:
-                        234324</a></li>
+                        <c:out value="${bankAccount.balance}"/></a></li>
                 </c:if>
                 <c:if test="${user eq null}">
                     <li><a href="?command=login" class="nav-link px-2 text-white"><fmt:message key="lang.log.in"/></a>

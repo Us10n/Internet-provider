@@ -24,20 +24,20 @@
             <div class="form-floating">
                 <input type="email" name="email" class="form-control" id="floatingInput"
                        placeholder="name@example.com"
-                       required="required">
-                <label for="floatingInput">Email address</label>
+                       required maxlength="25">
+                <label for="floatingInput"><fmt:message key="lang.email"/></label>
             </div>
             <div class="form-floating">
                 <input type="password" name="password" class="form-control" id="floatingPassword"
-                       placeholder="Password" required minlength="10" maxlength="20">
-                <label for="floatingPassword">Password</label>
+                       required minlength="8" maxlength="20">
+                <label for="floatingPassword"><fmt:message key="lang.password"/></label>
             </div>
-            <button class="w-100 btn btn-lg btn-info" type="submit">Sign in</button>
+            <button class="w-100 btn btn-lg btn-info" type="submit"><fmt:message key="lang.log.in"/></button>
 
             <c:choose>
-                <c:when test="${deleteError eq 'true'}">
+                <c:when test="${bannedError eq 'true'}">
                     <div class="alert alert-danger fade show " role="alert">
-                        <fmt:message key="lang.delete.error"/>
+                        <fmt:message key="lang.ban.error"/>
                     </div>
                 </c:when>
                 <c:when test="${loginError eq 'true'}">
@@ -58,6 +58,5 @@
 
 </body>
 <jsp:include page="fragment/footer.jsp"/>
-
 
 </html>

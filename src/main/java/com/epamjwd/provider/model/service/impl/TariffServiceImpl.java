@@ -8,11 +8,16 @@ import com.epamjwd.provider.model.entity.SpecialOffer;
 import com.epamjwd.provider.model.entity.Tariff;
 import com.epamjwd.provider.model.entity.comparator.TariffNewPriceComparator;
 import com.epamjwd.provider.model.service.TariffService;
+import com.epamjwd.provider.model.service.validator.TariffValidator;
+import com.epamjwd.provider.model.service.validator.impl.TariffValidatorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TariffServiceImpl implements TariffService {
@@ -94,6 +99,38 @@ public class TariffServiceImpl implements TariffService {
             throw new ServiceException("Tariff find by name error", e);
         }
         return optionalTariff;
+    }
+
+    @Override
+    public boolean createNewTariff(String name, String internetSpeed, String price, String image, String description) throws ServiceException {
+        if (!isTariffFormValid(name, internetSpeed, price, image, description)) {
+            return false;
+        }
+        TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
+        try {
+            if (tariffDao.findByName(name).isPresent()) {
+                return false;
+            }
+            BigDecimal priceDecimal = new BigDecimal(price);
+            Long internetSpeedLong = Long.valueOf(internetSpeed);
+            Tariff newTariff = new Tariff(name, description, priceDecimal, internetSpeedLong, image);
+            tariffDao.create(newTariff);
+        } catch (NumberFormatException e) {
+            logger.error("Number values parse error", e);
+            return false;
+        } catch (DaoException e) {
+            logger.error("Tariff create error", e);
+            throw new ServiceException("Tariff create error", e);
+        }
+
+        return true;
+    }
+
+    private boolean isTariffFormValid(String name, String internetSpeed, String price, String image, String description) {
+        TariffValidator tariffValidator = TariffValidatorImpl.getInstance();
+        return tariffValidator.isNameValid(name) && tariffValidator.isInternetSpeedValid(internetSpeed) &&
+                tariffValidator.isPriceValid(price) && tariffValidator.isImageNameValid(image) &&
+                tariffValidator.isDescriptionValid(description);
     }
 
     private void countPriceAfterDiscountList(List<Tariff> tariffList) {

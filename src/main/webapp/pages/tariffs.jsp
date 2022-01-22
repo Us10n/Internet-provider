@@ -38,7 +38,7 @@
                 <c:if test="${tariff.status == 'ACTIVE'}">
                     <div class="row bg-light my-2">
                         <div class="col-md-auto align-self-center">
-                            <img src="static/images/<c:out value="${tariff.image}"/>" class="img-fluid" width="60"
+                            <img src="static/images/tariff/<c:out value="${tariff.image}"/>" class="img-fluid" width="60"
                                  height="60">
                         </div>
                         <div class="col-md align-self-center">

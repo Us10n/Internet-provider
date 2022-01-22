@@ -57,7 +57,7 @@
                         <div class="col-12 pb-2">
                             <label for="floatingPassword"><fmt:message key="lang.password"/></label>
                             <input type="password" name="password" class="form-control" id="floatingPassword"
-                                   placeholder="Password" required minlength="10" maxlength="20">
+                                   placeholder="Password" required minlength="8" maxlength="20">
                         </div>
 
                     </div>

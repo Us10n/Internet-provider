@@ -11,7 +11,7 @@
 <main class="flex-shrink-0">
     <div class="container">
         <h1 class="mt-5"><fmt:message key="lang.verification.successful"/></h1>
-        <a href="${pageContext.request.contextPath}/controller?command=home"><fmt:message key="lang.go.to.home"/></a>
+        <a href="${pageContext.request.contextPath}/controller?command=login"><fmt:message key="lang.go.to.home"/></a>
     </div>
 </main>
 </body>

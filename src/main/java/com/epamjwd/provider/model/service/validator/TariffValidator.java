@@ -4,7 +4,7 @@ public interface TariffValidator {
     boolean isNameValid(String name);
     boolean isDescriptionValid(String description);
     boolean isInternetSpeedValid(String speed);
-    boolean isImageUrlValid(String url);
+    boolean isImageNameValid(String image);
     boolean isPriceValid(String price);
 
 }

@@ -18,13 +18,14 @@ public class ShowSingleTariffPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String TARIFF_NAME_PARAMETER = "name";
+    private static final String TARIFF_ATTRIBUTE = "tariff";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        TariffService tariffService = ServiceHolder.getInstance().getTariffService();
         String tariffName = request.getParameter(TARIFF_NAME_PARAMETER);
 
         Optional<Tariff> tariffOptional = Optional.empty();
+        TariffService tariffService = ServiceHolder.getInstance().getTariffService();
         try {
             tariffOptional = tariffService.findTariffByName(tariffName);
         } catch (ServiceException e) {
@@ -35,8 +36,8 @@ public class ShowSingleTariffPageCommand implements Command {
         if (tariffOptional.isEmpty()) {
             return new CommandResult(PagePath.ERROR_NOT_FOUND_PAGE, CommandType.FORWARD);
         } else {
-            request.setAttribute("tariff", tariffOptional.get());
-            request.getSession().setAttribute("currentPage","?command=tariff&name="+tariffName);
+            request.setAttribute(TARIFF_ATTRIBUTE, tariffOptional.get());
+            request.getSession().setAttribute("currentPage", "?command=tariff&name=" + tariffName);
             return new CommandResult(PagePath.SINGLE_TARIFF_PAGE, CommandType.FORWARD);
         }
     }

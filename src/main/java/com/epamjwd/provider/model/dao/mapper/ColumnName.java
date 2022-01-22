@@ -13,7 +13,7 @@ public final class ColumnName {
     public static final String USER_TOKEN = "users.token";
 
     public static final String BANK_ACCOUNT_BALANCE = "bankaccounts.balance";
-    public static final String BANK_ACCOUNT_USER_ID = "bankaccounts.user_id";
+    public static final String BANK_ACCOUNT_USER_ID = "bankaccounts.users_id";
     public static final String BANK_ACCOUNT_TARIFF_ID = "bankaccounts.tariffs_id";
 
     public static final String TARIFF_SPECIAL_OFFER_ID = "tariffs.special_offers_id";
