@@ -47,8 +47,8 @@ public class LocaleFilter implements Filter {
 
         if (locale != null && locale.matches(AVAILABLE_LANGUAGES_REGEX)) {
             localeCookie.setValue(locale);
-            response.addCookie(localeCookie);
         }
+        response.addCookie(localeCookie);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

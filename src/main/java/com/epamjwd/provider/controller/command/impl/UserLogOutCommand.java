@@ -8,16 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class UserLogOutCommand implements Command {
-    private static final String USER_ATTRIBUTE = "user";
-    private static final String BANK_ACCOUNT_ATTRIBUTE = "bankAccount";
     private static final String LOGIN_PAGE = "?command=login";
+    private static final String USER_ID_ATTRIBUTE = "userId";
+    private static final String USER_EMAIL_ATTRIBUTE = "userEmail";
+    private static final String USER_ROLE_ATTRIBUTE = "userRole";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        session.removeAttribute(USER_ATTRIBUTE);
-        session.removeAttribute(BANK_ACCOUNT_ATTRIBUTE);
+        session.removeAttribute(USER_ID_ATTRIBUTE);
+        session.removeAttribute(USER_EMAIL_ATTRIBUTE);
+        session.removeAttribute(USER_ROLE_ATTRIBUTE);
         return new CommandResult(LOGIN_PAGE, CommandType.REDIRECT);
     }
 }

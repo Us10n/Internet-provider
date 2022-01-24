@@ -48,7 +48,6 @@ public class TariffEditCommand implements Command {
             String page;
             CommandType commandType;
             if (updateStatus) {
-
                 page = TARIFFS_PAGE;
                 commandType = CommandType.REDIRECT;
             } else {

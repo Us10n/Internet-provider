@@ -35,12 +35,14 @@ public class ShowSingleTariffPageCommand implements Command {
             return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
         }
 
+        String page;
         if (tariffOptional.isEmpty()) {
-            return new CommandResult(PagePath.ERROR_NOT_FOUND_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_NOT_FOUND_PAGE;
         } else {
+            page = PagePath.SINGLE_TARIFF_PAGE;
             request.setAttribute(TARIFF_ATTRIBUTE, tariffOptional.get());
             request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + tariffName);
-            return new CommandResult(PagePath.SINGLE_TARIFF_PAGE, CommandType.FORWARD);
         }
+        return new CommandResult(page, CommandType.FORWARD);
     }
 }

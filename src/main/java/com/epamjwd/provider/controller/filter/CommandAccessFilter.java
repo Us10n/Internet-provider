@@ -16,7 +16,7 @@ import java.util.List;
 @WebFilter(urlPatterns = "/controller")
 public class CommandAccessFilter implements Filter {
     private static final int FORBIDDEN_STATUS = 403;
-    private static final String USER_ATTRIBUTE = "user";
+    private static final String USER_ROLE_ATTRIBUTE = "userRole";
     private static final String COMMAND_PARAMETER = "command";
 
     private HashMap<String, List<AccessLevel>> commandAccessMap = new HashMap<>();
@@ -40,14 +40,14 @@ public class CommandAccessFilter implements Filter {
         commandAccessMap.put(CommandName.LOG_OUT_USER, List.of(AccessLevel.LEVEL_USER, AccessLevel.LEVEL_ADMIN));
         commandAccessMap.put(CommandName.VERIFY, List.of(AccessLevel.LEVEL_ANY));
         commandAccessMap.put(CommandName.PROFILE, List.of(AccessLevel.LEVEL_USER, AccessLevel.LEVEL_ADMIN));
-        commandAccessMap.put(CommandName.TARIFF_ADD_PAGE, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
-        commandAccessMap.put(CommandName.TARIFF_ADD, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
-        commandAccessMap.put(CommandName.TARIFF_EDIT_PAGE, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
-        commandAccessMap.put(CommandName.TARIFF_EDIT, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
-        commandAccessMap.put(CommandName.BALANCE_RECHARGE_PAGE, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER)); //todo(after debug remove level_any)
+        commandAccessMap.put(CommandName.TARIFF_ADD_PAGE, List.of(AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.TARIFF_ADD, List.of( AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.TARIFF_EDIT_PAGE, List.of( AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.TARIFF_EDIT, List.of(AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.BALANCE_RECHARGE_PAGE, List.of( AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
         commandAccessMap.put(CommandName.BALANCE_RECHARGE, List.of(AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
         commandAccessMap.put(CommandName.PROFILE_EDIT, List.of(AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
-        commandAccessMap.put(CommandName.PROMOTION_EDIT, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
+        commandAccessMap.put(CommandName.PROMOTION_EDIT, List.of(AccessLevel.LEVEL_ADMIN));
     }
 
     @Override
@@ -56,11 +56,10 @@ public class CommandAccessFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String command = request.getParameter(COMMAND_PARAMETER);
-
-        User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE);
+        Role userRole = (Role) request.getSession().getAttribute(USER_ROLE_ATTRIBUTE);
         AccessLevel currentAccessLevel;
-        if (user != null) {
-            currentAccessLevel = user.getRole() == Role.ADMIN ?
+        if (userRole != null) {
+            currentAccessLevel = userRole == Role.ADMIN ?
                     AccessLevel.LEVEL_ADMIN : AccessLevel.LEVEL_USER;
         } else {
             currentAccessLevel = AccessLevel.LEVEL_GUEST;
@@ -70,7 +69,7 @@ public class CommandAccessFilter implements Filter {
                     (!commandAccessMap.get(command).contains(currentAccessLevel) &&
                             !commandAccessMap.get(command).contains(AccessLevel.LEVEL_ANY))) {
                 response.setStatus(FORBIDDEN_STATUS);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/controller?command=pageNotFoundError");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/controller?command=forbiddenError");
                 requestDispatcher.forward(servletRequest, servletResponse);
                 return;
             }

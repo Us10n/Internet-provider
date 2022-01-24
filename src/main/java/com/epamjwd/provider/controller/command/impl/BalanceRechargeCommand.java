@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 public class BalanceRechargeCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final String RECHARGE_AMOUNT_PARAMETER = "rechargeAmount";
-    private static final String BANK_ACCOUNT_ATTRIBUTE = "bankAccount";
+    private static final String USER_ID_ATTRIBUTE = "userId";
     private static final String RECHARGE_ERROR_ATTRIBUTE = "rechargeError";
     private static final String TARIFFS_PAGE = "?command=tariffs";
 
@@ -27,11 +27,12 @@ public class BalanceRechargeCommand implements Command {
         HttpSession session = request.getSession();
 
         String rechargeAmount = request.getParameter(RECHARGE_AMOUNT_PARAMETER);
-        BankAccount bankAccount = (BankAccount) session.getAttribute(BANK_ACCOUNT_ATTRIBUTE);
+        Long userId = (Long) session.getAttribute(USER_ID_ATTRIBUTE);
 
         BankAccountService bankAccountService = ServiceHolder.getInstance().getBankAccountService();
 
         try {
+            BankAccount bankAccount = bankAccountService.findBankAccountByUserId(userId);
             boolean rechargeStatus = bankAccountService.rechargeBalance(bankAccount, rechargeAmount);
             String page;
             CommandType commandType;

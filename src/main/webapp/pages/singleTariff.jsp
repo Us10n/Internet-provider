@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<c:if test="${(user==null || user.role!='ADMIN') && tariff.status =='DEACTIVATED'}">
+<c:if test="${userRole!='ADMIN' && tariff.status =='DEACTIVATED'}">
     <jsp:forward page="error/error404.jsp"/>
 </c:if>
 

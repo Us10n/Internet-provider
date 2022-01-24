@@ -17,7 +17,7 @@
                        class="nav-link px-2 text-white"><fmt:message key="lang.promotions"/></a></li>
                 <li><a href="${pageContext.request.contextPath}/controller?command=about"
                        class="nav-link px-2 text-white"><fmt:message key="lang.about"/></a></li>
-                <c:if test="${user!=null && user.role=='ADMIN'}">
+                <c:if test="${userRole=='ADMIN'}">
                     <div class="dropdown">
                         <button class="btn bg-info text-white dropdown-toggle" type="button" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,18 +39,6 @@
                 <div class="dropdown">
                     <form action="${pageContext.request.contextPath}/controller?command=changeLocale" method="post">
                         <c:choose>
-                            <c:when test="${cookie['lang'].value eq 'ru-RU'}">
-                                <button class="btn bg-info text-white dropdown-toggle" type="button"
-                                        id="dropdownMenuButton2"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                    <fmt:message key="lang.ru"/>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                    <button class="dropdown-item" name="cookieLocale" value="en-US" type="submit">
-                                        <fmt:message key="lang.en"/>
-                                    </button>
-                                </ul>
-                            </c:when>
                             <c:when test="${cookie['lang'].value eq 'en-US'}">
                                 <button class="btn bg-info text-white dropdown-toggle" type="button"
                                         id="dropdownMenuButton2"
@@ -63,22 +51,29 @@
                                     </button>
                                 </ul>
                             </c:when>
+                            <c:otherwise>
+                                <button class="btn bg-info text-white dropdown-toggle" type="button"
+                                        id="dropdownMenuButton2"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <fmt:message key="lang.ru"/>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                    <button class="dropdown-item" name="cookieLocale" value="en-US" type="submit">
+                                        <fmt:message key="lang.en"/>
+                                    </button>
+                                </ul>
+                            </c:otherwise>
                         </c:choose>
                     </form>
 
                 </div>
-                <c:if test="${user!=null && bankAccount!=null}">
-                    <li><a href="?command=rechargeBalancePage" class="nav-link px-2 text-black-50 bg-white">
-                        <fmt:message key="lang.balance"/>:<c:out value="${bankAccount.balance}"/>
-                    </a></li>
-                </c:if>
-                <c:if test="${user eq null}">
+                <c:if test="${userId eq null}">
                     <li><a href="?command=login" class="nav-link px-2 text-white"><fmt:message key="lang.log.in"/></a>
                     </li>
                     <li><a href="?command=signup" class="nav-link px-2 text-white"><fmt:message key="lang.sign.up"/></a>
                     </li>
                 </c:if>
-                <c:if test="${user!=null}">
+                <c:if test="${userId !=null}">
                     <li><a href="?command=profile" class="nav-link px-2 text-white"><fmt:message
                             key="lang.profile"/></a>
                     </li>

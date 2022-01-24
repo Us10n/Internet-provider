@@ -17,7 +17,6 @@ import java.util.Optional;
 public class SpecialOfferServiceImpl implements SpecialOfferService {
     private static final Logger logger = LogManager.getLogger();
 
-
     @Override
     public List<SpecialOffer> findAllPromotions() throws ServiceException {
         SpecialOfferDao specialOfferDao = DaoHolder.getInstance().getSpecialOfferDao();

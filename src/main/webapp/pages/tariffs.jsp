@@ -27,7 +27,7 @@
                     <fmt:message key="lang.sort.button"/></button>
             </form>
         </div>
-        <c:if test="${user!=null && user.role eq 'ADMIN'}">
+        <c:if test="${userRole eq 'ADMIN'}">
             <div class="col-2 align-self-start">
                 <a href="?command=tariffAddPage" class="nav-link bg-info text-white text-center">
                     <fmt:message key="lang.add.tariff"/>
@@ -42,7 +42,7 @@
         <div class="container">
             <c:forEach var="tariff" items="${tariffs}">
                 <c:choose>
-                    <c:when test="${user!=null && user.role eq 'ADMIN'}">
+                    <c:when test="${userRole eq 'ADMIN'}">
                         <div class="row bg-light my-2">
                             <div class="col-md-auto align-self-center">
                                 <img src="static/images/tariff/<c:out value="${tariff.image}"/>" class="img-fluid"
@@ -101,7 +101,7 @@
                                    class="nav-link bg-info text-white"><fmt:message
                                         key="lang.view"/></a>
                             </div>
-                            <c:if test="${user!=null && user.role eq 'ADMIN'}">
+                            <c:if test="${userRole eq 'ADMIN'}">
                                 <div class="col-md align-self-center d-flex flex-wrap">
                                     <a href="?command=tariffEditPage&name=${tariff.name}"
                                        class="nav-link bg-info text-white"><fmt:message

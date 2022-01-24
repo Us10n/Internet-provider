@@ -36,12 +36,16 @@ public class ShowTariffEditPageCommand implements Command {
             try {
                 Optional<Tariff> tariffOptional = tariffService.findTariffByName(tariffName);
                 List<SpecialOffer> specialOfferList = specialOfferService.findAllPromotions();
+                String page;
                 if (tariffOptional.isPresent()) {
                     request.setAttribute(TARIFF_ATTRIBUTE, tariffOptional.get());
                     request.setAttribute(SPECIAL_OFFERS_ATTRIBUTE, specialOfferList);
                     request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + tariffName);
-                    return new CommandResult(PagePath.TARIFF_EDIT_PAGE, CommandType.FORWARD);
+                    page = PagePath.TARIFF_EDIT_PAGE;
+                } else {
+                    page = PagePath.ERROR_NOT_FOUND_PAGE;
                 }
+                return new CommandResult(page, CommandType.FORWARD);
             } catch (ServiceException e) {
                 logger.error("Tariff find by name error", e);
                 return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);

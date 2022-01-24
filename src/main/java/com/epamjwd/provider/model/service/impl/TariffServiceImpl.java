@@ -93,7 +93,7 @@ public class TariffServiceImpl implements TariffService {
 
     @Override
     public Optional<Tariff> findTariffByName(String tariffName) throws ServiceException {
-        if (tariffName == null) {
+        if (!TariffValidatorImpl.getInstance().isNameValid(tariffName)) {
             return Optional.empty();
         }
         TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
@@ -110,7 +110,6 @@ public class TariffServiceImpl implements TariffService {
 
     @Override
     public Optional<Tariff> findTariffById(long id) throws ServiceException {
-
         TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
         Optional<Tariff> optionalTariff = Optional.empty();
         try {

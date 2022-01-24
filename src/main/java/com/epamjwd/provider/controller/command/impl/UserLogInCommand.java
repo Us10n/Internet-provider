@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class UserLogInCommand implements Command {
@@ -24,12 +25,15 @@ public class UserLogInCommand implements Command {
     private static final String LOG_IN_ERROR_ATTRIBUTE = "loginError";
     private static final String BAN_ERROR_ATTRIBUTE = "bannedError";
     private static final String UNVERIFIED_ERROR_ATTRIBUTE = "unverifiedError";
-    private static final String USER_ATTRIBUTE = "user";
-    private static final String BANK_ACCOUNT_ATTRIBUTE = "bankAccount";
+    private static final String USER_ID_ATTRIBUTE = "userId";
+    private static final String USER_EMAIL_ATTRIBUTE = "userEmail";
+    private static final String USER_ROLE_ATTRIBUTE = "userRole";
     private static final String PROFILE_PAGE = "?command=profile";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
         String email = request.getParameter(EMAIL_PARAMETER);
         String password = request.getParameter(PASSWORD_PARAMETER);
 
@@ -49,8 +53,9 @@ public class UserLogInCommand implements Command {
                 case VERIFIED, BLOCKED -> {
                     page = PROFILE_PAGE;
                     commandType = CommandType.REDIRECT;
-                    request.getSession().setAttribute(USER_ATTRIBUTE, loadedUser);
-                    request.getSession().setAttribute(BANK_ACCOUNT_ATTRIBUTE, bankAccount);
+                    session.setAttribute(USER_ID_ATTRIBUTE, loadedUser.getId());
+                    session.setAttribute(USER_EMAIL_ATTRIBUTE, loadedUser.getEmail());
+                    session.setAttribute(USER_ROLE_ATTRIBUTE, loadedUser.getRole());
                     ActiveUserPool.getInstance().addUser(loadedUser.getEmail());
                 }
                 case UNVERIFIED -> {
