@@ -87,12 +87,12 @@ public class UserDaoImpl extends AbstractQueryExecutor<User> implements UserDao 
     }
 
     @Override
-    public void updateName(long userId, String newName) throws DaoException {
+    public void updateFirstName(long userId, String newName) throws DaoException {
         executeUpdateQuery(UPDATE_NAME_QUERY, newName, userId);
     }
 
     @Override
-    public void updateSurname(long userId, String newSurname) throws DaoException {
+    public void updateLastName(long userId, String newSurname) throws DaoException {
         executeUpdateQuery(UPDATE_SURNAME_QUERY, newSurname, userId);
     }
 

@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
-public class AddTariffCommand implements Command {
+public class TariffAddCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final String TARIFF_NAME_PARAMETER = "tariffName";
     private static final String TARIFF_INTERNET_SPEED_PARAMETER = "tariffInternetSpeed";

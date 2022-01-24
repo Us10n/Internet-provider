@@ -10,10 +10,12 @@ import javax.servlet.http.HttpSession;
 
 
 public class ShowLogInPageCommand implements Command {
+    private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
+    private static final String CURRENT_PAGE = "?command=login";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        request.getSession().setAttribute("currentPage", "?command=login");
+        request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE);
         return new CommandResult(PagePath.LOG_IN_PAGE, CommandType.FORWARD);
     }
 }

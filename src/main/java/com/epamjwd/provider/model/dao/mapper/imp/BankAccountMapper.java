@@ -10,11 +10,13 @@ import java.sql.SQLException;
 public class BankAccountMapper implements RowMapper<BankAccount> {
     @Override
     public BankAccount map(ResultSet resultSet) throws SQLException {
-        BankAccount bankAccount=new BankAccount();
+        BankAccount bankAccount = new BankAccount();
         bankAccount.setId(resultSet.getLong(ColumnName.ID));
         bankAccount.setBalance(resultSet.getBigDecimal(ColumnName.BANK_ACCOUNT_BALANCE));
         bankAccount.setUserId(resultSet.getLong(ColumnName.BANK_ACCOUNT_USER_ID));
-        bankAccount.setTariffId(resultSet.getLong(ColumnName.BANK_ACCOUNT_TARIFF_ID));
+
+        Long tariffId = resultSet.getLong(ColumnName.BANK_ACCOUNT_TARIFF_ID);
+        bankAccount.setTariffId(tariffId == 0 ? null : tariffId);
 
         return bankAccount;
     }

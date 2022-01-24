@@ -23,6 +23,8 @@ public class ShowTariffEditPageCommand implements Command {
     private static final String TARIFF_NAME_PARAMETER = "name";
     private static final String TARIFF_ATTRIBUTE = "tariff";
     private static final String SPECIAL_OFFERS_ATTRIBUTE = "specialOffers";
+    private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
+    private static final String CURRENT_PAGE = "?command=tariffEditPage&name=";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
@@ -37,7 +39,7 @@ public class ShowTariffEditPageCommand implements Command {
                 if (tariffOptional.isPresent()) {
                     request.setAttribute(TARIFF_ATTRIBUTE, tariffOptional.get());
                     request.setAttribute(SPECIAL_OFFERS_ATTRIBUTE, specialOfferList);
-                    request.getSession().setAttribute("currentPage", "?command=tariffEditPage&name=" + tariffName);
+                    request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + tariffName);
                     return new CommandResult(PagePath.TARIFF_EDIT_PAGE, CommandType.FORWARD);
                 }
             } catch (ServiceException e) {

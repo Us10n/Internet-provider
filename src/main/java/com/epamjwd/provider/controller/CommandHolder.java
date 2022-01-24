@@ -23,7 +23,7 @@ public class CommandHolder {
         commandMap.put(CommandName.TARIFFS, new ShowTariffListPageCommand());
         commandMap.put(CommandName.PROMOTIONS, new ShowSpecialOfferPageCommand());
         commandMap.put(CommandName.SINGLE_TARIFF, new ShowSingleTariffPageCommand());
-        commandMap.put(CommandName.CHANGE_LOCALE, new ChangeLocaleCommand());
+        commandMap.put(CommandName.CHANGE_LOCALE, new LocaleChangeCommand());
         commandMap.put(CommandName.ABOUT_US, new ShowAboutUsCommand());
         commandMap.put(CommandName.SIGN_UP_USER, new UserSignUpCommand());
         commandMap.put(CommandName.LOG_IN_USER, new UserLogInCommand());
@@ -32,10 +32,14 @@ public class CommandHolder {
         commandMap.put(CommandName.LOG_OUT_USER, new UserLogOutCommand());
         commandMap.put(CommandName.FORBIDDEN_ERROR, new ShowForbiddenPageCommand());
         commandMap.put(CommandName.PAGE_NOT_FOUND_ERROR, new ShowPageNotFoundCommand());
-        commandMap.put(CommandName.TARIFF_PANEL, new ShowTariffPanelPageCommand());
         commandMap.put(CommandName.TARIFF_ADD_PAGE, new ShowTariffAddPageCommand());
-        commandMap.put(CommandName.TARIFF_ADD, new AddTariffCommand());
+        commandMap.put(CommandName.TARIFF_ADD, new TariffAddCommand());
         commandMap.put(CommandName.TARIFF_EDIT_PAGE, new ShowTariffEditPageCommand());
+        commandMap.put(CommandName.TARIFF_EDIT, new TariffEditCommand());
+        commandMap.put(CommandName.BALANCE_RECHARGE_PAGE, new ShowBalanceRechargePageCommand());
+        commandMap.put(CommandName.BALANCE_RECHARGE, new BalanceRechargeCommand());
+        commandMap.put(CommandName.PROFILE_EDIT, new ProfileEditCommand());
+        commandMap.put(CommandName.PROMOTION_EDIT, new ShowSpecialOfferEditPageCommand());
     }
 
     public static CommandHolder getInstance() {

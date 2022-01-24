@@ -19,6 +19,8 @@ public class ShowSingleTariffPageCommand implements Command {
 
     private static final String TARIFF_NAME_PARAMETER = "name";
     private static final String TARIFF_ATTRIBUTE = "tariff";
+    private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
+    private static final String CURRENT_PAGE = "?command=tariff&name=";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
@@ -37,7 +39,7 @@ public class ShowSingleTariffPageCommand implements Command {
             return new CommandResult(PagePath.ERROR_NOT_FOUND_PAGE, CommandType.FORWARD);
         } else {
             request.setAttribute(TARIFF_ATTRIBUTE, tariffOptional.get());
-            request.getSession().setAttribute("currentPage", "?command=tariff&name=" + tariffName);
+            request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + tariffName);
             return new CommandResult(PagePath.SINGLE_TARIFF_PAGE, CommandType.FORWARD);
         }
     }

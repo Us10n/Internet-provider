@@ -2,13 +2,20 @@ package com.epamjwd.provider.model.service.impl;
 
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.exception.ServiceException;
+import com.epamjwd.provider.model.dao.BankAccountDao;
 import com.epamjwd.provider.model.dao.DaoHolder;
+import com.epamjwd.provider.model.dao.SpecialOfferDao;
 import com.epamjwd.provider.model.dao.TariffDao;
 import com.epamjwd.provider.model.entity.SpecialOffer;
 import com.epamjwd.provider.model.entity.Tariff;
+import com.epamjwd.provider.model.entity.TariffStatus;
 import com.epamjwd.provider.model.entity.comparator.TariffNewPriceComparator;
+import com.epamjwd.provider.model.service.ServiceHolder;
+import com.epamjwd.provider.model.service.SpecialOfferService;
 import com.epamjwd.provider.model.service.TariffService;
+import com.epamjwd.provider.model.service.validator.SpecialOfferValidator;
 import com.epamjwd.provider.model.service.validator.TariffValidator;
+import com.epamjwd.provider.model.service.validator.impl.SpecialOfferValidatorImpl;
 import com.epamjwd.provider.model.service.validator.impl.TariffValidatorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -102,6 +109,21 @@ public class TariffServiceImpl implements TariffService {
     }
 
     @Override
+    public Optional<Tariff> findTariffById(long id) throws ServiceException {
+
+        TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
+        Optional<Tariff> optionalTariff = Optional.empty();
+        try {
+            optionalTariff = tariffDao.findById(id);
+        } catch (DaoException e) {
+            logger.error("Tariff find by id error", e);
+            throw new ServiceException("Tariff find by id error", e);
+        }
+
+        return optionalTariff;
+    }
+
+    @Override
     public boolean createNewTariff(String name, String internetSpeed, String price, String image, String description) throws ServiceException {
         if (!isTariffFormValid(name, internetSpeed, price, image, description)) {
             return false;
@@ -122,15 +144,60 @@ public class TariffServiceImpl implements TariffService {
             logger.error("Tariff create error", e);
             throw new ServiceException("Tariff create error", e);
         }
-
         return true;
     }
 
-    private boolean isTariffFormValid(String name, String internetSpeed, String price, String image, String description) {
+    @Override
+    public boolean updateTariff(String name, String newInternetSpeed,
+                                String newPrice, String newImage,
+                                String newDescription, String newStatus,
+                                String newSpecialOfferTitle) throws ServiceException {
+        if (!isTariffFormValid(name, newInternetSpeed, newPrice, newImage, newDescription, newStatus)) {
+            return false;
+        }
+        TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
+        SpecialOfferDao specialOfferDao = DaoHolder.getInstance().getSpecialOfferDao();
+        BankAccountDao bankAccountDao = DaoHolder.getInstance().getBankAccountDao();
+        try {
+            if (tariffDao.findByName(name).isEmpty()) {
+                return false;
+            }
+            Optional<SpecialOffer> specialOfferOptional = specialOfferDao.findByTitle(newSpecialOfferTitle);
+            if (newSpecialOfferTitle != null && specialOfferOptional.isEmpty()) {
+                return false;
+            }
+            BigDecimal priceDecimal = new BigDecimal(newPrice);
+            Long internetSpeedLong = Long.valueOf(newInternetSpeed);
+            TariffStatus tariffStatus = TariffStatus.valueOf(newStatus);
+            Tariff newTariff = new Tariff(internetSpeedLong, priceDecimal, newImage, newDescription, tariffStatus, specialOfferOptional);
+            tariffDao.updateByName(name, newTariff);
+
+            bankAccountDao.deleteTariffIdWhereTariffIsDeactivated();
+        } catch (NumberFormatException e) {
+            logger.error("Number values parse error", e);
+            return false;
+        } catch (DaoException e) {
+            logger.error("Tariff update error", e);
+            throw new ServiceException("Tariff update error", e);
+        }
+        return true;
+    }
+
+    private boolean isTariffFormValid(String name, String internetSpeed,
+                                      String price, String image,
+                                      String description) {
         TariffValidator tariffValidator = TariffValidatorImpl.getInstance();
         return tariffValidator.isNameValid(name) && tariffValidator.isInternetSpeedValid(internetSpeed) &&
                 tariffValidator.isPriceValid(price) && tariffValidator.isImageNameValid(image) &&
                 tariffValidator.isDescriptionValid(description);
+    }
+
+    private boolean isTariffFormValid(String name, String internetSpeed, String price,
+                                      String image, String description, String status) {
+        TariffValidator tariffValidator = TariffValidatorImpl.getInstance();
+        return tariffValidator.isNameValid(name) && tariffValidator.isInternetSpeedValid(internetSpeed) &&
+                tariffValidator.isPriceValid(price) && tariffValidator.isImageNameValid(image) &&
+                tariffValidator.isDescriptionValid(description) && tariffValidator.isTariffStatusValid(status);
     }
 
     private void countPriceAfterDiscountList(List<Tariff> tariffList) {

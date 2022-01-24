@@ -38,26 +38,27 @@
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label"><fmt:message key="lang.first.name"/></label>
                             <input type="text" name="firstName" class="form-control" id="firstName" placeholder=""
-                                   value="" required maxlength="20">
+                                   required maxlength="30" minlength="1">
                         </div>
 
 
                         <div class="col-sm-6">
                             <label for="lastName" class="form-label"><fmt:message key="lang.last.name"/></label>
                             <input type="text" name="lastName" class="form-control" id="lastName" placeholder=""
-                                   value="" required maxlength="20">
+                                   value="" required maxlength="30" minlength="1">
                         </div>
 
                         <div class="col-12">
                             <label for="email" class="form-label"><fmt:message key="lang.email"/></label>
                             <input type="email" name="email" class="form-control" id="email"
                                    placeholder="you@example.com"
-                                   required maxlength="25">
+                                   required maxlength="45">
                         </div>
                         <div class="col-12 pb-2">
                             <label for="floatingPassword"><fmt:message key="lang.password"/></label>
                             <input type="password" name="password" class="form-control" id="floatingPassword"
-                                   placeholder="Password" required minlength="8" maxlength="20">
+                                   placeholder="<fmt:message key="lang.password"/>" required minlength="8"
+                                   maxlength="20">
                         </div>
 
                     </div>

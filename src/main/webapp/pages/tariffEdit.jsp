@@ -3,7 +3,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${cookie['lang'].value}"/>
 <fmt:setBundle basename="language"/>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <jsp:include page="fragment/links.jsp"/>
@@ -20,7 +19,7 @@
 
         <div class="row justify-content-center">
             <div class="col-md-7 col-lg-8">
-                <form class="needs-validation" action="${pageContext.request.contextPath}/controller?command=editTariff"
+                <form class="needs-validation" action="${pageContext.request.contextPath}/controller?command=tariffEdit"
                       method="post">
                     <div class="row g-3">
                         <div class="col-12">
@@ -59,21 +58,23 @@
                         </div>
                         <div class="col-sm-6">
                             <label for="tariffStatus"><fmt:message key="lang.status"/> </label>
-                            <select id="tariffStatus" class="form-select" name="status"
-                                    aria-label="Default select example">
+                            <select id="tariffStatus" class="form-select" name="tariffStatus">
                                 <c:choose>
                                     <c:when test="${tariff.status=='ACTIVE'}">
                                         <option value="ACTIVE"><fmt:message key="lang.tariff.status.active"/></option>
                                         <option value="ARCHIVE"><fmt:message key="lang.tariff.status.archive"/></option>
-                                        <option value="DEACTIVATED"><fmt:message key="lang.tariff.status.deactivated"/></option>
+                                        <option value="DEACTIVATED"><fmt:message
+                                                key="lang.tariff.status.deactivated"/></option>
                                     </c:when>
                                     <c:when test="${tariff.status=='ARCHIVE'}">
                                         <option value="ARCHIVE"><fmt:message key="lang.tariff.status.archive"/></option>
                                         <option value="ACTIVE"><fmt:message key="lang.tariff.status.active"/></option>
-                                        <option value="DEACTIVATED"><fmt:message key="lang.tariff.status.deactivated"/></option>
+                                        <option value="DEACTIVATED"><fmt:message
+                                                key="lang.tariff.status.deactivated"/></option>
                                     </c:when>
                                     <c:when test="${tariff.status=='DEACTIVATED'}">
-                                        <option value="DEACTIVATED"><fmt:message key="lang.tariff.status.deactivated"/></option>
+                                        <option value="DEACTIVATED"><fmt:message
+                                                key="lang.tariff.status.deactivated"/></option>
                                         <option value="ARCHIVE"><fmt:message key="lang.tariff.status.archive"/></option>
                                         <option value="ACTIVE"><fmt:message key="lang.tariff.status.active"/></option>
                                     </c:when>
@@ -81,24 +82,20 @@
                             </select>
                         </div>
                         <div class="col-sm-6">
-                            <label for="tariffSpecialOffer"><fmt:message key="lang.tariff.special.offer"/> </label>
-                            <select id="tariffSpecialOffer" class="form-select" name="specialOffer"
-                                    aria-label="Default select example">
-                                <c:choose>
-                                    <c:when test="${tariff.specialOffer.isPresent() eq 'true'}">
-                                        <option value="${tariff.specialOffer.get().title}" selected>
-                                            <c:out value="${tariff.specialOffer.get().title}"/>
-                                        </option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="${null}" selected></option>
-                                    </c:otherwise>
-                                </c:choose>
-
-                                <c:forEach var="specialOffer" items="${specialOffers}">
-                                    <option value="${specialOffer.title}">
-                                        <c:out value="${specialOffer.title}"/>
+                            <label for="specialOfferTitle"><fmt:message key="lang.tariff.special.offer"/> </label>
+                            <select id="specialOfferTitle" class="form-select" name="specialOfferTitle">
+                                <c:if test="${tariff.specialOffer.isPresent() eq 'true'}">
+                                    <option value="${tariff.specialOffer.get().title}">
+                                        <c:out value="${tariff.specialOffer.get().title}"/>
                                     </option>
+                                </c:if>
+                                <option value="NONE"><fmt:message key="lang.tariff.none"/></option>
+                                <c:forEach var="specialOffer" items="${specialOffers}">
+                                    <c:if test="${tariff.specialOffer.isEmpty() || tariff.specialOffer.get().title!=specialOffer.title}">
+                                        <option value="${specialOffer.title}">
+                                            <c:out value="${specialOffer.title}"/>
+                                        </option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </div>
@@ -107,18 +104,11 @@
                             <textarea name="tariffDescription" class="form-control" id="tariffDescription"
                                       required maxlength="2048"><c:out value="${tariff.description}"/></textarea>
                         </div>
-                        <c:choose>
-                            <c:when test="${updateError eq 'true'}">
-                                <div class="alert alert-danger fade show pb-3" role="alert">
-                                    <fmt:message key="lang.tariff.add.error"/>
-                                </div>
-                            </c:when>
-                            <c:when test="${existsError eq 'true'}">
-                                <div class="alert alert-danger fade show pb-3" role="alert">
-                                    <fmt:message key="lang.tariff.exists.error"/>
-                                </div>
-                            </c:when>
-                        </c:choose>
+                        <c:if test="${editError eq 'true'}">
+                            <div class="alert alert-danger fade show pb-3" role="alert">
+                                <fmt:message key="lang.tariff.edit.error"/>
+                            </div>
+                        </c:if>
 
                     </div>
                     <div class="text-right">

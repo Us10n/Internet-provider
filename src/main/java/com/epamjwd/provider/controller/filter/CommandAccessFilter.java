@@ -2,6 +2,7 @@ package com.epamjwd.provider.controller.filter;
 
 import com.epamjwd.provider.controller.AccessLevel;
 import com.epamjwd.provider.controller.command.constants.CommandName;
+import com.epamjwd.provider.model.entity.Role;
 import com.epamjwd.provider.model.entity.User;
 
 import javax.servlet.*;
@@ -18,7 +19,7 @@ public class CommandAccessFilter implements Filter {
     private static final String USER_ATTRIBUTE = "user";
     private static final String COMMAND_PARAMETER = "command";
 
-    private HashMap<String, List<Integer>> commandAccessMap = new HashMap<>();
+    private HashMap<String, List<AccessLevel>> commandAccessMap = new HashMap<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -39,10 +40,14 @@ public class CommandAccessFilter implements Filter {
         commandAccessMap.put(CommandName.LOG_OUT_USER, List.of(AccessLevel.LEVEL_USER, AccessLevel.LEVEL_ADMIN));
         commandAccessMap.put(CommandName.VERIFY, List.of(AccessLevel.LEVEL_ANY));
         commandAccessMap.put(CommandName.PROFILE, List.of(AccessLevel.LEVEL_USER, AccessLevel.LEVEL_ADMIN));
-        commandAccessMap.put(CommandName.TARIFF_PANEL, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
         commandAccessMap.put(CommandName.TARIFF_ADD_PAGE, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
         commandAccessMap.put(CommandName.TARIFF_ADD, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
         commandAccessMap.put(CommandName.TARIFF_EDIT_PAGE, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
+        commandAccessMap.put(CommandName.TARIFF_EDIT, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
+        commandAccessMap.put(CommandName.BALANCE_RECHARGE_PAGE, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER)); //todo(after debug remove level_any)
+        commandAccessMap.put(CommandName.BALANCE_RECHARGE, List.of(AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
+        commandAccessMap.put(CommandName.PROFILE_EDIT, List.of(AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
+        commandAccessMap.put(CommandName.PROMOTION_EDIT, List.of(AccessLevel.LEVEL_ANY, AccessLevel.LEVEL_ADMIN)); //todo(after debug remove level_any)
     }
 
     @Override
@@ -53,12 +58,10 @@ public class CommandAccessFilter implements Filter {
         String command = request.getParameter(COMMAND_PARAMETER);
 
         User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE);
-        int currentAccessLevel;
+        AccessLevel currentAccessLevel;
         if (user != null) {
-            switch (user.getRole()) {
-                case ADMIN -> currentAccessLevel = AccessLevel.LEVEL_ADMIN;
-                default -> currentAccessLevel = AccessLevel.LEVEL_USER;
-            }
+            currentAccessLevel = user.getRole() == Role.ADMIN ?
+                    AccessLevel.LEVEL_ADMIN : AccessLevel.LEVEL_USER;
         } else {
             currentAccessLevel = AccessLevel.LEVEL_GUEST;
         }

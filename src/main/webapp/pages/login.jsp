@@ -24,11 +24,12 @@
             <div class="form-floating">
                 <input type="email" name="email" class="form-control" id="floatingInput"
                        placeholder="name@example.com"
-                       required maxlength="25">
+                       required maxlength="45">
                 <label for="floatingInput"><fmt:message key="lang.email"/></label>
             </div>
             <div class="form-floating">
                 <input type="password" name="password" class="form-control" id="floatingPassword"
+                       placeholder="<fmt:message key="lang.password"/>"
                        required minlength="8" maxlength="20">
                 <label for="floatingPassword"><fmt:message key="lang.password"/></label>
             </div>
@@ -47,7 +48,7 @@
                 </c:when>
                 <c:when test="${unverifiedError eq 'true'}">
                     <div class="alert alert-danger fade show " role="alert">
-                        <fmt:message key="lang.login.error"/>
+                        <fmt:message key="lang.unverified.error"/>
                     </div>
                 </c:when>
             </c:choose>

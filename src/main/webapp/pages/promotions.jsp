@@ -10,10 +10,12 @@
     <title>Promotions</title>
 </head>
 <body>
+
+
 <div class="album py-5 bg-light">
     <div class="container">
-
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
             <c:forEach var="offer" items="${offers}">
                 <div class="col">
                     <div class="card shadow-sm">
@@ -24,6 +26,19 @@
                             <h5 class="card-title"><c:out value="${offer.title}"/></h5>
                             <p class="card-text"><c:out value="${offer.description}"/></p>
                             <div class="d-flex justify-content-between align-items-center">
+                                <c:if test="${user!=null && user.role eq 'ADMIN'}">
+                                    <form action=${pageContext.request.contextPath}/controller?command=deletePromotion
+                                          method="post">
+                                        <div class="btn-group">
+                                            <a href="${pageContext.request.contextPath}/controller?command=promotionEdit"
+                                               class="btn btn-sm btn-outline-secondary">Edit
+                                            </a>
+                                            <button type="submit" value="${offer.title}"
+                                                    class="btn btn-sm btn-outline-danger">Delete
+                                            </button>
+                                        </div>
+                                    </form>
+                                </c:if>
                                 <small class="text-muted"><c:out value="${offer.startDate}"/> — <c:out
                                         value="${offer.expirationDate}"/></small>
                             </div>
@@ -31,8 +46,6 @@
                     </div>
                 </div>
             </c:forEach>
-
-
         </div>
     </div>
 </div>

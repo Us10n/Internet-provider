@@ -22,6 +22,8 @@ public class ShowTariffListPageCommand implements Command {
     private static final String PRICE_SORT_PARAMETER = "price";
     private static final String RATING_SORT_PARAMETER = "rating";
     private static final String SPEED_SORT_PARAMETER = "speed";
+    private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
+    private static final String CURRENT_PAGE = "?command=tariffs&sort=";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
@@ -51,7 +53,7 @@ public class ShowTariffListPageCommand implements Command {
             return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
         }
         request.setAttribute("tariffs", tariffList);
-        request.getSession().setAttribute("currentPage", "?command=tariffs&sort=" + sortParameter);
+        request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + sortParameter);
         return new CommandResult(PagePath.TARIFF_LIST_PAGE, CommandType.FORWARD);
     }
 }

@@ -19,10 +19,14 @@ public final class CommandName {
     public static final String LOG_OUT_USER = "logoutUser";
     public static final String VERIFY = "verify";
     public static final String PROFILE = "profile";
-    public static final String TARIFF_PANEL = "tariffsPanel";
     public static final String TARIFF_ADD_PAGE = "tariffAddPage";
     public static final String TARIFF_ADD = "addTariff";
-    public static final String TARIFF_EDIT_PAGE="tariffEditPage";
+    public static final String TARIFF_EDIT_PAGE = "tariffEditPage";
+    public static final String TARIFF_EDIT = "tariffEdit";
+    public static final String BALANCE_RECHARGE_PAGE = "rechargeBalancePage";
+    public static final String BALANCE_RECHARGE = "rechargeBalance";
+    public static final String PROFILE_EDIT = "editProfile";
+    public static final String PROMOTION_EDIT = "promotionEdit";
 
 
     private CommandName() {

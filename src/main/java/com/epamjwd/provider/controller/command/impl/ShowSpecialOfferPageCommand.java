@@ -17,6 +17,8 @@ import java.util.List;
 
 public class ShowSpecialOfferPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
+    private static final String CURRENT_PAGE = "?command=promotions";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
@@ -30,7 +32,7 @@ public class ShowSpecialOfferPageCommand implements Command {
         }
 
         request.setAttribute("offers", specialOfferList);
-        request.getSession().setAttribute("currentPage","?command=promotions");
+        request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE);
         return new CommandResult(PagePath.PROMOTION_LIST_PAGE, CommandType.FORWARD);
     }
 }

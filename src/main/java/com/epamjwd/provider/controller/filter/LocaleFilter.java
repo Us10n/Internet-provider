@@ -45,15 +45,10 @@ public class LocaleFilter implements Filter {
                     .findFirst().orElse(new Cookie(COOKIE_LOCALE_NAME, DEFAULT_LOCALE));
         }
 
-        Cookie newCookie;
-        if (locale == null || !locale.matches(AVAILABLE_LANGUAGES_REGEX)) {
-            newCookie = localeCookie;
-        } else {
-            logger.info("Locale wa changed");
-            newCookie = new Cookie(COOKIE_LOCALE_NAME, locale);
+        if (locale != null && locale.matches(AVAILABLE_LANGUAGES_REGEX)) {
+            localeCookie.setValue(locale);
+            response.addCookie(localeCookie);
         }
-        newCookie.setMaxAge(Integer.MAX_VALUE);
-        response.addCookie(newCookie);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

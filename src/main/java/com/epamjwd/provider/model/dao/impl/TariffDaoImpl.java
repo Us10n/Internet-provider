@@ -1,5 +1,6 @@
 package com.epamjwd.provider.model.dao.impl;
 
+import com.epamjwd.provider.controller.command.constants.PagePath;
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.model.dao.AbstractQueryExecutor;
 import com.epamjwd.provider.model.dao.TariffDao;
@@ -72,12 +73,9 @@ public class TariffDaoImpl extends AbstractQueryExecutor<Tariff> implements Tari
     private static final String INSERT_TARIFF_QUERY = """
             INSERT INTO internetprovider.tariffs (name, description,internet_speed, image_url, price)
             VALUES (?, ?, ?, ?, ?)""";
-    private static final String UPDATE_SPECIAL_OFFER_ID_QUERY = """
-            UPDATE internetprovider.tariffs SET special_offers_id = ? WHERE id = ?""";
-    private static final String UPDATE_STATUS_QUERY = """
-            UPDATE internetprovider.tariffs SET status = ? WHERE id = ?""";
-    private static final String UPDATE_PRICE_QUERY = """
-            UPDATE internetprovider.tariffs SET price = ? WHERE id = ?""";
+    private static final String UPDATE_TARIFF_BY_NAME_QUERY = """
+            UPDATE internetprovider.tariffs SET description = ?, internet_speed = ?, image_url = ?, price = ?, status = ? ,special_offers_id = ? WHERE name = ?""";
+
 
     public TariffDaoImpl() {
         super(RowMapperFactory.getInstance().getTariffRowMapper());
@@ -128,22 +126,14 @@ public class TariffDaoImpl extends AbstractQueryExecutor<Tariff> implements Tari
     }
 
     @Override
-    public void updateSpecialOfferId(long tariffId, long specialOfferId) throws DaoException {
-        executeUpdateQuery(UPDATE_SPECIAL_OFFER_ID_QUERY, specialOfferId, tariffId);
-    }
-
-    @Override
-    public void updateStatus(long tariffId, TariffStatus tariffStatus) throws DaoException {
-        executeUpdateQuery(UPDATE_STATUS_QUERY, tariffStatus.toString(), tariffId);
-    }
-
-    @Override
-    public void updatePrice(long tariffId, BigDecimal newPrice) throws DaoException {
-        executeUpdateQuery(UPDATE_PRICE_QUERY, newPrice, tariffId);
-    }
-
-    @Override
-    public void deleteSpecialOfferId(long tariffId) throws DaoException {
-        executeUpdateQuery(UPDATE_SPECIAL_OFFER_ID_QUERY, tariffId);
+    public void updateByName(String tariffName, Tariff newTariff) throws DaoException {
+        Long specialOfferId = null;
+        if (newTariff.getSpecialOffer().isPresent()) {
+            specialOfferId = newTariff.getSpecialOffer().get().getId();
+        }
+        executeUpdateQuery(UPDATE_TARIFF_BY_NAME_QUERY,
+                newTariff.getDescription(), newTariff.getInternetSpeed(),
+                newTariff.getImage(), newTariff.getPrice(),
+                newTariff.getStatus().toString(), specialOfferId, tariffName);
     }
 }

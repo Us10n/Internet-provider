@@ -28,9 +28,6 @@
                                    href="${pageContext.request.contextPath}/controller?command=usersPanel">
                                 <fmt:message key="lang.users.control"/></a></li>
                             <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/controller?command=tariffsPanel">
-                                <fmt:message key="lang.tariff.control"/> </a></li>
-                            <li><a class="dropdown-item"
                                    href="${pageContext.request.contextPath}/controller?command=promotionsPanel">
                                 <fmt:message key="lang.promotions.control"/></a></li>
                         </ul>
@@ -39,7 +36,6 @@
             </ul>
 
             <ul class="nav col-12 col-lg-auto ml-lg-auto mb-2 justify-content-center mb-md-0">
-
                 <div class="dropdown">
                     <form action="${pageContext.request.contextPath}/controller?command=changeLocale" method="post">
                         <c:choose>
@@ -72,8 +68,9 @@
 
                 </div>
                 <c:if test="${user!=null && bankAccount!=null}">
-                    <li><a href="#" class="nav-link px-2 text-black-50 bg-white"><fmt:message key="lang.balance"/>:
-                        <c:out value="${bankAccount.balance}"/></a></li>
+                    <li><a href="?command=rechargeBalancePage" class="nav-link px-2 text-black-50 bg-white">
+                        <fmt:message key="lang.balance"/>:<c:out value="${bankAccount.balance}"/>
+                    </a></li>
                 </c:if>
                 <c:if test="${user eq null}">
                     <li><a href="?command=login" class="nav-link px-2 text-white"><fmt:message key="lang.log.in"/></a>
@@ -82,6 +79,9 @@
                     </li>
                 </c:if>
                 <c:if test="${user!=null}">
+                    <li><a href="?command=profile" class="nav-link px-2 text-white"><fmt:message
+                            key="lang.profile"/></a>
+                    </li>
                     <form action="${pageContext.request.contextPath}/controller?command=logoutUser" method="post">
                         <button class="btn bg-info text-white" type="submit">
                             <fmt:message key="lang.log.out"/>

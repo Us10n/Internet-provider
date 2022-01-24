@@ -11,7 +11,7 @@ public class SpecialOffer implements Identifiable {
     private Date expirationDate;
     private String image;
 
-    public SpecialOffer(){
+    public SpecialOffer() {
     }
 
     public SpecialOffer(String title, String description, byte discount,
@@ -22,6 +22,10 @@ public class SpecialOffer implements Identifiable {
         this.startDate = startDate;
         this.expirationDate = expirationDate;
         this.image = image;
+    }
+
+    public SpecialOffer(String title) {
+        this.title = title;
     }
 
     @Override

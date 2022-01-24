@@ -10,6 +10,7 @@ public class TariffValidatorImpl implements TariffValidator {
     private static final String VALID_IMAGE_REGEX = "^[\\w_]+\\.[A-Za-z]{3}$";
     private static final String VALID_SPEED_REGEX = "^\\d+$";
     private static final String VALID_PRICE_REGEX = "^[0-9]+(\\.[0-9]{1,2})?$";
+    private static final String VALID_STATUS_REGEX = "^ACTIVE|ARCHIVE|DEACTIVATED$";
     private static TariffValidatorImpl instance;
 
     private TariffValidatorImpl() {
@@ -49,5 +50,10 @@ public class TariffValidatorImpl implements TariffValidator {
     @Override
     public boolean isPriceValid(String price) {
         return price != null && price.matches(VALID_PRICE_REGEX) && price.length() <= 11;
+    }
+
+    @Override
+    public boolean isTariffStatusValid(String status) {
+        return status != null && status.matches(VALID_STATUS_REGEX);
     }
 }

@@ -54,6 +54,15 @@ public class Tariff implements Identifiable {
         this.specialOffer = Optional.ofNullable(specialOffer);
     }
 
+    public Tariff(long internetSpeed, BigDecimal price, String image, String description, TariffStatus tariffStatus, Optional<SpecialOffer> specialOffer) {
+        this.internetSpeed = internetSpeed;
+        this.price = price;
+        this.image = image;
+        this.description = description;
+        this.status = tariffStatus;
+        this.specialOffer = specialOffer;
+    }
+
     @Override
     public long getId() {
         return tariffId;

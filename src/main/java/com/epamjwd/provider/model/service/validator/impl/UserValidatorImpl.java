@@ -4,7 +4,7 @@ import com.epamjwd.provider.model.service.validator.UserValidator;
 
 public class UserValidatorImpl implements UserValidator {
 
-    private static final String VALID_NAME_REGEX = "^[A-Za-zА-Яа-я]{1,20}$";
+    private static final String VALID_NAME_REGEX = "^[A-Za-zА-Яа-я][A-Za-zА-Яа-я]{0,29}$";
     private static final String VALID_EMAIL_REGEX = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
     private static UserValidatorImpl instance;
 
@@ -30,6 +30,6 @@ public class UserValidatorImpl implements UserValidator {
 
     @Override
     public boolean isPasswordValid(String password) {
-        return password != null && password.length() <= 20;
+        return password != null && password.length()>=8 && password.length() <= 20;
     }
 }

@@ -6,6 +6,7 @@ import com.epamjwd.provider.model.dao.BankAccountDao;
 import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
 import com.epamjwd.provider.model.entity.BankAccount;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +26,20 @@ public class BankAccountDaoImpl extends AbstractQueryExecutor<BankAccount> imple
     private static final String INSERT_BANKACCOUNT_QUERY = """
             INSERT INTO internetprovider.bankaccounts (users_id, balance)
             VALUES (?, ?)""";
-    private static final String UPDATE_BALANCE_QUERY = """
+    private static final String UPDATE_BALANCE_BY_ID_QUERY = """
             UPDATE internetprovider.bankaccounts SET balance = ? WHERE (id = ?)""";
-    private static final String UPDATE_TARIFF_ID_QUERY = """
+    private static final String UPDATE_TARIFF_ID_BY_ID_QUERY = """
             UPDATE internetprovider.bankaccounts SET tariffs_id = ? WHERE (id = ?)""";
+    private static final String DELETE_TARIFF_ID_WHERE_TARIFF_IS_DEACTIVATED = """
+            UPDATE 
+                 internetprovider.bankaccounts
+            INNER JOIN
+                 internetprovider.tariffs
+            ON
+             	bankaccounts.tariffs_id = tariffs.id
+            SET
+             	bankaccounts.tariffs_id=NULL
+            WHERE tariffs.status='DEACTIVATED';""";
 
     public BankAccountDaoImpl() {
         super(RowMapperFactory.getInstance().getBankAccountRowMapper());
@@ -58,12 +69,17 @@ public class BankAccountDaoImpl extends AbstractQueryExecutor<BankAccount> imple
     }
 
     @Override
-    public void updateBalance(long bankAccountId, long newBalance) throws DaoException {
-        executeUpdateQuery(UPDATE_BALANCE_QUERY, newBalance, bankAccountId);
+    public void updateBalance(long bankAccountId, BigDecimal newBalance) throws DaoException {
+        executeUpdateQuery(UPDATE_BALANCE_BY_ID_QUERY, newBalance, bankAccountId);
     }
 
     @Override
-    public void updateTariffId(long bankAccountId, long tariffId) throws DaoException {
-        executeUpdateQuery(UPDATE_TARIFF_ID_QUERY, tariffId, bankAccountId);
+    public void updateTariffId(long bankAccountId, Long tariffId) throws DaoException {
+        executeUpdateQuery(UPDATE_TARIFF_ID_BY_ID_QUERY, tariffId, bankAccountId);
+    }
+
+    @Override
+    public void deleteTariffIdWhereTariffIsDeactivated() throws DaoException {
+        executeUpdateQuery(DELETE_TARIFF_ID_WHERE_TARIFF_IS_DEACTIVATED);
     }
 }

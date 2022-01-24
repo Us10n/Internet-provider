@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
             return Optional.empty();
         }
         UserDao userDao = DaoHolder.getInstance().getUserDao();
-        Optional<User> user = Optional.empty();
+        Optional<User> user;
         try {
             user = userDao.findByEmail(email);
         } catch (DaoException e) {
@@ -109,6 +109,55 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Verification error", e);
         }
         return false;
+    }
+
+    @Override
+    public boolean updateFirstName(long userId, String newFirstName) throws ServiceException {
+        if (!UserValidatorImpl.getInstance().isNameValid(newFirstName)) {
+            return false;
+        }
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        try {
+            userDao.updateFirstName(userId, newFirstName);
+        } catch (DaoException e) {
+            logger.error("First name update error", e);
+            throw new ServiceException("First name update error", e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateLastName(long userId, String newLastName) throws ServiceException {
+        if (!UserValidatorImpl.getInstance().isNameValid(newLastName)) {
+            return false;
+        }
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        try {
+            userDao.updateLastName(userId, newLastName);
+        } catch (DaoException e) {
+            logger.error("Last name update error", e);
+            throw new ServiceException("Last name update error", e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updatePassword(long userId, String password) throws ServiceException {
+        if (!UserValidatorImpl.getInstance().isPasswordValid(password)) {
+            return false;
+        }
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        try {
+            String encodedPassword = PasswordEncryptor.getInstance().encryptPassword(password);
+            userDao.updatePassword(userId, encodedPassword);
+        } catch (DaoException e) {
+            logger.error("Password update error", e);
+            throw new ServiceException("Password update error", e);
+        } catch (UtilityException e) {
+            logger.error("Password encrypt error", e);
+            throw new ServiceException("Password encrypt error", e);
+        }
+        return true;
     }
 
     private String buildVerificationMessage(String token) {
