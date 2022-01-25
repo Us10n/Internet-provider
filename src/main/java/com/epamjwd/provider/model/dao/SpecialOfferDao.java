@@ -7,4 +7,7 @@ import java.util.Optional;
 
 public interface SpecialOfferDao extends Dao<SpecialOffer> {
     Optional<SpecialOffer> findByTitle(String title) throws DaoException;
+
+    void deleteById(long id) throws DaoException;
+    void updateByTitle(String title, SpecialOffer specialOffer) throws DaoException;
 }

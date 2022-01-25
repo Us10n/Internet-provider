@@ -1,6 +1,7 @@
 package com.epamjwd.provider.controller.filter;
 
 import com.epamjwd.provider.model.entity.User;
+import com.epamjwd.provider.model.entity.UserStatus;
 import com.epamjwd.provider.model.pool.ActiveUserPool;
 
 import javax.servlet.*;
@@ -14,8 +15,9 @@ import java.io.IOException;
 public class UserStatusFilter implements Filter {
     private static final String COMMAND_PARAMETER = "command";
     private static final String LOG_OUT_PARAMETER = "logoutUser";
-    private static final String USER_ATTRIBUTE = "user";
-    private static final String LOG_OUT_COMMAND = "?command=logoutUser";
+    private static final String USER_EMAIL_ATTRIBUTE = "userEmail";
+    private static final String USER_STATUS_ATTRIBUTE = "userStatus";
+    private static final String LOG_OUT_COMMAND = "/controller?command=logoutUser";
 
 
     @Override
@@ -32,13 +34,14 @@ public class UserStatusFilter implements Filter {
         String commandParameter = request.getParameter(COMMAND_PARAMETER);
 
         if (session != null) {
-            User user = (User) session.getAttribute(USER_ATTRIBUTE);
-            if (user != null) {
+            UserStatus userStatus = (UserStatus) session.getAttribute(USER_STATUS_ATTRIBUTE);
+            String userEmail = (String) session.getAttribute(USER_EMAIL_ATTRIBUTE);
+            if (userStatus != null && userEmail != null) {
                 if (commandParameter != null && commandParameter.equalsIgnoreCase(LOG_OUT_PARAMETER)) {
-                    ActiveUserPool.getInstance().removeUser(user.getEmail());
+                    ActiveUserPool.getInstance().removeUser(userEmail);
                 } else {
-                    if (!ActiveUserPool.getInstance().isActive(user.getEmail())) {
-                        ActiveUserPool.getInstance().removeUser(user.getEmail());
+                    if (userStatus == UserStatus.BANNED && ActiveUserPool.getInstance().isActive(userEmail)) {
+                        ActiveUserPool.getInstance().removeUser(userEmail);
                         request.getRequestDispatcher(LOG_OUT_COMMAND)
                                 .forward(request, response);
                         return;

@@ -28,6 +28,15 @@ public class SpecialOffer implements Identifiable {
         this.title = title;
     }
 
+
+    public SpecialOffer(String description, byte discount, Date startDate, Date expirationDate, String image) {
+        this.description = description;
+        this.discount = discount;
+        this.startDate = startDate;
+        this.expirationDate = expirationDate;
+        this.image = image;
+    }
+
     @Override
     public long getId() {
         return specialOfferId;

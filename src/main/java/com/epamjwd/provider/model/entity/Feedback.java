@@ -29,6 +29,13 @@ public class Feedback implements Identifiable {
         this.authorName = authorName;
     }
 
+    public Feedback(int rating, String feedbackBody, Long tariffId, Long authorId) {
+        this.rating = rating;
+        this.feedbackBody = feedbackBody;
+        this.tariffId = tariffId;
+        this.authorId = authorId;
+    }
+
     @Override
     public long getId() {
         return feedbackId;

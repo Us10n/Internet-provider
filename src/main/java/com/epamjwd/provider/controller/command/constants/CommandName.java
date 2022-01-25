@@ -26,7 +26,15 @@ public final class CommandName {
     public static final String BALANCE_RECHARGE_PAGE = "rechargeBalancePage";
     public static final String BALANCE_RECHARGE = "rechargeBalance";
     public static final String PROFILE_EDIT = "editProfile";
+    public static final String PROMOTION_EDIT_PAGE = "promotionEditPage";
     public static final String PROMOTION_EDIT = "promotionEdit";
+    public static final String PROMOTION_DELETE = "deletePromotion";
+    public static final String PROMOTION_ADD_PAGE = "promotionAddPage";
+    public static final String PROMOTION_ADD = "promotionAdd";
+    public static final String USERS_PANEL = "usersPanel";
+    public static final String USER_ACTION = "userAction";
+    public static final String TARIFF_ACTION = "tariffAction";
+    public static final String FEEDBACK_ADD = "addFeedback";
 
 
     private CommandName() {

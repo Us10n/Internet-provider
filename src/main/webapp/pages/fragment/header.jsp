@@ -27,9 +27,6 @@
                             <li><a class="dropdown-item"
                                    href="${pageContext.request.contextPath}/controller?command=usersPanel">
                                 <fmt:message key="lang.users.control"/></a></li>
-                            <li><a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/controller?command=promotionsPanel">
-                                <fmt:message key="lang.promotions.control"/></a></li>
                         </ul>
                     </div>
                 </c:if>

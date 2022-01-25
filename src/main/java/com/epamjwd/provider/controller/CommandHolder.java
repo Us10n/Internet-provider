@@ -22,7 +22,7 @@ public class CommandHolder {
         commandMap.put(CommandName.SIGN_UP, new ShowSignUpPageCommand());
         commandMap.put(CommandName.TARIFFS, new ShowTariffListPageCommand());
         commandMap.put(CommandName.PROMOTIONS, new ShowSpecialOfferPageCommand());
-        commandMap.put(CommandName.SINGLE_TARIFF, new ShowSingleTariffPageCommand());
+        commandMap.put(CommandName.SINGLE_TARIFF, new ShowTariffSinglePageCommand());
         commandMap.put(CommandName.CHANGE_LOCALE, new LocaleChangeCommand());
         commandMap.put(CommandName.ABOUT_US, new ShowAboutUsCommand());
         commandMap.put(CommandName.SIGN_UP_USER, new UserSignUpCommand());
@@ -39,7 +39,15 @@ public class CommandHolder {
         commandMap.put(CommandName.BALANCE_RECHARGE_PAGE, new ShowBalanceRechargePageCommand());
         commandMap.put(CommandName.BALANCE_RECHARGE, new BalanceRechargeCommand());
         commandMap.put(CommandName.PROFILE_EDIT, new ProfileEditCommand());
-        commandMap.put(CommandName.PROMOTION_EDIT, new ShowSpecialOfferEditPageCommand());
+        commandMap.put(CommandName.PROMOTION_EDIT_PAGE, new ShowSpecialOfferEditPageCommand());
+        commandMap.put(CommandName.PROMOTION_EDIT, new SpecialOfferEditCommand());
+        commandMap.put(CommandName.PROMOTION_DELETE, new SpecialOfferDeleteCommand());
+        commandMap.put(CommandName.PROMOTION_ADD_PAGE, new ShowSpecialOfferAddPageCommand());
+        commandMap.put(CommandName.PROMOTION_ADD, new SpecialOfferAddCommand());
+        commandMap.put(CommandName.USERS_PANEL, new ShowUserPanelPageCommand());
+        commandMap.put(CommandName.USER_ACTION, new UserActionCommand());
+        commandMap.put(CommandName.TARIFF_ACTION, new TariffActionCommand());
+        commandMap.put(CommandName.FEEDBACK_ADD, new UserCommentCommand());
     }
 
     public static CommandHolder getInstance() {

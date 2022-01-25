@@ -28,6 +28,8 @@ public class UserLogInCommand implements Command {
     private static final String USER_ID_ATTRIBUTE = "userId";
     private static final String USER_EMAIL_ATTRIBUTE = "userEmail";
     private static final String USER_ROLE_ATTRIBUTE = "userRole";
+    private static final String USER_STATUS_ATTRIBUTE = "userStatus";
+    private static final String USER_TARIFF_ID_ATTRIBUTE = "userTariffId";
     private static final String PROFILE_PAGE = "?command=profile";
 
     @Override
@@ -56,6 +58,8 @@ public class UserLogInCommand implements Command {
                     session.setAttribute(USER_ID_ATTRIBUTE, loadedUser.getId());
                     session.setAttribute(USER_EMAIL_ATTRIBUTE, loadedUser.getEmail());
                     session.setAttribute(USER_ROLE_ATTRIBUTE, loadedUser.getRole());
+                    session.setAttribute(USER_STATUS_ATTRIBUTE, loadedUser.getStatus());
+                    session.setAttribute(USER_TARIFF_ID_ATTRIBUTE, bankAccount.getTariffId().orElse(null));
                     ActiveUserPool.getInstance().addUser(loadedUser.getEmail());
                 }
                 case UNVERIFIED -> {

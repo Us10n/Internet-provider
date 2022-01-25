@@ -5,6 +5,7 @@ import com.epamjwd.provider.exception.ServiceException;
 import com.epamjwd.provider.model.dao.BankAccountDao;
 import com.epamjwd.provider.model.dao.Dao;
 import com.epamjwd.provider.model.dao.DaoHolder;
+import com.epamjwd.provider.model.dao.UserDao;
 import com.epamjwd.provider.model.entity.BankAccount;
 import com.epamjwd.provider.model.service.BankAccountService;
 import com.epamjwd.provider.model.service.validator.BankAccountValidator;
@@ -54,11 +55,59 @@ public class BankAccountServiceImpl implements BankAccountService {
             BigDecimal newBalance = new BigDecimal(rechargeAmount).add(bankAccount.getBalance());
             bankAccountDao.updateBalance(bankAccount.getId(), newBalance);
             bankAccount.setBalance(newBalance);
-        } catch (DaoException e) {
-            e.printStackTrace();
         } catch (NumberFormatException e) {
             logger.error("Number values parse error", e);
             return false;
+        } catch (DaoException e) {
+            logger.error("BankAccount update balance error", e);
+            throw new ServiceException("BankAccount update balance error", e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean subscribeTariff(Long userId, String tariffId) throws ServiceException {
+        if (userId == null || tariffId == null) {
+            return false;
+        }
+        BankAccountDao bankAccountDao = DaoHolder.getInstance().getBankAccountDao();
+        try {
+            Optional<BankAccount> optionalBankAccount = bankAccountDao.findByUserId(userId);
+            if (optionalBankAccount.isEmpty()) {
+                return false;
+            }
+            long bankAccountId = optionalBankAccount.get().getId();
+            long tariffIdLong = Long.parseLong(tariffId);
+            bankAccountDao.updateTariffId(bankAccountId, tariffIdLong);
+        } catch (NumberFormatException e) {
+            logger.error("Number values parse error", e);
+            return false;
+        } catch (DaoException e) {
+            logger.error("BankAccount update tariff id error", e);
+            throw new ServiceException("BankAccount update tariff id error", e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean unsubscribeTariff(Long userId) throws ServiceException {
+        if (userId == null) {
+            return false;
+        }
+        BankAccountDao bankAccountDao = DaoHolder.getInstance().getBankAccountDao();
+        try {
+            Optional<BankAccount> optionalBankAccount = bankAccountDao.findByUserId(userId);
+            if (optionalBankAccount.isEmpty()) {
+                return false;
+            }
+            long bankAccountId = optionalBankAccount.get().getId();
+            bankAccountDao.updateTariffId(bankAccountId, null);
+        } catch (NumberFormatException e) {
+            logger.error("Number values parse error", e);
+            return false;
+        } catch (DaoException e) {
+            logger.error("BankAccount update tariff id error", e);
+            throw new ServiceException("BankAccount update tariff id error", e);
         }
         return true;
     }

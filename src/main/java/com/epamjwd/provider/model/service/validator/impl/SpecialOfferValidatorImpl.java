@@ -58,8 +58,6 @@ public class SpecialOfferValidatorImpl implements SpecialOfferValidator {
     @Override
     public boolean isImageNameValid(String name) {
         String baseUrl = "src/main/webapp/static/images/offer/";
-//        return name != null && name.matches(VALID_IMAGE_REGEX)
-//                && name.length() <= 45 && new File(baseUrl + name).isFile();
         return name != null && name.matches(VALID_IMAGE_REGEX)
                 && name.length() <= 45;
     }

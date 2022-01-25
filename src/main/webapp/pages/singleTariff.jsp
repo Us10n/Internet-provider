@@ -17,8 +17,10 @@
 
 <form action="${pageContext.request.contextPath}/controller?command=tariffAction"
       method="post">
+
     <div class="container col-xxl-8 px-4 py-5">
         <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+            <input type="hidden" name="tariffId" value="${tariff.id}"/>
 
             <div class="col-10 col-sm-8 col-lg-6">
                 <img src="static/images/tariff/<c:out value="${tariff.image}"/>" class=" d-block mx-lg-auto img-fluid"
@@ -78,22 +80,22 @@
                 </div>
                 <div class="container pt-5">
                     <c:choose>
-                        <c:when test="${user!=null}">
-                            <c:if test="${bankAccount.tariffId.isEmpty() eq 'true' && tariff.status != 'ARCHIVE'}">
-                                <button class="btn bg-info text-white" type="submit"><fmt:message
-                                        key="lang.subscribe"/></button>
-                                <input type="hidden" name="operation" value="subscribe">
+                        <c:when test="${userId!=null}">
+                            <c:if test="${userTariffId ==null && tariff.status != 'ARCHIVE' && tariff.status!='DEACTIVATED'}">
+                                <button class="btn bg-info text-white" name="action" value="subscribe" type="submit">
+                                    <fmt:message key="lang.subscribe"/>
+                                </button>
                             </c:if>
-                            <c:if test="${bankAccount.tariffId.isPresent() == 'true' && bankAccount.tariffId.get()==tariff.id}">
-                                <button class="btn bg-info text-white" type="submit"><fmt:message
-                                        key="lang.unsubscribe"/></button>
-                                <input type="hidden" name="operation" value="unsubscribe">
+                            <c:if test="${userTariffId !=null && userTariffId==tariff.id}">
+                                <button class="btn bg-info text-white" name="action" value="unsubscribe" type="submit">
+                                    <fmt:message key="lang.unsubscribe"/>
+                                </button>
                             </c:if>
                         </c:when>
                         <c:otherwise>
-                            <c:if test="${tariff.status!= 'ARCHIVE'}">
+                            <c:if test="${tariff.status!= 'ARCHIVE' && tariff.status != 'DEACTIVATED'}">
                                 <a href="${pageContext.request.contextPath}/controller?command=login"
-                                   class="nav-link bg-info text-white"><fmt:message key="lang.subscribe"/></a>
+                                   class="btn bg-info text-white"><fmt:message key="lang.subscribe"/></a>
                             </c:if>
                         </c:otherwise>
                     </c:choose>
@@ -102,7 +104,72 @@
         </div>
     </div>
 </form>
-
+<c:if test="${userId !=null}">
+    <form action="${pageContext.request.contextPath}/controller?command=addFeedback"
+          method="post">
+        <div class="container">
+            <main>
+                <div class="row justify-content-center">
+                    <div class="col-md-7 col-lg-8">
+                        <input type="hidden" name="tariffId" value="${tariff.id}"/>
+                        <div class="row g-3">
+                            <div class="col-12 pb-3">
+                        <textarea style="resize: none" name="feedbackBody" class="form-control"
+                                  required maxlength="2048"></textarea>
+                            </div>
+                        </div>
+                        <div class="row pl-2">
+                            <div class="col-sm-auto">
+                                <p class="text-black-50"><fmt:message key="lang.rating"/>: </p>
+                            </div>
+                            <div class="col-sm-4">
+                                <select class="form-select" name="rating" aria-label="Default select example">
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="bg-info text-white" type="submit"><fmt:message
+                                        key="lang.comment"/></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </form>
+</c:if>
+<div class="container-fluid mt--7 w pt-3 pb-3">
+    <div class="album pb-5 pl-2">
+        <div class="container">
+            <c:forEach var="feedback" items="${feedbacks}">
+                <div class="row bg-light my-2">
+                    <div class="row">
+                        <div class="col ml-4">
+                            <p class="text-black-50"><c:out value="${feedback.authorName}"/></p>
+                        </div>
+                        <div class="col">
+                            <p class="text-black-50">
+                                <fmt:message key="lang.rating"/>: <c:out value="${feedback.rating}"/>
+                            </p>
+                        </div>
+                    </div>
+                    <textarea style="resize: none" name="tariffDescription" class="form-control"
+                              required maxlength="2048" readonly><c:out value="${feedback.feedbackBody}"/></textarea>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+</div>
+<h1></h1>
 
 </body>
 

@@ -23,6 +23,7 @@ public class ShowTariffListPageCommand implements Command {
     private static final String RATING_SORT_PARAMETER = "rating";
     private static final String SPEED_SORT_PARAMETER = "speed";
     private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
+    private static final String TARIFF_LIST_ATTRIBUTE = "tariffs";
     private static final String CURRENT_PAGE = "?command=tariffs&sort=";
 
     @Override
@@ -33,26 +34,17 @@ public class ShowTariffListPageCommand implements Command {
         String sortParameter = request.getParameter(CommandName.SORT) == null ?
                 NAME_SORT_PARAMETER : request.getParameter(CommandName.SORT);
         try {
-            switch (sortParameter) {
-                case PRICE_SORT_PARAMETER:
-                    tariffList = tariffService.findTariffsAndSortByPrice();
-                    break;
-                case RATING_SORT_PARAMETER:
-                    tariffList = tariffService.findTariffsAndSortByRating();
-                    break;
-                case SPEED_SORT_PARAMETER:
-                    tariffList = tariffService.findTariffsAndSortBySpeed();
-                    break;
-                default:
-                case NAME_SORT_PARAMETER:
-                    tariffList = tariffService.findTariffsAndSortByName();
-                    break;
-            }
+            tariffList = switch (sortParameter) {
+                case PRICE_SORT_PARAMETER -> tariffService.findTariffsAndSortByPrice();
+                case RATING_SORT_PARAMETER -> tariffService.findTariffsAndSortByRating();
+                case SPEED_SORT_PARAMETER -> tariffService.findTariffsAndSortBySpeed();
+                default -> tariffService.findTariffsAndSortByName();
+            };
         } catch (ServiceException e) {
-            logger.error("TariffService error", e);
+            logger.error("Find and sort tariffs error", e);
             return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
         }
-        request.setAttribute("tariffs", tariffList);
+        request.setAttribute(TARIFF_LIST_ATTRIBUTE, tariffList);
         request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + sortParameter);
         return new CommandResult(PagePath.TARIFF_LIST_PAGE, CommandType.FORWARD);
     }

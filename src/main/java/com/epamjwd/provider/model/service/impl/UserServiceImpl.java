@@ -10,6 +10,7 @@ import com.epamjwd.provider.model.entity.BankAccount;
 import com.epamjwd.provider.model.entity.Role;
 import com.epamjwd.provider.model.entity.User;
 import com.epamjwd.provider.model.entity.UserStatus;
+import com.epamjwd.provider.model.pool.ActiveUserPool;
 import com.epamjwd.provider.model.service.UserService;
 import com.epamjwd.provider.model.service.validator.UserValidator;
 import com.epamjwd.provider.model.service.validator.impl.UserValidatorImpl;
@@ -20,6 +21,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -27,9 +30,76 @@ public class UserServiceImpl implements UserService {
     private static final String MAIL_TEXT = "To activate an account on the Internet Provider resource, follow the following link: ";
 
     @Override
+    public Optional<User> findUserById(Long userId) throws ServiceException {
+        if (userId == null) {
+            return Optional.empty();
+        }
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        Optional<User> user = Optional.empty();
+        try {
+            user = userDao.findById(userId);
+        } catch (DaoException e) {
+            logger.error("Find user by id error", e);
+            throw new ServiceException("Find user by id error", e);
+        }
+        return user;
+    }
+
+    @Override
+    public List<User> findUsersSortByFirstName() throws ServiceException {
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        List<User> userList = new ArrayList<>();
+        try {
+            userList = userDao.findUsersSortByFirstName();
+        } catch (DaoException e) {
+            logger.error("Find users and sort by first name error", e);
+            throw new ServiceException("Find users and sort by first name error", e);
+        }
+        return userList;
+    }
+
+    @Override
+    public List<User> findUsersSortByEmail() throws ServiceException {
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        List<User> userList = new ArrayList<>();
+        try {
+            userList = userDao.findUsersSortByEmail();
+        } catch (DaoException e) {
+            logger.error("Find users and sort by email error", e);
+            throw new ServiceException("Find users and sort by email error", e);
+        }
+        return userList;
+    }
+
+    @Override
+    public List<User> findUsersSortByRole() throws ServiceException {
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        List<User> userList = new ArrayList<>();
+        try {
+            userList = userDao.findUsersSortByRole();
+        } catch (DaoException e) {
+            logger.error("Find users and sort by role error", e);
+            throw new ServiceException("Find users and sort by role error", e);
+        }
+        return userList;
+    }
+
+    @Override
+    public List<User> findUsersSortByStatus() throws ServiceException {
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        List<User> userList = new ArrayList<>();
+        try {
+            userList = userDao.findUsersSortByStatus();
+        } catch (DaoException e) {
+            logger.error("Find users and sort by status error", e);
+            throw new ServiceException("Find users and sort by status error", e);
+        }
+        return userList;
+    }
+
+    @Override
     public Optional<User> findUserByEmail(String email) throws ServiceException {
-        UserValidator userValidator = UserValidatorImpl.getInstance();
-        if (!userValidator.isEmailValid(email)) {
+        if (!UserValidatorImpl.getInstance().isEmailValid(email)) {
             return Optional.empty();
         }
         UserDao userDao = DaoHolder.getInstance().getUserDao();
@@ -156,6 +226,98 @@ public class UserServiceImpl implements UserService {
         } catch (UtilityException e) {
             logger.error("Password encrypt error", e);
             throw new ServiceException("Password encrypt error", e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean makeUserAdmin(String userId) throws ServiceException {
+        if (userId == null) {
+            return false;
+        }
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        try {
+            long userIdLong = Long.parseLong(userId);
+            if (userDao.findById(userIdLong).isEmpty()) {
+                return false;
+            }
+            userDao.updateRole(userIdLong, Role.ADMIN);
+        } catch (NumberFormatException e) {
+            logger.error("Number values parse error", e);
+            return false;
+        } catch (DaoException e) {
+            logger.error("Make user admin error", e);
+            throw new ServiceException("Make user admin error", e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean makeUserVerified(String userId) throws ServiceException {
+        if (userId == null) {
+            return false;
+        }
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        try {
+            long userIdLong = Long.parseLong(userId);
+            Optional<User> optionalUser = userDao.findById(userIdLong);
+            if (optionalUser.isEmpty() || optionalUser.get().getStatus() != UserStatus.UNVERIFIED) {
+                return false;
+            }
+            userDao.updateStatus(userIdLong, UserStatus.VERIFIED);
+        } catch (NumberFormatException e) {
+            logger.error("Number values parse error", e);
+            return false;
+        } catch (DaoException e) {
+            logger.error("Make user verified error", e);
+            throw new ServiceException("Make user verified error", e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean makeUserBanned(String userId) throws ServiceException {
+        if (userId == null) {
+            return false;
+        }
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        try {
+            long userIdLong = Long.parseLong(userId);
+            Optional<User> optionalUser = userDao.findById(userIdLong);
+            if (optionalUser.isEmpty() || optionalUser.get().getRole() == Role.ADMIN) {
+                return false;
+            }
+            userDao.updateStatus(userIdLong, UserStatus.BANNED);
+
+        } catch (NumberFormatException e) {
+            logger.error("Number values parse error", e);
+            return false;
+        } catch (DaoException e) {
+            logger.error("Make user banned error", e);
+            throw new ServiceException("Make user banned error", e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean makeUserUnbanned(String userId) throws ServiceException {
+        if (userId == null) {
+            return false;
+        }
+        UserDao userDao = DaoHolder.getInstance().getUserDao();
+        try {
+            long userIdLong = Long.parseLong(userId);
+            Optional<User> optionalUser = userDao.findById(userIdLong);
+            if (optionalUser.isEmpty() || optionalUser.get().getRole() == Role.ADMIN) {
+                return false;
+            }
+            userDao.updateStatus(userIdLong, UserStatus.VERIFIED);
+        } catch (NumberFormatException e) {
+            logger.error("Number values parse error", e);
+            return false;
+        } catch (DaoException e) {
+            logger.error("Make user unbanned error", e);
+            throw new ServiceException("Make user unbanned error", e);
         }
         return true;
     }

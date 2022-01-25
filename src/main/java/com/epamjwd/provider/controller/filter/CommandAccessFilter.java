@@ -41,13 +41,21 @@ public class CommandAccessFilter implements Filter {
         commandAccessMap.put(CommandName.VERIFY, List.of(AccessLevel.LEVEL_ANY));
         commandAccessMap.put(CommandName.PROFILE, List.of(AccessLevel.LEVEL_USER, AccessLevel.LEVEL_ADMIN));
         commandAccessMap.put(CommandName.TARIFF_ADD_PAGE, List.of(AccessLevel.LEVEL_ADMIN));
-        commandAccessMap.put(CommandName.TARIFF_ADD, List.of( AccessLevel.LEVEL_ADMIN));
-        commandAccessMap.put(CommandName.TARIFF_EDIT_PAGE, List.of( AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.TARIFF_ADD, List.of(AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.TARIFF_EDIT_PAGE, List.of(AccessLevel.LEVEL_ADMIN));
         commandAccessMap.put(CommandName.TARIFF_EDIT, List.of(AccessLevel.LEVEL_ADMIN));
-        commandAccessMap.put(CommandName.BALANCE_RECHARGE_PAGE, List.of( AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
+        commandAccessMap.put(CommandName.BALANCE_RECHARGE_PAGE, List.of(AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
         commandAccessMap.put(CommandName.BALANCE_RECHARGE, List.of(AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
         commandAccessMap.put(CommandName.PROFILE_EDIT, List.of(AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
+        commandAccessMap.put(CommandName.PROMOTION_EDIT_PAGE, List.of(AccessLevel.LEVEL_ADMIN));
         commandAccessMap.put(CommandName.PROMOTION_EDIT, List.of(AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.PROMOTION_DELETE, List.of(AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.PROMOTION_ADD_PAGE, List.of(AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.PROMOTION_ADD, List.of(AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.USERS_PANEL, List.of(AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.USER_ACTION, List.of(AccessLevel.LEVEL_ADMIN));
+        commandAccessMap.put(CommandName.TARIFF_ACTION, List.of(AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
+        commandAccessMap.put(CommandName.FEEDBACK_ADD, List.of(AccessLevel.LEVEL_USER, AccessLevel.LEVEL_USER));
     }
 
     @Override

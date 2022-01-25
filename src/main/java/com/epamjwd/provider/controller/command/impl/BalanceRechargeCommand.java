@@ -19,7 +19,7 @@ public class BalanceRechargeCommand implements Command {
     private static final String RECHARGE_AMOUNT_PARAMETER = "rechargeAmount";
     private static final String USER_ID_ATTRIBUTE = "userId";
     private static final String RECHARGE_ERROR_ATTRIBUTE = "rechargeError";
-    private static final String TARIFFS_PAGE = "?command=tariffs";
+    private static final String PROFILE_PAGE = "?command=profile";
 
 
     @Override
@@ -34,16 +34,9 @@ public class BalanceRechargeCommand implements Command {
         try {
             BankAccount bankAccount = bankAccountService.findBankAccountByUserId(userId);
             boolean rechargeStatus = bankAccountService.rechargeBalance(bankAccount, rechargeAmount);
-            String page;
-            CommandType commandType;
-            if (rechargeStatus) {
-                page = TARIFFS_PAGE;
-                commandType = CommandType.REDIRECT;
-            } else {
-                page = PagePath.BALANCE_RECHARGE_PAGE;
-                commandType = CommandType.FORWARD;
-                request.setAttribute(RECHARGE_ERROR_ATTRIBUTE, true);
-            }
+            String page = rechargeStatus ? PROFILE_PAGE : PagePath.BALANCE_RECHARGE_PAGE;
+            CommandType commandType = rechargeStatus ? CommandType.REDIRECT : CommandType.FORWARD;
+            request.setAttribute(RECHARGE_ERROR_ATTRIBUTE, !rechargeStatus);
             return new CommandResult(page, commandType);
         } catch (ServiceException e) {
             logger.error("Recharge balance error", e);

@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <c:forEach var="offer" items="${offers}">
-                <div class="col">
+                <div class="col pb-5">
                     <div class="card shadow-sm">
                         <img src="static/images/offer/<c:out value="${offer.image}"/>" class="img-fluid" width="100%"
                              height="200">
@@ -32,7 +32,7 @@
                                             <a href="${pageContext.request.contextPath}/controller?command=promotionEditPage&title=${offer.title}"
                                                class="btn btn-sm btn-outline-secondary">Edit
                                             </a>
-                                            <button type="submit" value="${offer.title}"
+                                            <button type="submit" name="offerId" value="${offer.id}"
                                                     class="btn btn-sm btn-outline-danger">Delete
                                             </button>
                                         </div>
@@ -47,13 +47,14 @@
             </c:forEach>
             <c:if test="${userRole=='ADMIN'}">
                 <div class="col align-self-center text-center">
-                    <a href="#" class="btn bg-info btn-primary btn-lg" role="button" style="width: 200px">
+                    <a href="${pageContext.request.contextPath}/controller?command=promotionAddPage" class="btn bg-info btn-primary btn-lg" role="button" style="width: 200px">
                         <fmt:message key="lang.promotion.add"/></a>
                 </div>
             </c:if>
         </div>
     </div>
 </div>
+<h1/>
 </body>
 
 <jsp:include page="fragment/footer.jsp"/>

@@ -32,16 +32,14 @@
                 <h4 class="mb-3">
                     <fmt:message key="lang.status"/>: <c:out value="${user.status}"/>
                 </h4>
-                <h4 class="mb-3">
-                    <div class="col-md-3">
+                <div class="row row-cols-auto">
+                    <h4 class="col-mb-auto pl-3 pr-3">
                         <fmt:message key="lang.balance"/>: <c:out value="${bankAccount.balance}"/>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="?command=rechargeBalancePage"
-                           class="nav-link px-2 text-black-50 bg-success"><fmt:message
-                                key="lang.recharge.balance"/> </a>
-                    </div>
-                </h4>
+                    </h4>
+                    <a href="?command=rechargeBalancePage"
+                       class="nav-link px-2 text-black-50 bg-success"><fmt:message
+                            key="lang.recharge.balance"/> </a>
+                </div>
                 <form class="needs-validation"
                       action="${pageContext.request.contextPath}/controller?command=editProfile"
                       method="post">

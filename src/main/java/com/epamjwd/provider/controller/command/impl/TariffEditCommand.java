@@ -45,16 +45,9 @@ public class TariffEditCommand implements Command {
 
         try {
             boolean updateStatus = tariffService.updateTariff(name, internetSpeed, price, image, description, status, specialOfferTitle);
-            String page;
-            CommandType commandType;
-            if (updateStatus) {
-                page = TARIFFS_PAGE;
-                commandType = CommandType.REDIRECT;
-            } else {
-                page = PagePath.TARIFF_EDIT_PAGE;
-                commandType = CommandType.FORWARD;
-                request.setAttribute(EDIT_ERROR_ATTRIBUTE, true);
-            }
+            String page = updateStatus ? TARIFFS_PAGE : PagePath.TARIFF_EDIT_PAGE;
+            CommandType commandType = updateStatus ? CommandType.REDIRECT : CommandType.FORWARD;
+            request.setAttribute(EDIT_ERROR_ATTRIBUTE, !updateStatus);
             return new CommandResult(page, commandType);
         } catch (ServiceException e) {
             logger.error("Update tariff error", e);

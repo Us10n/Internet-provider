@@ -12,14 +12,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.print.PageFormat;
 import java.util.Optional;
 
 public class ShowSpecialOfferEditPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
-    private static final String CURRENT_PAGE = "?command=promotionEdit";
+    private static final String CURRENT_PAGE = "?command=promotionEditPage";
     private static final String TITLE_PARAMETER = "title";
     private static final String SPECIAL_OFFER_ATTRIBUTE = "specialOffer";
 

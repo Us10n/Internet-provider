@@ -15,6 +15,22 @@ public class UserDaoImpl extends AbstractQueryExecutor<User> implements UserDao 
 
     private static final String FIND_ALL_USERS_QUERY = """
             SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status FROM users""";
+    private static final String FIND_ALL_USERS_SORT_BY_FIRST_NAME_QUERY = """
+            SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status 
+            FROM users
+            ORDER BY users.first_name ASC;""";
+    private static final String FIND_ALL_USERS_SORT_BY_EMAIL_QUERY = """
+            SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status 
+            FROM users
+            ORDER BY users.email ASC;""";
+    private static final String FIND_ALL_USERS_SORT_BY_ROLE_QUERY = """
+            SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status 
+            FROM users
+            ORDER BY users.role ASC;""";
+    private static final String FIND_ALL_USERS_SORT_BY_STATUS_QUERY = """
+            SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status 
+            FROM users
+            ORDER BY users.status ASC;""";
     private static final String FIND_USER_BY_ID_QUERY = """
             SELECT users.id, users.email, users.first_name, users.last_name, users.role, users.status FROM users
             WHERE id=?""";
@@ -59,6 +75,26 @@ public class UserDaoImpl extends AbstractQueryExecutor<User> implements UserDao 
     public Optional<User> findById(long id) throws DaoException {
         List<User> userList = executeQuery(FIND_USER_BY_ID_QUERY, id);
         return userList.size() != 1 ? Optional.empty() : Optional.of(userList.get(0));
+    }
+
+    @Override
+    public List<User> findUsersSortByFirstName() throws DaoException {
+        return executeQuery(FIND_ALL_USERS_SORT_BY_FIRST_NAME_QUERY);
+    }
+
+    @Override
+    public List<User> findUsersSortByEmail() throws DaoException {
+        return executeQuery(FIND_ALL_USERS_SORT_BY_EMAIL_QUERY);
+    }
+
+    @Override
+    public List<User> findUsersSortByRole() throws DaoException {
+        return executeQuery(FIND_ALL_USERS_SORT_BY_ROLE_QUERY);
+    }
+
+    @Override
+    public List<User> findUsersSortByStatus() throws DaoException {
+        return executeQuery(FIND_ALL_USERS_SORT_BY_STATUS_QUERY);
     }
 
     @Override

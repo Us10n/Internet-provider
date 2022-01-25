@@ -41,8 +41,6 @@ public class TariffValidatorImpl implements TariffValidator {
     @Override
     public boolean isImageNameValid(String name) {
         String baseUrl = "src/main/webapp/static/images/tariff/";
-//        return name != null && name.matches(VALID_IMAGE_REGEX) &&
-//                name.length() <= 45 && new File(baseUrl + name).isFile(); //todo
         return name != null && name.matches(VALID_IMAGE_REGEX) &&
                 name.length() <= 45;
     }

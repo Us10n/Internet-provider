@@ -28,6 +28,11 @@ public class SpecialOfferDaoImpl extends AbstractQueryExecutor<SpecialOffer> imp
     private static final String INSERT_SPECIAL_OFFER_QUERY = """
             INSERT INTO internetprovider.specialoffers (title, description, start_date, expiration_date, discount, image_url)
             VALUES (?, ?, ?, ?, ?, ?)""";
+    private static final String DELETE_SPECIAL_OFFER_BY_TITLE_QUERY = """
+            DELETE FROM internetprovider.specialoffers WHERE id =?""";
+    private static final String UPDATE_SPECIAL_OFFER_BY_TITLE_QUERY = """
+            UPDATE internetprovider.specialoffers 
+            SET start_date = ?, expiration_date = ?, discount = ?, image_url = ?, description = ? WHERE title = ?""";
 
     public SpecialOfferDaoImpl() {
         super(RowMapperFactory.getInstance().getSpecialOfferRowMapper());
@@ -58,5 +63,15 @@ public class SpecialOfferDaoImpl extends AbstractQueryExecutor<SpecialOffer> imp
                 specialOffer.getDiscount(), specialOffer.getImage());
     }
 
+    @Override
+    public void deleteById(long id) throws DaoException {
+        executeUpdateQuery(DELETE_SPECIAL_OFFER_BY_TITLE_QUERY, id);
+    }
 
+    @Override
+    public void updateByTitle(String title, SpecialOffer specialOffer) throws DaoException {
+        executeUpdateQuery(UPDATE_SPECIAL_OFFER_BY_TITLE_QUERY, specialOffer.getStartDate(),
+                specialOffer.getExpirationDate(), specialOffer.getDiscount(), specialOffer.getImage(),
+                specialOffer.getDescription(), title);
+    }
 }

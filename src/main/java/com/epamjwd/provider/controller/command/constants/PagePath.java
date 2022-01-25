@@ -18,6 +18,8 @@ public final class PagePath {
     public static final String TARIFF_EDIT_PAGE = "/pages/tariffEdit.jsp";
     public static final String BALANCE_RECHARGE_PAGE = "/pages/balanceRecharge.jsp";
     public static final String PROMOTION_EDIT_PAGE = "/pages/promotionEdit.jsp";
+    public static final String PROMOTION_ADD_PAGE = "/pages/promotionAdd.jsp";
+    public static final String USERS_PANEL_PAGE="/pages/usersPanel.jsp";
 
     private PagePath() {
     }

@@ -75,6 +75,8 @@ public class TariffDaoImpl extends AbstractQueryExecutor<Tariff> implements Tari
             VALUES (?, ?, ?, ?, ?)""";
     private static final String UPDATE_TARIFF_BY_NAME_QUERY = """
             UPDATE internetprovider.tariffs SET description = ?, internet_speed = ?, image_url = ?, price = ?, status = ? ,special_offers_id = ? WHERE name = ?""";
+    private static final String DELETE_SPECIAL_OFFER_ID_BY_SPECIAL_OFFER_ID = """
+            UPDATE internetprovider.tariffs SET special_offers_id = NULL WHERE special_offers_id=?;""";
 
 
     public TariffDaoImpl() {
@@ -135,5 +137,10 @@ public class TariffDaoImpl extends AbstractQueryExecutor<Tariff> implements Tari
                 newTariff.getDescription(), newTariff.getInternetSpeed(),
                 newTariff.getImage(), newTariff.getPrice(),
                 newTariff.getStatus().toString(), specialOfferId, tariffName);
+    }
+
+    @Override
+    public void deleteSpecialOfferId(long specialOfferId) throws DaoException {
+        executeUpdateQuery(DELETE_SPECIAL_OFFER_ID_BY_SPECIAL_OFFER_ID, specialOfferId);
     }
 }
