@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface SpecialOfferService {
     List<SpecialOffer> findAllPromotions() throws ServiceException;
 
+    Optional<SpecialOffer> findById(String id) throws ServiceException;
+
     Optional<SpecialOffer> findByTitle(String title) throws ServiceException;
 
     boolean deleteSpecialOfferById(String offerId) throws ServiceException;

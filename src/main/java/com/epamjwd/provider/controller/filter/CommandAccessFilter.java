@@ -55,7 +55,7 @@ public class CommandAccessFilter implements Filter {
         commandAccessMap.put(CommandName.USERS_PANEL, List.of(AccessLevel.LEVEL_ADMIN));
         commandAccessMap.put(CommandName.USER_ACTION, List.of(AccessLevel.LEVEL_ADMIN));
         commandAccessMap.put(CommandName.TARIFF_ACTION, List.of(AccessLevel.LEVEL_ADMIN, AccessLevel.LEVEL_USER));
-        commandAccessMap.put(CommandName.FEEDBACK_ADD, List.of(AccessLevel.LEVEL_USER, AccessLevel.LEVEL_USER));
+        commandAccessMap.put(CommandName.FEEDBACK_ADD, List.of(AccessLevel.LEVEL_USER, AccessLevel.LEVEL_ADMIN));
     }
 
     @Override

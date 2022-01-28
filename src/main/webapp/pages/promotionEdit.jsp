@@ -54,7 +54,8 @@
                                    value="${specialOffer.discount}"
                                    pattern="^[0-9][0-9]?$|^100$"
                                    min="0"
-                                   max="100">
+                                   max="100"
+                                   maxlength="3">
                         </div>
                         <div class="col-12 pb-2">
                             <label for="image"><fmt:message key="lang.image.name"/> </label>

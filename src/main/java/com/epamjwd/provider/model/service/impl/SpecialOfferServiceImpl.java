@@ -26,15 +26,35 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
     @Override
     public List<SpecialOffer> findAllPromotions() throws ServiceException {
         SpecialOfferDao specialOfferDao = DaoHolder.getInstance().getSpecialOfferDao();
-        List<SpecialOffer> specialOfferList = new ArrayList<>();
         try {
+            List<SpecialOffer> specialOfferList;
             specialOfferList = specialOfferDao.findAll();
+            return specialOfferList;
         } catch (DaoException e) {
             logger.error("Special offers find all error", e);
             throw new ServiceException("Special offers find all error", e);
         }
+    }
 
-        return specialOfferList;
+    @Override
+    public Optional<SpecialOffer> findById(String offerId) throws ServiceException {
+        if (offerId == null) {
+            return Optional.empty();
+        }
+
+        SpecialOfferDao specialOfferDao = DaoHolder.getInstance().getSpecialOfferDao();
+        try {
+            Optional<SpecialOffer> specialOffer;
+            long offerIdLong = Long.parseLong(offerId);
+            specialOffer = specialOfferDao.findById(offerIdLong);
+            return specialOffer;
+        } catch (NumberFormatException e) {
+            logger.error("Number values parse error", e);
+            return Optional.empty();
+        } catch (DaoException e) {
+            logger.error("Special offers find by name error", e);
+            throw new ServiceException("Special offers find by name error", e);
+        }
     }
 
     @Override
@@ -44,15 +64,14 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
         }
 
         SpecialOfferDao specialOfferDao = DaoHolder.getInstance().getSpecialOfferDao();
-        Optional<SpecialOffer> specialOffer;
         try {
+            Optional<SpecialOffer> specialOffer;
             specialOffer = specialOfferDao.findByTitle(title);
+            return specialOffer;
         } catch (DaoException e) {
             logger.error("Special offers find by name error", e);
             throw new ServiceException("Special offers find by name error", e);
         }
-
-        return specialOffer;
     }
 
     @Override

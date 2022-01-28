@@ -30,10 +30,8 @@ public class BalanceRechargeCommand implements Command {
         Long userId = (Long) session.getAttribute(USER_ID_ATTRIBUTE);
 
         BankAccountService bankAccountService = ServiceHolder.getInstance().getBankAccountService();
-
         try {
-            BankAccount bankAccount = bankAccountService.findBankAccountByUserId(userId);
-            boolean rechargeStatus = bankAccountService.rechargeBalance(bankAccount, rechargeAmount);
+            boolean rechargeStatus = bankAccountService.rechargeBalance(userId, rechargeAmount);
             String page = rechargeStatus ? PROFILE_PAGE : PagePath.BALANCE_RECHARGE_PAGE;
             CommandType commandType = rechargeStatus ? CommandType.REDIRECT : CommandType.FORWARD;
             request.setAttribute(RECHARGE_ERROR_ATTRIBUTE, !rechargeStatus);

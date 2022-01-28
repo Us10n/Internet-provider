@@ -26,7 +26,11 @@
                         <div class="col-12">
                             <label for="offerTitle" class="form-label"><fmt:message
                                     key="lang.special.offer.title"/> </label>
-                            <input type="text" name="offerTitle" class="form-control" id="offerTitle">
+                            <input type="text" name="offerTitle" class="form-control" id="offerTitle"
+                                   placeholder="<fmt:message key="lang.special.offer.title"/> "
+                                   maxlength="45"
+                                   minlength="1"
+                                   pattern="^[A-Za-zА-Я а-я0-9]{1,45}$">
                         </div>
                         <div class="col-12">
                             <label for="startDate" class="form-label">
@@ -46,10 +50,12 @@
                         <div class="col-12 pb-2">
                             <label for="discount"><fmt:message key="lang.special.offer.discount"/> </label>
                             <input type="number" name="discount" class="form-control" id="discount"
+                                   placeholder="0-100"
                                    required
                                    pattern="^[0-9][0-9]?$|^100$"
                                    min="0"
-                                   max="100">
+                                   max="100"
+                                   maxlength="3">
                         </div>
                         <div class="col-12 pb-2">
                             <label for="image"><fmt:message key="lang.image.name"/> </label>
@@ -61,7 +67,7 @@
                         <div class="col-12 pb-3">
                             <label for="offerDescription"><fmt:message key="lang.description"/></label>
                             <textarea name="offerDescription" class="form-control" id="offerDescription"
-                                      required maxlength="2048"></textarea>
+                                      required maxlength="2048" minlength="1"></textarea>
                         </div>
                         <c:choose>
                             <c:when test="${addError eq 'true'}">

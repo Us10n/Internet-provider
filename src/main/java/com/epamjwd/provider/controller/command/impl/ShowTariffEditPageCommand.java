@@ -20,37 +20,34 @@ import java.util.Optional;
 public class ShowTariffEditPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String TARIFF_NAME_PARAMETER = "name";
+    private static final String TARIFF_ID_PARAMETER = "tariffId";
     private static final String TARIFF_ATTRIBUTE = "tariff";
     private static final String SPECIAL_OFFERS_ATTRIBUTE = "specialOffers";
     private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
-    private static final String CURRENT_PAGE = "?command=tariffEditPage&name=";
+    private static final String CURRENT_PAGE = "?command=tariffEditPage&tariffId=";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        String tariffName = request.getParameter(TARIFF_NAME_PARAMETER);
+        String tariffId = request.getParameter(TARIFF_ID_PARAMETER);
 
-        if (tariffName != null) {
-            TariffService tariffService = ServiceHolder.getInstance().getTariffService();
-            SpecialOfferService specialOfferService = ServiceHolder.getInstance().getSpecialOfferService();
-            try {
-                Optional<Tariff> tariffOptional = tariffService.findTariffByName(tariffName);
-                List<SpecialOffer> specialOfferList = specialOfferService.findAllPromotions();
-                String page;
-                if (tariffOptional.isPresent()) {
-                    request.setAttribute(TARIFF_ATTRIBUTE, tariffOptional.get());
-                    request.setAttribute(SPECIAL_OFFERS_ATTRIBUTE, specialOfferList);
-                    request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + tariffName);
-                    page = PagePath.TARIFF_EDIT_PAGE;
-                } else {
-                    page = PagePath.ERROR_NOT_FOUND_PAGE;
-                }
-                return new CommandResult(page, CommandType.FORWARD);
-            } catch (ServiceException e) {
-                logger.error("Tariff find by name error", e);
-                return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+        TariffService tariffService = ServiceHolder.getInstance().getTariffService();
+        SpecialOfferService specialOfferService = ServiceHolder.getInstance().getSpecialOfferService();
+        try {
+            Optional<Tariff> tariffOptional = tariffService.findTariffById(tariffId);
+            List<SpecialOffer> specialOfferList = specialOfferService.findAllPromotions();
+            String page;
+            if (tariffOptional.isPresent()) {
+                request.setAttribute(TARIFF_ATTRIBUTE, tariffOptional.get());
+                request.setAttribute(SPECIAL_OFFERS_ATTRIBUTE, specialOfferList);
+                request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + tariffId);
+                page = PagePath.TARIFF_EDIT_PAGE;
+            } else {
+                page = PagePath.ERROR_NOT_FOUND_PAGE;
             }
+            return new CommandResult(page, CommandType.FORWARD);
+        } catch (ServiceException e) {
+            logger.error("Tariff find by name error", e);
+            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
         }
-        return new CommandResult(PagePath.ERROR_NOT_FOUND_PAGE, CommandType.FORWARD);
     }
 }

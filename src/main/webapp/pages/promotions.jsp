@@ -29,7 +29,7 @@
                                     <form action=${pageContext.request.contextPath}/controller?command=deletePromotion
                                           method="post">
                                         <div class="btn-group">
-                                            <a href="${pageContext.request.contextPath}/controller?command=promotionEditPage&title=${offer.title}"
+                                            <a href="${pageContext.request.contextPath}/controller?command=promotionEditPage&offerId=${offer.id}"
                                                class="btn btn-sm btn-outline-secondary">Edit
                                             </a>
                                             <button type="submit" name="offerId" value="${offer.id}"

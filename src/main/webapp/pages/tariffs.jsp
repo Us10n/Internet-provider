@@ -97,13 +97,13 @@
                                 </c:choose>
                             </div>
                             <div class="col-md align-self-center d-flex flex-wrap">
-                                <a href="?command=tariff&name=${tariff.name}"
+                                <a href="?command=tariff&tariffId=${tariff.id}"
                                    class="nav-link bg-info text-white"><fmt:message
                                         key="lang.view"/></a>
                             </div>
                             <c:if test="${userRole eq 'ADMIN'}">
                                 <div class="col-md align-self-center d-flex flex-wrap">
-                                    <a href="?command=tariffEditPage&name=${tariff.name}"
+                                    <a href="?command=tariffEditPage&tariffId=${tariff.id}"
                                        class="nav-link bg-info text-white"><fmt:message
                                             key="lang.edit"/></a>
                                 </div>
@@ -146,7 +146,7 @@
                                             value="${tariff.rating}"/></p>
                                 </div>
                                 <div class="col-md align-self-center d-flex flex-wrap">
-                                    <a href="?command=tariff&name=${tariff.name}"
+                                    <a href="?command=tariff&tariffId=${tariff.id}"
                                        class="nav-link bg-info text-white"><fmt:message
                                             key="lang.view"/></a>
                                 </div>

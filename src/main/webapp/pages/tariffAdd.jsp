@@ -24,7 +24,8 @@
                     <div class="row g-3">
                         <div class="col-12">
                             <label for="tariffName" class="form-label"><fmt:message key="lang.tariff.name"/> </label>
-                            <input type="text" name="tariffName" class="form-control" id="tariffName" placeholder=""
+                            <input type="text" name="tariffName" class="form-control" id="tariffName"
+                                   placeholder="<fmt:message key="lang.tariff.name"/>"
                                    required maxlength="15">
                         </div>
 
@@ -33,6 +34,7 @@
                                 <fmt:message key="lang.speed.up.to"/>, <fmt:message key="lang.mb.s"/>
                             </label>
                             <input type="number" name="tariffInternetSpeed" class="form-control" id="internetSpeed"
+                                   placeholder="0-9999"
                                    required min="0"
                                    pattern="^\d+$"
                                    max="9999">
@@ -41,6 +43,7 @@
                             <label for="tariffPrice">
                                 <fmt:message key="lang.price"/>,<fmt:message key="lang.rub.month"/></label>
                             <input type="text" name="tariffPrice" class="form-control" id="tariffPrice"
+                                   placeholder="10.1"
                                    required min="0"
                                    pattern="^[0-9]+(\.[0-9]{1,2})?$"
                                    maxlength="11">

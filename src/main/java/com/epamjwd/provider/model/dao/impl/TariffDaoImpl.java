@@ -77,6 +77,11 @@ public class TariffDaoImpl extends AbstractQueryExecutor<Tariff> implements Tari
             UPDATE internetprovider.tariffs SET description = ?, internet_speed = ?, image_url = ?, price = ?, status = ? ,special_offers_id = ? WHERE name = ?""";
     private static final String DELETE_SPECIAL_OFFER_ID_BY_SPECIAL_OFFER_ID = """
             UPDATE internetprovider.tariffs SET special_offers_id = NULL WHERE special_offers_id=?;""";
+    private static final String UPDATE_TARIFF_RATING_QUERY= """
+            UPDATE internetprovider.tariffs
+            JOIN (SELECT tariffs_id, AVG(rating) as avg_rating FROM internetprovider.feedbacks GROUP BY tariffs_id) AS fd
+            ON tariffs.id= fd.tariffs_id
+            SET tariffs.rating = fd.avg_rating;""";
 
 
     public TariffDaoImpl() {
@@ -142,5 +147,10 @@ public class TariffDaoImpl extends AbstractQueryExecutor<Tariff> implements Tari
     @Override
     public void deleteSpecialOfferId(long specialOfferId) throws DaoException {
         executeUpdateQuery(DELETE_SPECIAL_OFFER_ID_BY_SPECIAL_OFFER_ID, specialOfferId);
+    }
+
+    @Override
+    public void updateTariffRating() throws DaoException {
+        executeUpdateQuery(UPDATE_TARIFF_RATING_QUERY);
     }
 }

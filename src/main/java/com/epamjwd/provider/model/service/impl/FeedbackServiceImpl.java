@@ -2,13 +2,11 @@ package com.epamjwd.provider.model.service.impl;
 
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.exception.ServiceException;
-import com.epamjwd.provider.model.dao.Dao;
 import com.epamjwd.provider.model.dao.DaoHolder;
 import com.epamjwd.provider.model.dao.FeedbackDao;
 import com.epamjwd.provider.model.dao.TariffDao;
 import com.epamjwd.provider.model.entity.Feedback;
 import com.epamjwd.provider.model.service.FeedbackService;
-import com.epamjwd.provider.model.service.TariffService;
 import com.epamjwd.provider.model.service.validator.FeedBackValidator;
 import com.epamjwd.provider.model.service.validator.impl.FeedBackValidatorImpl;
 import org.apache.logging.log4j.LogManager;
@@ -26,15 +24,15 @@ public class FeedbackServiceImpl implements FeedbackService {
             return new ArrayList<>();
         }
 
-        List<Feedback> feedbackList = new ArrayList<>();
         FeedbackDao feedbackDao = DaoHolder.getInstance().getFeedBackDao();
         try {
+            List<Feedback> feedbackList ;
             feedbackList = feedbackDao.findByTariffId(tariffId);
+            return feedbackList;
         } catch (DaoException e) {
             logger.error("Feedbacks find by tariff id error", e);
             throw new ServiceException("Feedbacks find by tariff id error", e);
         }
-        return feedbackList;
     }
 
     @Override
@@ -53,9 +51,7 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
             Feedback feedback = new Feedback(ratingInt, feedbackBody, tariffIdLong, authorId);
             feedbackDao.create(feedback);
-        } catch (NumberFormatException e) {
-            logger.error("Number values parse error", e);
-            return false;
+            tariffDao.updateTariffRating();
         } catch (DaoException e) {
             logger.error("Feedbacks create error", e);
             throw new ServiceException("Feedbacks create error", e);

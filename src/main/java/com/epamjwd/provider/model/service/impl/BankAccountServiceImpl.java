@@ -7,6 +7,7 @@ import com.epamjwd.provider.model.dao.Dao;
 import com.epamjwd.provider.model.dao.DaoHolder;
 import com.epamjwd.provider.model.dao.UserDao;
 import com.epamjwd.provider.model.entity.BankAccount;
+import com.epamjwd.provider.model.entity.UserStatus;
 import com.epamjwd.provider.model.service.BankAccountService;
 import com.epamjwd.provider.model.service.validator.BankAccountValidator;
 import com.epamjwd.provider.model.service.validator.impl.BankAccountValidatorImpl;
@@ -41,23 +42,29 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public boolean rechargeBalance(BankAccount bankAccount, String rechargeAmount) throws ServiceException {
-        if (bankAccount == null) {
-            logger.error("Bank account can't be null");
-            throw new ServiceException("Bank account can't be null");
+    public boolean rechargeBalance(Long userId, String rechargeAmount) throws ServiceException {
+        if (userId == null) {
+            logger.error("User id can't be null");
+            throw new ServiceException("User id can't be null");
         }
         if (!isRechargeAmountValid(rechargeAmount)) {
             return false;
         }
         BankAccountDao bankAccountDao = DaoHolder.getInstance().getBankAccountDao();
-
         try {
-            BigDecimal newBalance = new BigDecimal(rechargeAmount).add(bankAccount.getBalance());
+            Optional<BankAccount> bankAccountOptional = bankAccountDao.findByUserId(userId);
+            if (bankAccountOptional.isEmpty()) {
+                return false;
+            }
+            BankAccount bankAccount = bankAccountOptional.get();
+            BigDecimal oldBalance = bankAccount.getBalance();
+            BigDecimal newBalance = new BigDecimal(rechargeAmount).add(oldBalance);
             bankAccountDao.updateBalance(bankAccount.getId(), newBalance);
-            bankAccount.setBalance(newBalance);
-        } catch (NumberFormatException e) {
-            logger.error("Number values parse error", e);
-            return false;
+            if (oldBalance.compareTo(BigDecimal.ZERO) < 0 &&
+                    newBalance.compareTo(BigDecimal.ZERO) >= 0) {
+                UserDao userDao = DaoHolder.getInstance().getUserDao();
+                userDao.updateStatus(userId, UserStatus.VERIFIED);
+            }
         } catch (DaoException e) {
             logger.error("BankAccount update balance error", e);
             throw new ServiceException("BankAccount update balance error", e);
@@ -79,9 +86,6 @@ public class BankAccountServiceImpl implements BankAccountService {
             long bankAccountId = optionalBankAccount.get().getId();
             long tariffIdLong = Long.parseLong(tariffId);
             bankAccountDao.updateTariffId(bankAccountId, tariffIdLong);
-        } catch (NumberFormatException e) {
-            logger.error("Number values parse error", e);
-            return false;
         } catch (DaoException e) {
             logger.error("BankAccount update tariff id error", e);
             throw new ServiceException("BankAccount update tariff id error", e);
@@ -102,9 +106,6 @@ public class BankAccountServiceImpl implements BankAccountService {
             }
             long bankAccountId = optionalBankAccount.get().getId();
             bankAccountDao.updateTariffId(bankAccountId, null);
-        } catch (NumberFormatException e) {
-            logger.error("Number values parse error", e);
-            return false;
         } catch (DaoException e) {
             logger.error("BankAccount update tariff id error", e);
             throw new ServiceException("BankAccount update tariff id error", e);

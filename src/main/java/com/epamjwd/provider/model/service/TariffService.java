@@ -19,6 +19,8 @@ public interface TariffService {
 
     Optional<Tariff> findTariffById(long id) throws ServiceException;
 
+    Optional<Tariff> findTariffById(String id) throws ServiceException;
+
     boolean createNewTariff(String name, String internetSpeed, String price, String image, String description) throws ServiceException;
 
     boolean updateTariff(String name, String newInternetSpeed, String newPrice, String newImage, String newDescription, String newStatus, String newSpecialOfferTitle) throws ServiceException;

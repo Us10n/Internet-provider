@@ -47,7 +47,7 @@ public class SpecialOfferAddCommand implements Command {
                 } else {
                     request.setAttribute(EXISTS_ERROR_ATTRIBUTE, true);
                 }
-                return new CommandResult(PagePath.TARIFF_ADD_PAGE, CommandType.FORWARD);
+                return new CommandResult(PagePath.PROMOTION_ADD_PAGE, CommandType.FORWARD);
             }
             return new CommandResult(SPECIAL_OFFER_LIST_PAGE, CommandType.REDIRECT);
         } catch (ServiceException e) {

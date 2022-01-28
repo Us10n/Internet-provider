@@ -35,66 +35,66 @@ public class UserServiceImpl implements UserService {
             return Optional.empty();
         }
         UserDao userDao = DaoHolder.getInstance().getUserDao();
-        Optional<User> user = Optional.empty();
         try {
+            Optional<User> user;
             user = userDao.findById(userId);
+            return user;
         } catch (DaoException e) {
             logger.error("Find user by id error", e);
             throw new ServiceException("Find user by id error", e);
         }
-        return user;
     }
 
     @Override
     public List<User> findUsersSortByFirstName() throws ServiceException {
         UserDao userDao = DaoHolder.getInstance().getUserDao();
-        List<User> userList = new ArrayList<>();
         try {
+            List<User> userList;
             userList = userDao.findUsersSortByFirstName();
+            return userList;
         } catch (DaoException e) {
             logger.error("Find users and sort by first name error", e);
             throw new ServiceException("Find users and sort by first name error", e);
         }
-        return userList;
     }
 
     @Override
     public List<User> findUsersSortByEmail() throws ServiceException {
         UserDao userDao = DaoHolder.getInstance().getUserDao();
-        List<User> userList = new ArrayList<>();
         try {
+            List<User> userList;
             userList = userDao.findUsersSortByEmail();
+            return userList;
         } catch (DaoException e) {
             logger.error("Find users and sort by email error", e);
             throw new ServiceException("Find users and sort by email error", e);
         }
-        return userList;
     }
 
     @Override
     public List<User> findUsersSortByRole() throws ServiceException {
         UserDao userDao = DaoHolder.getInstance().getUserDao();
-        List<User> userList = new ArrayList<>();
         try {
+            List<User> userList;
             userList = userDao.findUsersSortByRole();
+            return userList;
         } catch (DaoException e) {
             logger.error("Find users and sort by role error", e);
             throw new ServiceException("Find users and sort by role error", e);
         }
-        return userList;
     }
 
     @Override
     public List<User> findUsersSortByStatus() throws ServiceException {
         UserDao userDao = DaoHolder.getInstance().getUserDao();
-        List<User> userList = new ArrayList<>();
         try {
+            List<User> userList;
             userList = userDao.findUsersSortByStatus();
+            return userList;
         } catch (DaoException e) {
             logger.error("Find users and sort by status error", e);
             throw new ServiceException("Find users and sort by status error", e);
         }
-        return userList;
     }
 
     @Override
@@ -103,14 +103,14 @@ public class UserServiceImpl implements UserService {
             return Optional.empty();
         }
         UserDao userDao = DaoHolder.getInstance().getUserDao();
-        Optional<User> user;
         try {
+            Optional<User> user;
             user = userDao.findByEmail(email);
+            return user;
         } catch (DaoException e) {
             logger.error("Find user by email error", e);
             throw new ServiceException("Find user by email error", e);
         }
-        return user;
     }
 
     @Override
@@ -123,11 +123,11 @@ public class UserServiceImpl implements UserService {
         try {
             String encodedPassword = PasswordEncryptor.getInstance().encryptPassword(password);
             user = userDao.findByEmailAndPassword(email, encodedPassword);
+        } catch (UtilityException e) {
+            logger.error("Password encoding error", e);
         } catch (DaoException e) {
             logger.error("Find user by email and password error", e);
             throw new ServiceException("Find user by email and password error", e);
-        } catch (UtilityException e) {
-            logger.error("Password encoding error", e);
         }
         return user;
     }
@@ -151,12 +151,12 @@ public class UserServiceImpl implements UserService {
             bankAccountDao.create(bankAccount);
             String verificationMessage = buildVerificationMessage(registrationToken);
             MailSender.getInstance().send(email, verificationMessage);
-        } catch (DaoException e) {
-            logger.error("User create error", e);
-            throw new ServiceException("User create error", e);
         } catch (UtilityException e) {
             logger.error("Password encoding error", e);
             throw new ServiceException("Password encoding error", e);
+        } catch (DaoException e) {
+            logger.error("User create error", e);
+            throw new ServiceException("User create error", e);
         }
 
         return true;
@@ -220,12 +220,12 @@ public class UserServiceImpl implements UserService {
         try {
             String encodedPassword = PasswordEncryptor.getInstance().encryptPassword(password);
             userDao.updatePassword(userId, encodedPassword);
-        } catch (DaoException e) {
-            logger.error("Password update error", e);
-            throw new ServiceException("Password update error", e);
         } catch (UtilityException e) {
             logger.error("Password encrypt error", e);
             throw new ServiceException("Password encrypt error", e);
+        } catch (DaoException e) {
+            logger.error("Password update error", e);
+            throw new ServiceException("Password update error", e);
         }
         return true;
     }

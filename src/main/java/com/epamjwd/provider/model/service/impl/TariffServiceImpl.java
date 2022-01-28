@@ -10,18 +10,13 @@ import com.epamjwd.provider.model.entity.SpecialOffer;
 import com.epamjwd.provider.model.entity.Tariff;
 import com.epamjwd.provider.model.entity.TariffStatus;
 import com.epamjwd.provider.model.entity.comparator.TariffNewPriceComparator;
-import com.epamjwd.provider.model.service.ServiceHolder;
-import com.epamjwd.provider.model.service.SpecialOfferService;
 import com.epamjwd.provider.model.service.TariffService;
-import com.epamjwd.provider.model.service.validator.SpecialOfferValidator;
 import com.epamjwd.provider.model.service.validator.TariffValidator;
-import com.epamjwd.provider.model.service.validator.impl.SpecialOfferValidatorImpl;
 import com.epamjwd.provider.model.service.validator.impl.TariffValidatorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -33,62 +28,62 @@ public class TariffServiceImpl implements TariffService {
     @Override
     public List<Tariff> findTariffsAndSortByName() throws ServiceException {
         TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
-        List<Tariff> tariffList = new ArrayList<>();
         try {
+            List<Tariff> tariffList;
             tariffList = tariffDao.findAllSortByName();
             countPriceAfterDiscountList(tariffList);
+            return tariffList;
         } catch (DaoException e) {
             logger.error("Tariffs find error", e);
             throw new ServiceException("Tariffs find error", e);
         }
 
-        return tariffList;
     }
 
     @Override
     public List<Tariff> findTariffsAndSortByPrice() throws ServiceException {
         TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
-        List<Tariff> tariffList = new ArrayList<>();
         try {
+            List<Tariff> tariffList;
             tariffList = tariffDao.findAllSortByPrice();
             countPriceAfterDiscountList(tariffList);
             tariffList = sortTariffsByPrice(tariffList);
+            return tariffList;
         } catch (DaoException e) {
             logger.error("Tariffs find error", e);
             throw new ServiceException("Tariffs find error", e);
         }
 
-        return tariffList;
     }
 
     @Override
     public List<Tariff> findTariffsAndSortBySpeed() throws ServiceException {
         TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
-        List<Tariff> tariffList = new ArrayList<>();
         try {
+            List<Tariff> tariffList;
             tariffList = tariffDao.findAllSortByInternetSpeed();
             countPriceAfterDiscountList(tariffList);
+            return tariffList;
         } catch (DaoException e) {
             logger.error("Tariffs find error", e);
             throw new ServiceException("Tariffs find error", e);
         }
 
-        return tariffList;
     }
 
     @Override
     public List<Tariff> findTariffsAndSortByRating() throws ServiceException {
         TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
-        List<Tariff> tariffList = new ArrayList<>();
         try {
+            List<Tariff> tariffList;
             tariffList = tariffDao.findAllSortByRating();
             countPriceAfterDiscountList(tariffList);
+            return tariffList;
         } catch (DaoException e) {
             logger.error("Tariffs find error", e);
             throw new ServiceException("Tariffs find error", e);
         }
 
-        return tariffList;
     }
 
     @Override
@@ -97,29 +92,42 @@ public class TariffServiceImpl implements TariffService {
             return Optional.empty();
         }
         TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
-        Optional<Tariff> optionalTariff = Optional.empty();
         try {
+            Optional<Tariff> optionalTariff;
             optionalTariff = tariffDao.findByName(tariffName);
             optionalTariff.ifPresent(this::countPriceAfterDiscountSingle);
+            return optionalTariff;
         } catch (DaoException e) {
             logger.error("Tariff find by name error", e);
             throw new ServiceException("Tariff find by name error", e);
         }
-        return optionalTariff;
     }
 
     @Override
     public Optional<Tariff> findTariffById(long id) throws ServiceException {
         TariffDao tariffDao = DaoHolder.getInstance().getTariffDao();
-        Optional<Tariff> optionalTariff = Optional.empty();
         try {
+            Optional<Tariff> optionalTariff;
             optionalTariff = tariffDao.findById(id);
+            return optionalTariff;
         } catch (DaoException e) {
             logger.error("Tariff find by id error", e);
             throw new ServiceException("Tariff find by id error", e);
         }
+    }
 
-        return optionalTariff;
+    @Override
+    public Optional<Tariff> findTariffById(String id) throws ServiceException {
+        if (id == null) {
+            return Optional.empty();
+        }
+        try {
+            long tariffIdLong = Long.parseLong(id);
+            return findTariffById(tariffIdLong);
+        } catch (NumberFormatException e) {
+            logger.error("Number values parse error", e);
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -136,9 +144,6 @@ public class TariffServiceImpl implements TariffService {
             Long internetSpeedLong = Long.valueOf(internetSpeed);
             Tariff newTariff = new Tariff(name, description, priceDecimal, internetSpeedLong, image);
             tariffDao.create(newTariff);
-        } catch (NumberFormatException e) {
-            logger.error("Number values parse error", e);
-            return false;
         } catch (DaoException e) {
             logger.error("Tariff create error", e);
             throw new ServiceException("Tariff create error", e);
@@ -172,9 +177,6 @@ public class TariffServiceImpl implements TariffService {
             tariffDao.updateByName(name, newTariff);
 
             bankAccountDao.deleteTariffIdWhereTariffIsDeactivated();
-        } catch (NumberFormatException e) {
-            logger.error("Number values parse error", e);
-            return false;
         } catch (DaoException e) {
             logger.error("Tariff update error", e);
             throw new ServiceException("Tariff update error", e);

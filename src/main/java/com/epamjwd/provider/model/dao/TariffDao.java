@@ -24,4 +24,7 @@ public interface TariffDao extends Dao<Tariff> {
     void updateByName(String tariffName, Tariff newTariff) throws DaoException;
 
     void deleteSpecialOfferId(long specialOfferId) throws DaoException;
+
+    void updateTariffRating() throws DaoException;
+
 }
