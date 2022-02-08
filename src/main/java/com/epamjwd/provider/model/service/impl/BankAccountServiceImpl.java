@@ -80,7 +80,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         BankAccountDao bankAccountDao = DaoHolder.getInstance().getBankAccountDao();
         try {
             Optional<BankAccount> optionalBankAccount = bankAccountDao.findByUserId(userId);
-            if (optionalBankAccount.isEmpty()) {
+            if (optionalBankAccount.isEmpty() || optionalBankAccount.get().getBalance().compareTo(BigDecimal.ZERO) < 0) {
                 return false;
             }
             long bankAccountId = optionalBankAccount.get().getId();

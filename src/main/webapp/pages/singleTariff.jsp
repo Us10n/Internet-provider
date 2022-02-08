@@ -37,7 +37,7 @@
                         <p class="text-warning"><fmt:message key="lang.status"/>: <c:out
                                 value="${tariff.status}"/></p>
                     </c:when>
-                    <c:when test="${tariff.status=='DEACTIVATED' && user!=null && user.role=='ADMIN'}">
+                    <c:when test="${tariff.status=='DEACTIVATED'}">
                         <p class="text-danger"><fmt:message key="lang.status"/>: <c:out
                                 value="${tariff.status}"/></p>
                     </c:when>
@@ -98,7 +98,7 @@
                 <div class="container pt-5">
                     <c:choose>
                         <c:when test="${userId!=null}">
-                            <c:if test="${userTariffId ==null && tariff.status != 'ARCHIVE' && tariff.status!='DEACTIVATED'}">
+                            <c:if test="${userTariffId ==null && tariff.status != 'ARCHIVE' && tariff.status!='DEACTIVATED' && sessionScope.userStatus!='BLOCKED'}">
                                 <button class="btn bg-info text-white" name="action" value="subscribe" type="submit">
                                     <fmt:message key="lang.subscribe"/>
                                 </button>
