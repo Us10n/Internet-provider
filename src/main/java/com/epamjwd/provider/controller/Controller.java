@@ -1,8 +1,8 @@
 package com.epamjwd.provider.controller;
 
 import com.epamjwd.provider.controller.command.Command;
-import com.epamjwd.provider.controller.command.constants.CommandType;
-import com.epamjwd.provider.controller.command.constants.CommandName;
+import com.epamjwd.provider.controller.command.CommandType;
+import com.epamjwd.provider.controller.command.CommandName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

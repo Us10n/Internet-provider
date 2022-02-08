@@ -109,6 +109,7 @@ public class TariffServiceImpl implements TariffService {
         try {
             Optional<Tariff> optionalTariff;
             optionalTariff = tariffDao.findById(id);
+            optionalTariff.ifPresent(this::countPriceAfterDiscountSingle);
             return optionalTariff;
         } catch (DaoException e) {
             logger.error("Tariff find by id error", e);
@@ -208,12 +209,13 @@ public class TariffServiceImpl implements TariffService {
     }
 
     private void countPriceAfterDiscountSingle(Tariff tariff) {
+        BigDecimal oneHundred = new BigDecimal(100);
         Optional<SpecialOffer> specialOffer = tariff.getSpecialOffer();
         if (specialOffer.isPresent() && isSpecialOfferValid(specialOffer.get())) {
             BigDecimal discount = new BigDecimal(specialOffer.get().getDiscount());
             BigDecimal newPrice = tariff.getPrice()
-                    .multiply(discount)
-                    .divide(BigDecimal.valueOf(100));
+                    .multiply(oneHundred.subtract(discount))
+                    .divide(oneHundred);
             tariff.setNewPrice(newPrice);
         }
     }

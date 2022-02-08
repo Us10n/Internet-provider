@@ -38,6 +38,7 @@
                                         </div>
                                     </form>
                                 </c:if>
+                                <small class="text-muted"><fmt:message key="lang.special.offer.discount"/>: <c:out value="${offer.discount}"/>%</small>
                                 <small class="text-muted"><c:out value="${offer.startDate}"/> — <c:out
                                         value="${offer.expirationDate}"/></small>
                             </div>

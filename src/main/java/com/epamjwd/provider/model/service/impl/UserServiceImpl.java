@@ -10,7 +10,6 @@ import com.epamjwd.provider.model.entity.BankAccount;
 import com.epamjwd.provider.model.entity.Role;
 import com.epamjwd.provider.model.entity.User;
 import com.epamjwd.provider.model.entity.UserStatus;
-import com.epamjwd.provider.model.pool.ActiveUserPool;
 import com.epamjwd.provider.model.service.UserService;
 import com.epamjwd.provider.model.service.validator.UserValidator;
 import com.epamjwd.provider.model.service.validator.impl.UserValidatorImpl;
@@ -21,7 +20,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -183,7 +181,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateFirstName(long userId, String newFirstName) throws ServiceException {
-        if (!UserValidatorImpl.getInstance().isNameValid(newFirstName)) {
+        if (!UserValidatorImpl.getInstance().isFirstNameValid(newFirstName)) {
             return false;
         }
         UserDao userDao = DaoHolder.getInstance().getUserDao();
@@ -198,7 +196,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateLastName(long userId, String newLastName) throws ServiceException {
-        if (!UserValidatorImpl.getInstance().isNameValid(newLastName)) {
+        if (!UserValidatorImpl.getInstance().isLastNameValid(newLastName)) {
             return false;
         }
         UserDao userDao = DaoHolder.getInstance().getUserDao();
@@ -338,8 +336,8 @@ public class UserServiceImpl implements UserService {
 
     private boolean isRegistrationUserFormValid(String firstName, String lastName, String email, String password) {
         UserValidator userValidator = UserValidatorImpl.getInstance();
-        return userValidator.isNameValid(firstName) &&
-                userValidator.isNameValid(lastName) &&
+        return userValidator.isFirstNameValid(firstName) &&
+                userValidator.isLastNameValid(lastName) &&
                 userValidator.isEmailValid(email) &&
                 userValidator.isPasswordValid(password);
     }

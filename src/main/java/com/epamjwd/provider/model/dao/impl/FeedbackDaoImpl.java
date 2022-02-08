@@ -22,12 +22,6 @@ public class FeedbackDaoImpl extends AbstractQueryExecutor<Feedback> implements 
             INNER JOIN internetprovider.users 
             ON feedbacks.users_id=users.id
             WHERE feedbacks.id=?""";
-    private static final String FIND_FEEDBACK_BY_USER_ID_QUERY = """
-            SELECT feedbacks.id, feedbacks.users_id, feedbacks.tariffs_id, feedbacks.rating, feedbacks.body, users.first_name 
-            FROM internetprovider.feedbacks
-            INNER JOIN internetprovider.users 
-            ON feedbacks.users_id=users.id
-            WHERE feedbacks.users_id=?""";
     private static final String FIND_FEEDBACK_BY_TARIFF_ID_QUERY = """
             SELECT feedbacks.id, feedbacks.users_id, feedbacks.tariffs_id, feedbacks.rating, feedbacks.body, users.first_name 
             FROM internetprovider.feedbacks
@@ -51,11 +45,6 @@ public class FeedbackDaoImpl extends AbstractQueryExecutor<Feedback> implements 
     public Optional<Feedback> findById(long id) throws DaoException {
         List<Feedback> tariffList = executeQuery(FIND_FEEDBACK_BY_FEEDBACK_ID_QUERY, id);
         return tariffList.size() != 1 ? Optional.empty() : Optional.of(tariffList.get(0));
-    }
-
-    @Override
-    public List<Feedback> findByUserId(long userId) throws DaoException {
-        return executeQuery(FIND_FEEDBACK_BY_USER_ID_QUERY, userId);
     }
 
     @Override

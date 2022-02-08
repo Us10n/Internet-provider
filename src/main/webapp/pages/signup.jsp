@@ -38,14 +38,16 @@
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label"><fmt:message key="lang.first.name"/></label>
                             <input type="text" name="firstName" class="form-control" id="firstName" placeholder=""
-                                   required maxlength="30" minlength="1">
+                                   required maxlength="30" minlength="1"
+                            pattern="^[A-Za-zА-Яа-я][A-Za-zА-Яа-я]{0,29}$">
                         </div>
 
 
                         <div class="col-sm-6">
                             <label for="lastName" class="form-label"><fmt:message key="lang.last.name"/></label>
                             <input type="text" name="lastName" class="form-control" id="lastName" placeholder=""
-                                   value="" required maxlength="30" minlength="1">
+                                   value="" required maxlength="30" minlength="1"
+                            pattern="^[A-Za-zА-Яа-я][A-Za-zА-Яа-я]{0,29}$">
                         </div>
 
                         <div class="col-12">

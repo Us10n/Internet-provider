@@ -9,38 +9,47 @@ import java.io.File;
 import static org.testng.Assert.*;
 
 public class TariffValidatorImplTest {
+    TariffValidator tariffValidator = TariffValidatorImpl.getInstance();
 
     @Test
     public void testIsNameValid() {
+        String name="This is name";
+        boolean actual=tariffValidator.isNameValid(name);
+        Assert.assertTrue(actual);
     }
 
     @Test
     public void testIsDescriptionValid() {
+        String description="This is description";
+        boolean actual= tariffValidator.isDescriptionValid(description);
+        Assert.assertTrue(actual);
     }
 
     @Test
     public void testIsInternetSpeedValid() {
+        String internetSpeed="1000";
+        boolean actual= tariffValidator.isInternetSpeedValid(internetSpeed);
+        Assert.assertTrue(actual);
     }
 
     @Test
     public void testIsImageValidRegex() {
         String imageName = "default.png";
-        TariffValidator tariffValidator = TariffValidatorImpl.getInstance();
         boolean actual = tariffValidator.isImageNameValid(imageName);
-        boolean expected = true;
-        Assert.assertEquals(actual, expected);
+        Assert.assertTrue(actual);
     }
 
     @Test
-    public void testIsImageValidFileExists() {
-        String baseUrl = "src/main/webapp/static/images/tariff/";
+    public void testIsImageValidFile() {
         String imageName = "default.png";
-        boolean actual = new File(baseUrl+imageName).isFile();
-        boolean expected = true;
-        Assert.assertEquals(actual, expected);
+        boolean actual = tariffValidator.isImageNameValid(imageName);
+        Assert.assertTrue(actual);
     }
 
     @Test
     public void testIsPriceValid() {
+        String price="123.12";
+        boolean actual= tariffValidator.isPriceValid(price);
+        Assert.assertTrue(actual);
     }
 }

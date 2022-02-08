@@ -47,13 +47,15 @@
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label"><fmt:message key="lang.first.name"/></label>
                             <input type="text" name="newFirstName" class="form-control" id="firstName" placeholder=""
-                                   value="${user.name}" required maxlength="30" minlength="1">
+                                   value="${user.name}" required maxlength="30" minlength="1"
+                            pattern="^[A-Za-zА-Яа-я][A-Za-zА-Яа-я]{0,29}$">
                         </div>
 
                         <div class="col-sm-6">
                             <label for="lastName" class="form-label"><fmt:message key="lang.last.name"/></label>
                             <input type="text" name="newLastName" class="form-control" id="lastName" placeholder=""
-                                   value="${user.surname}" required maxlength="30" minlength="1">
+                                   value="${user.surname}" required maxlength="30" minlength="1"
+                            pattern="^[A-Za-zА-Яа-я][A-Za-zА-Яа-я]{0,29}$">
                         </div>
                         <c:if test="${firstNameError eq 'true'}">
                             <div class="alert alert-danger fade show " role="alert">

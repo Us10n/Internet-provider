@@ -1,9 +1,8 @@
 package com.epamjwd.provider.controller.filter;
 
 import com.epamjwd.provider.controller.AccessLevel;
-import com.epamjwd.provider.controller.command.constants.CommandName;
+import com.epamjwd.provider.controller.command.CommandName;
 import com.epamjwd.provider.model.entity.Role;
-import com.epamjwd.provider.model.entity.User;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

@@ -19,7 +19,11 @@ public class UserValidatorImpl implements UserValidator {
     }
 
     @Override
-    public boolean isNameValid(String name) {
+    public boolean isFirstNameValid(String name) {
+        return name != null && name.matches(VALID_NAME_REGEX);
+    }
+    @Override
+    public boolean isLastNameValid(String name) {
         return name != null && name.matches(VALID_NAME_REGEX);
     }
 

@@ -2,9 +2,9 @@ package com.epamjwd.provider.controller.command.impl;
 
 import com.epamjwd.provider.controller.CommandResult;
 import com.epamjwd.provider.controller.command.Command;
-import com.epamjwd.provider.controller.command.constants.CommandName;
-import com.epamjwd.provider.controller.command.constants.CommandType;
-import com.epamjwd.provider.controller.command.constants.PagePath;
+import com.epamjwd.provider.controller.command.CommandName;
+import com.epamjwd.provider.controller.command.CommandType;
+import com.epamjwd.provider.controller.command.PagePath;
 import com.epamjwd.provider.exception.ServiceException;
 import com.epamjwd.provider.model.entity.User;
 import com.epamjwd.provider.model.service.ServiceHolder;

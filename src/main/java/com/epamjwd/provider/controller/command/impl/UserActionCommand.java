@@ -2,14 +2,11 @@ package com.epamjwd.provider.controller.command.impl;
 
 import com.epamjwd.provider.controller.CommandResult;
 import com.epamjwd.provider.controller.command.Command;
-import com.epamjwd.provider.controller.command.constants.CommandType;
-import com.epamjwd.provider.controller.command.constants.PagePath;
+import com.epamjwd.provider.controller.command.CommandType;
+import com.epamjwd.provider.controller.command.PagePath;
 import com.epamjwd.provider.exception.ServiceException;
-import com.epamjwd.provider.model.entity.User;
-import com.epamjwd.provider.model.pool.ActiveUserPool;
 import com.epamjwd.provider.model.service.ServiceHolder;
 import com.epamjwd.provider.model.service.UserService;
-import com.sun.mail.imap.protocol.UIDSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

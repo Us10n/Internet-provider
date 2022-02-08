@@ -2,11 +2,10 @@ package com.epamjwd.provider.controller.command.impl;
 
 import com.epamjwd.provider.controller.CommandResult;
 import com.epamjwd.provider.controller.command.Command;
-import com.epamjwd.provider.controller.command.constants.CommandType;
-import com.epamjwd.provider.controller.command.constants.PagePath;
+import com.epamjwd.provider.controller.command.CommandType;
+import com.epamjwd.provider.controller.command.PagePath;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 public class ShowLogInPageCommand implements Command {

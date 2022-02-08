@@ -76,6 +76,23 @@
                                 </c:if>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md align-self-center">
+                                <fmt:message key="lang.tariff.special.offer"/>:
+                            </div>
+                            <div class="col-md align-self-center">
+                                <p>
+                                    <c:choose>
+                                        <c:when test="${tariff.specialOffer.isEmpty() eq 'true'}">
+                                            <fmt:message key="lang.tariff.none"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:out value="${tariff.specialOffer.get().title}"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="container pt-5">

@@ -1,6 +1,6 @@
 package com.epamjwd.provider.controller;
 
-import com.epamjwd.provider.controller.command.constants.CommandType;
+import com.epamjwd.provider.controller.command.CommandType;
 
 public class CommandResult {
     private String page="";

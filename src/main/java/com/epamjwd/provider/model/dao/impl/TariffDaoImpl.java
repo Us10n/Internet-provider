@@ -1,14 +1,11 @@
 package com.epamjwd.provider.model.dao.impl;
 
-import com.epamjwd.provider.controller.command.constants.PagePath;
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.model.dao.AbstractQueryExecutor;
 import com.epamjwd.provider.model.dao.TariffDao;
 import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
 import com.epamjwd.provider.model.entity.Tariff;
-import com.epamjwd.provider.model.entity.TariffStatus;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 

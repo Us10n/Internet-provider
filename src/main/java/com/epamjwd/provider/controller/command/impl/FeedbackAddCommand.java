@@ -2,8 +2,8 @@ package com.epamjwd.provider.controller.command.impl;
 
 import com.epamjwd.provider.controller.CommandResult;
 import com.epamjwd.provider.controller.command.Command;
-import com.epamjwd.provider.controller.command.constants.CommandType;
-import com.epamjwd.provider.controller.command.constants.PagePath;
+import com.epamjwd.provider.controller.command.CommandType;
+import com.epamjwd.provider.controller.command.PagePath;
 import com.epamjwd.provider.exception.ServiceException;
 import com.epamjwd.provider.model.service.FeedbackService;
 import com.epamjwd.provider.model.service.ServiceHolder;
@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UserCommentCommand implements Command {
+public class FeedbackAddCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final String TARIFF_ID_PARAMETER = "tariffId";
     private static final String FEEDBACK_BODY_PARAMETER = "feedbackBody";

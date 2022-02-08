@@ -1,4 +1,4 @@
-package com.epamjwd.provider.controller.command.constants;
+package com.epamjwd.provider.controller.command;
 
 public final class CommandName {
     public static final String INTERNAL_ERROR = "internalError";

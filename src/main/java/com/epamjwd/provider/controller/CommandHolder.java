@@ -1,7 +1,7 @@
 package com.epamjwd.provider.controller;
 
 import com.epamjwd.provider.controller.command.Command;
-import com.epamjwd.provider.controller.command.constants.CommandName;
+import com.epamjwd.provider.controller.command.CommandName;
 import com.epamjwd.provider.controller.command.impl.*;
 
 import java.util.HashMap;
@@ -16,7 +16,6 @@ public class CommandHolder {
     }
 
     public CommandHolder() {
-        commandMap.put(CommandName.INTERNAL_ERROR, new DefaultCommand());
         commandMap.put(CommandName.HOME, new ShowHomePageCommand());
         commandMap.put(CommandName.LOG_IN, new ShowLogInPageCommand());
         commandMap.put(CommandName.SIGN_UP, new ShowSignUpPageCommand());
@@ -47,7 +46,7 @@ public class CommandHolder {
         commandMap.put(CommandName.USERS_PANEL, new ShowUserPanelPageCommand());
         commandMap.put(CommandName.USER_ACTION, new UserActionCommand());
         commandMap.put(CommandName.TARIFF_ACTION, new TariffActionCommand());
-        commandMap.put(CommandName.FEEDBACK_ADD, new UserCommentCommand());
+        commandMap.put(CommandName.FEEDBACK_ADD, new FeedbackAddCommand());
     }
 
     public static CommandHolder getInstance() {

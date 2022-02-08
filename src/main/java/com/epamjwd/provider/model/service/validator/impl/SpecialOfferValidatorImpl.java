@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 
 public class SpecialOfferValidatorImpl implements SpecialOfferValidator {
 
-    private static final String VALID_TITLE_REGEX = "^[A-Za-zА-Я а-я0-9]{1,45}$";
+    private static final String VALID_TITLE_REGEX = "^[A-Za-zА-Я &а-я0-9]{1,45}$";
     private static final String VALID_DATE_REGEX = "^\\d{4}-(02-(0[1-9]|[12][0-9])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))$";
     private static final String VALID_IMAGE_REGEX = "^[\\w_]+\\.[A-Za-z]{3}$";
     private static final String VALID_DISCOUNT_REGEX = "^[0-9][0-9]?$|^100$";

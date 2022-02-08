@@ -2,8 +2,8 @@ package com.epamjwd.provider.controller.command.impl;
 
 import com.epamjwd.provider.controller.CommandResult;
 import com.epamjwd.provider.controller.command.Command;
-import com.epamjwd.provider.controller.command.constants.CommandType;
-import com.epamjwd.provider.controller.command.constants.PagePath;
+import com.epamjwd.provider.controller.command.CommandType;
+import com.epamjwd.provider.controller.command.PagePath;
 import com.epamjwd.provider.exception.ServiceException;
 import com.epamjwd.provider.model.entity.Feedback;
 import com.epamjwd.provider.model.entity.Tariff;
@@ -14,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

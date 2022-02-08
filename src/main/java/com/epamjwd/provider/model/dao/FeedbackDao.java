@@ -6,9 +6,17 @@ import com.epamjwd.provider.model.entity.Feedback;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The interface Feedback dao.
+ */
 public interface FeedbackDao extends Dao<Feedback> {
 
-    List<Feedback> findByUserId(long userId) throws DaoException;
-
+    /**
+     * Finds feedback by tariff id.
+     *
+     * @param tariffId the tariff id
+     * @return feedback list.
+     * @throws DaoException the dao exception
+     */
     List<Feedback> findByTariffId(long tariffId) throws DaoException;
 }
