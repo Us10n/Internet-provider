@@ -40,6 +40,8 @@ public class UserLogInCommand implements Command {
         String password = request.getParameter(PASSWORD_PARAMETER);
 
         UserService userService = ServiceHolder.getInstance().getUserService();
+        String page;
+        CommandType commandType;
         try {
             Optional<User> optionalUser = userService.findUserByEmailAndPassword(email, password);
             if (optionalUser.isEmpty()) {
@@ -49,8 +51,6 @@ public class UserLogInCommand implements Command {
             User loadedUser = optionalUser.get();
             BankAccountService bankAccountService = ServiceHolder.getInstance().getBankAccountService();
             BankAccount bankAccount = bankAccountService.findBankAccountByUserId(loadedUser.getId());
-            String page;
-            CommandType commandType;
             switch (loadedUser.getStatus()) {
                 case VERIFIED, BLOCKED -> {
                     page = PROFILE_PAGE;
@@ -78,10 +78,11 @@ public class UserLogInCommand implements Command {
                     request.setAttribute(LOG_IN_ERROR_ATTRIBUTE, true);
                 }
             }
-            return new CommandResult(page, commandType);
         } catch (ServiceException e) {
             logger.error("Log in user error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
+            commandType = CommandType.FORWARD;
         }
+        return new CommandResult(page, commandType);
     }
 }

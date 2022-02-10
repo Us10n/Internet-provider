@@ -1,11 +1,6 @@
 package com.epamjwd.provider.model.dao.mapper.imp;
 
-import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.exception.PoolException;
-import com.epamjwd.provider.model.dao.impl.UserDaoImpl;
-import com.epamjwd.provider.model.dao.mapper.ColumnName;
-import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
-import com.epamjwd.provider.model.entity.Identifiable;
 import com.epamjwd.provider.model.entity.Role;
 import com.epamjwd.provider.model.entity.User;
 import com.epamjwd.provider.model.entity.UserStatus;
@@ -17,10 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.testng.Assert.*;
 
 public class UserMapperTest {
 

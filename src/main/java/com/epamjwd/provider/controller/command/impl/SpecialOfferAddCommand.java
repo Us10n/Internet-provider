@@ -38,6 +38,8 @@ public class SpecialOfferAddCommand implements Command {
 
         SpecialOfferService specialOfferService = ServiceHolder.getInstance().getSpecialOfferService();
 
+        String page;
+        CommandType commandType;
         try {
             boolean creationStatus = specialOfferService.createSpecialOffer(title, startDate, expirationDate, discount, image, description);
             if (!creationStatus) {
@@ -47,12 +49,14 @@ public class SpecialOfferAddCommand implements Command {
                 } else {
                     request.setAttribute(EXISTS_ERROR_ATTRIBUTE, true);
                 }
-                return new CommandResult(PagePath.PROMOTION_ADD_PAGE, CommandType.FORWARD);
             }
-            return new CommandResult(SPECIAL_OFFER_LIST_PAGE, CommandType.REDIRECT);
+            page = creationStatus ? SPECIAL_OFFER_LIST_PAGE : PagePath.PROMOTION_ADD_PAGE;
+            commandType = creationStatus ? CommandType.REDIRECT : CommandType.FORWARD;
         } catch (ServiceException e) {
             logger.error("Special offer add error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
+            commandType = CommandType.FORWARD;
         }
+        return new CommandResult(page, commandType);
     }
 }

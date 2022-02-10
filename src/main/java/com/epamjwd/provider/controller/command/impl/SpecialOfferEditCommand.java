@@ -36,17 +36,19 @@ public class SpecialOfferEditCommand implements Command {
         String description = request.getParameter(SPECIAL_OFFER_DESCRIPTION_PARAMETER);
 
         SpecialOfferService specialOfferService = ServiceHolder.getInstance().getSpecialOfferService();
-
+        String page;
+        CommandType commandType;
         try {
             boolean updateStatus = specialOfferService.updateSpecialOfferByTitle(title, startDate, expirationDate, discount, image, description);
-            String page = updateStatus ? SPECIAL_OFFER_LIST_PAGE : PagePath.PROMOTION_EDIT_PAGE;
-            CommandType commandType = updateStatus ? CommandType.REDIRECT : CommandType.FORWARD;
+            page = updateStatus ? SPECIAL_OFFER_LIST_PAGE : PagePath.PROMOTION_EDIT_PAGE;
+            commandType = updateStatus ? CommandType.REDIRECT : CommandType.FORWARD;
             request.setAttribute(SPECIAL_OFFER_EDIT_ERROR_ATTRIBUTE, !updateStatus);
-            return new CommandResult(page, commandType);
         } catch (ServiceException e) {
             logger.error("Special offer update error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
+            commandType = CommandType.FORWARD;
         }
+        return new CommandResult(page, commandType);
 
     }
 }

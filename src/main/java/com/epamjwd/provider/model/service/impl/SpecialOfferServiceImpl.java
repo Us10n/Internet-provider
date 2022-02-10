@@ -2,7 +2,6 @@ package com.epamjwd.provider.model.service.impl;
 
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.exception.ServiceException;
-import com.epamjwd.provider.model.dao.Dao;
 import com.epamjwd.provider.model.dao.DaoHolder;
 import com.epamjwd.provider.model.dao.SpecialOfferDao;
 import com.epamjwd.provider.model.dao.TariffDao;
@@ -15,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

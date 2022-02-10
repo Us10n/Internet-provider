@@ -18,10 +18,10 @@ public class CommandAccessFilter implements Filter {
     private static final String USER_ROLE_ATTRIBUTE = "userRole";
     private static final String COMMAND_PARAMETER = "command";
 
-    private HashMap<String, List<AccessLevel>> commandAccessMap = new HashMap<>();
+    private final HashMap<String, List<AccessLevel>> commandAccessMap = new HashMap<>();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         commandAccessMap.put(CommandName.INTERNAL_ERROR, List.of(AccessLevel.LEVEL_ANY));
         commandAccessMap.put(CommandName.PAGE_NOT_FOUND_ERROR, List.of(AccessLevel.LEVEL_ANY));
         commandAccessMap.put(CommandName.FORBIDDEN_ERROR, List.of(AccessLevel.LEVEL_ANY));

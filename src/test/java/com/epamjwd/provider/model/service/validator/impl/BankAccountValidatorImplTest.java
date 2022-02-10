@@ -3,8 +3,6 @@ package com.epamjwd.provider.model.service.validator.impl;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 public class BankAccountValidatorImplTest {
 
     @Test

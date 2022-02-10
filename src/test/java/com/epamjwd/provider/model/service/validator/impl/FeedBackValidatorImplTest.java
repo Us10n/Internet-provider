@@ -4,8 +4,6 @@ import com.epamjwd.provider.model.service.validator.FeedBackValidator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 public class FeedBackValidatorImplTest {
     FeedBackValidator feedBackValidator=FeedBackValidatorImpl.getInstance();
 

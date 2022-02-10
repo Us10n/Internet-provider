@@ -2,7 +2,6 @@ package com.epamjwd.provider.model.service.validator.impl;
 
 import com.epamjwd.provider.model.service.validator.SpecialOfferValidator;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

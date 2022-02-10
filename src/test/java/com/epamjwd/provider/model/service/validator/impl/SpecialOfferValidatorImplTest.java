@@ -4,8 +4,6 @@ import com.epamjwd.provider.model.service.validator.SpecialOfferValidator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 public class SpecialOfferValidatorImplTest {
     SpecialOfferValidator specialOfferValidator = SpecialOfferValidatorImpl.getInstance();
 

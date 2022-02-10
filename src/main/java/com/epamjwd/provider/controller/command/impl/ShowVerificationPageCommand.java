@@ -21,16 +21,15 @@ public class ShowVerificationPageCommand implements Command {
 
         String token = request.getParameter(TOKEN_PARAMETER);
         UserService userService = ServiceHolder.getInstance().getUserService();
+        String page;
         try {
             boolean verificationStatus = userService.verifyUser(token);
-            if (!verificationStatus) {
-                return new CommandResult(PagePath.ERROR_NOT_FOUND_PAGE, CommandType.FORWARD);
-            }
+            page = verificationStatus ? PagePath.VERIFICATION_PAGE : PagePath.ERROR_NOT_FOUND_PAGE;
         } catch (ServiceException e) {
             logger.error("Verification error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
         }
 
-        return new CommandResult(PagePath.VERIFICATION_PAGE, CommandType.FORWARD);
+        return new CommandResult(page, CommandType.FORWARD);
     }
 }

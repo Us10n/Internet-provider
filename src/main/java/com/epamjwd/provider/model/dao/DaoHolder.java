@@ -1,7 +1,6 @@
 package com.epamjwd.provider.model.dao;
 
 import com.epamjwd.provider.model.dao.impl.*;
-import com.epamjwd.provider.model.entity.User;
 
 public class DaoHolder {
     private BankAccountDao bankAccountDao = new BankAccountDaoImpl();

@@ -1,6 +1,5 @@
 package com.epamjwd.provider.controller.filter;
 
-import com.epamjwd.provider.model.entity.User;
 import com.epamjwd.provider.model.entity.UserStatus;
 import com.epamjwd.provider.model.pool.ActiveUserPool;
 
@@ -21,7 +20,7 @@ public class UserStatusFilter implements Filter {
 
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

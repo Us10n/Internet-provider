@@ -27,25 +27,31 @@ public class TariffActionCommand implements Command {
         HttpSession session = request.getSession();
 
         String action = request.getParameter(ACTION_PARAMETER);
-        if (action != null) {
-            try {
-                String tariffId = request.getParameter(TARIFF_ID_PARAMETER);
-                Long userId = (Long) session.getAttribute(USER_ID_ATTRIBUTE);
-
-                BankAccountService bankAccountService = ServiceHolder.getInstance().getBankAccountService();
-                switch (action) {
-                    case ACTION_SUBSCRIBE -> bankAccountService.subscribeTariff(userId, tariffId);
-                    case ACTION_UNSUBSCRIBE -> bankAccountService.unsubscribeTariff(userId);
-                    default -> throw new ServiceException("Can not find action " + action);
-                }
-                return new CommandResult(PROFILE_PAGE, CommandType.REDIRECT);
-            } catch (ServiceException e) {
-                logger.error("Tariff subscribe/unsubscribe error", e);
-                return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
-            }
+        if (action == null) {
+            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
         }
-        return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+        String page;
+        CommandType commandType;
+        try {
+            String tariffId = request.getParameter(TARIFF_ID_PARAMETER);
+            Long userId = (Long) session.getAttribute(USER_ID_ATTRIBUTE);
+
+            BankAccountService bankAccountService = ServiceHolder.getInstance().getBankAccountService();
+            switch (action) {
+                case ACTION_SUBSCRIBE -> bankAccountService.subscribeTariff(userId, tariffId);
+                case ACTION_UNSUBSCRIBE -> bankAccountService.unsubscribeTariff(userId);
+                default -> throw new ServiceException("Can not find action " + action);
+            }
+            page = PROFILE_PAGE;
+            commandType = CommandType.REDIRECT;
+        } catch (ServiceException e) {
+            logger.error("Tariff subscribe/unsubscribe error", e);
+            page = PagePath.ERROR_INTERNAL_PAGE;
+            commandType = CommandType.FORWARD;
+        }
+        return new CommandResult(page, commandType);
     }
+
 
 }
 

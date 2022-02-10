@@ -28,25 +28,29 @@ public class UserActionCommand implements Command {
 
         String action = request.getParameter(USER_ACTION_PARAMETER);
         String userId = request.getParameter(USER_EDITING_ID_PARAMETER);
-        if (action != null) {
-            try {
-                UserService userService = ServiceHolder.getInstance().getUserService();
-                boolean userUpdateStatus = switch (action) {
-                    case ACTION_BAN_PARAMETER -> userService.makeUserBanned(userId);
-                    case ACTION_UNBAN_PARAMETER -> userService.makeUserUnbanned(userId);
-                    case ACTION_VERIFY_PARAMETER -> userService.makeUserVerified(userId);
-                    case ACTION_MAKE_ADMIN_PARAMETER -> userService.makeUserAdmin(userId);
-                    default -> false;
-                };
-                request.setAttribute(USER_UPDATE_ERROR_ATTRIBUTE, !userUpdateStatus);
-                String page = userUpdateStatus ? USERS_PANEL_PAGE : PagePath.ERROR_INTERNAL_PAGE;
-                CommandType commandType = userUpdateStatus ? CommandType.REDIRECT : CommandType.FORWARD;
-                return new CommandResult(page, commandType);
-            } catch (ServiceException e) {
-                logger.error("User update error", e);
-                return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
-            }
+        if (action == null) {
+            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
         }
-        return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+        String page;
+        CommandType commandType;
+        try {
+            UserService userService = ServiceHolder.getInstance().getUserService();
+            boolean userUpdateStatus = switch (action) {
+                case ACTION_BAN_PARAMETER -> userService.makeUserBanned(userId);
+                case ACTION_UNBAN_PARAMETER -> userService.makeUserUnbanned(userId);
+                case ACTION_VERIFY_PARAMETER -> userService.makeUserVerified(userId);
+                case ACTION_MAKE_ADMIN_PARAMETER -> userService.makeUserAdmin(userId);
+                default -> false;
+            };
+            request.setAttribute(USER_UPDATE_ERROR_ATTRIBUTE, !userUpdateStatus);
+            page = userUpdateStatus ? USERS_PANEL_PAGE : PagePath.ERROR_INTERNAL_PAGE;
+            commandType = userUpdateStatus ? CommandType.REDIRECT : CommandType.FORWARD;
+        } catch (ServiceException e) {
+            logger.error("User update error", e);
+            page = PagePath.ERROR_INTERNAL_PAGE;
+            commandType = CommandType.FORWARD;
+        }
+        return new CommandResult(page, commandType);
     }
+
 }

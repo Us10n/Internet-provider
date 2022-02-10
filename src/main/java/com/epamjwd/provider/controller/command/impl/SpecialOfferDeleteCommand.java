@@ -23,14 +23,17 @@ public class SpecialOfferDeleteCommand implements Command {
         String offerId = request.getParameter(SPECIAL_OFFER_ID_PARAMETER);
 
         SpecialOfferService specialOfferService = ServiceHolder.getInstance().getSpecialOfferService();
+        String page;
+        CommandType commandType;
         try {
             boolean deletionStatus = specialOfferService.deleteSpecialOfferById(offerId);
-            String page = deletionStatus ? SPECIAL_OFFERS_PAGE : PagePath.ERROR_INTERNAL_PAGE;
-            CommandType commandType = deletionStatus ? CommandType.REDIRECT : CommandType.FORWARD;
-            return new CommandResult(page, commandType);
+            page = deletionStatus ? SPECIAL_OFFERS_PAGE : PagePath.ERROR_INTERNAL_PAGE;
+            commandType = deletionStatus ? CommandType.REDIRECT : CommandType.FORWARD;
         } catch (ServiceException e) {
             logger.error("Special offer delete error");
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
+            commandType = CommandType.FORWARD;
         }
+        return new CommandResult(page, commandType);
     }
 }

@@ -4,7 +4,6 @@ import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.model.entity.Feedback;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The interface Feedback dao.

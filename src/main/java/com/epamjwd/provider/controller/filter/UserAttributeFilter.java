@@ -2,7 +2,6 @@ package com.epamjwd.provider.controller.filter;
 
 import com.epamjwd.provider.exception.ServiceException;
 import com.epamjwd.provider.model.entity.BankAccount;
-import com.epamjwd.provider.model.entity.Role;
 import com.epamjwd.provider.model.entity.User;
 import com.epamjwd.provider.model.service.BankAccountService;
 import com.epamjwd.provider.model.service.ServiceHolder;
@@ -11,7 +10,6 @@ import com.epamjwd.provider.model.service.UserService;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
@@ -25,14 +23,13 @@ public class UserAttributeFilter implements Filter {
     private static final String INTERNAL_ERROR_PAGE = "/controller?command=internalError";
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig){
 
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
         Long currentUserId = (Long) session.getAttribute(USER_ID_ATTRIBUTE);

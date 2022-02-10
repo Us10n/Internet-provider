@@ -29,9 +29,9 @@ public class ShowSpecialOfferEditPageCommand implements Command {
 
         SpecialOfferService specialOfferService = ServiceHolder.getInstance().getSpecialOfferService();
 
+        String page;
         try {
             Optional<SpecialOffer> specialOfferOptional = specialOfferService.findById(offerId);
-            String page;
             if (specialOfferOptional.isPresent()) {
                 request.setAttribute(SPECIAL_OFFER_ATTRIBUTE, specialOfferOptional.get());
                 request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + offerId);
@@ -39,10 +39,10 @@ public class ShowSpecialOfferEditPageCommand implements Command {
             } else {
                 page = PagePath.ERROR_NOT_FOUND_PAGE;
             }
-            return new CommandResult(page, CommandType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Special offer find by title error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
         }
+        return new CommandResult(page, CommandType.FORWARD);
     }
 }

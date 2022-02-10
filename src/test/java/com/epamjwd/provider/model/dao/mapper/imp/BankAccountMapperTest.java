@@ -3,7 +3,6 @@ package com.epamjwd.provider.model.dao.mapper.imp;
 import com.epamjwd.provider.exception.PoolException;
 import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
 import com.epamjwd.provider.model.entity.Identifiable;
-import com.epamjwd.provider.model.entity.Tariff;
 import com.epamjwd.provider.model.pool.ConnectionPool;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -14,8 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.testng.Assert.*;
 
 public class BankAccountMapperTest {
 

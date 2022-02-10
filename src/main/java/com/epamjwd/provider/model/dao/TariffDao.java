@@ -1,11 +1,8 @@
 package com.epamjwd.provider.model.dao;
 
 import com.epamjwd.provider.exception.DaoException;
-import com.epamjwd.provider.model.entity.SpecialOffer;
 import com.epamjwd.provider.model.entity.Tariff;
-import com.epamjwd.provider.model.entity.TariffStatus;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 

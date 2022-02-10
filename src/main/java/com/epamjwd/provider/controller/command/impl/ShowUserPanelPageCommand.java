@@ -34,6 +34,7 @@ public class ShowUserPanelPageCommand implements Command {
         String sortParameter = request.getParameter(CommandName.SORT) == null ?
                 FIRST_NAME_SORT_PARAMETER : request.getParameter(CommandName.SORT);
 
+        String page;
         try {
             userList = switch (sortParameter) {
                 case EMAIL_SORT_PARAMETER -> userService.findUsersSortByEmail();
@@ -41,12 +42,13 @@ public class ShowUserPanelPageCommand implements Command {
                 case ROLE_SORT_PARAMETER -> userService.findUsersSortByRole();
                 default -> userService.findUsersSortByFirstName();
             };
+            request.setAttribute(USER_LIST_ATTRIBUTE, userList);
+            request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + sortParameter);
+            page = PagePath.USERS_PANEL_PAGE;
         } catch (ServiceException e) {
             logger.error("Find and sort users error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
         }
-        request.setAttribute(USER_LIST_ATTRIBUTE, userList);
-        request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + sortParameter);
-        return new CommandResult(PagePath.USERS_PANEL_PAGE, CommandType.FORWARD);
+        return new CommandResult(page, CommandType.FORWARD);
     }
 }

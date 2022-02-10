@@ -1,21 +1,15 @@
 package com.epamjwd.provider.controller.filter;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
 
 @WebFilter(urlPatterns = {"/*"})
 public class LocaleFilter implements Filter {
-    private static final Logger logger = LogManager.getLogger();
-
     private static final String AVAILABLE_LANGUAGES_REGEX = "(en-US)|(ru-RU)";
     private static final String DEFAULT_LOCALE = "en-US";
     private static final String COOKIE_LOCALE_NAME = "lang";
@@ -23,8 +17,7 @@ public class LocaleFilter implements Filter {
 
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
+    public void init(FilterConfig filterConfig){
     }
 
     @Override

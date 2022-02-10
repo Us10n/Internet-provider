@@ -2,8 +2,6 @@ package com.epamjwd.provider.model.service.validator.impl;
 
 import com.epamjwd.provider.model.service.validator.TariffValidator;
 
-import java.io.File;
-
 public class TariffValidatorImpl implements TariffValidator {
 
     private static final String VALID_TITLE_REGEX = "^[A-Za-zА-Я а-я0-9]{1,15}$";

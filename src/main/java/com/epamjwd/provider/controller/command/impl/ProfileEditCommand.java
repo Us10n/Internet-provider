@@ -38,11 +38,12 @@ public class ProfileEditCommand implements Command {
         String userEmail = (String) session.getAttribute(USER_EMAIL_ATTRIBUTE);
 
         UserService userService = ServiceHolder.getInstance().getUserService();
-
+        String page;
+        CommandType commandType;
         try {
             User user = userService.findUserByEmail(userEmail).get();
-            String page = PROFILE_PAGE;
-            CommandType commandType = CommandType.REDIRECT;
+            page = PROFILE_PAGE;
+            commandType = CommandType.REDIRECT;
             if (newFirstName != null && !user.getName().equals(newFirstName)) {
                 boolean updateFirstNameStatus = userService.updateFirstName(userId, newFirstName);
                 if (!updateFirstNameStatus) {
@@ -67,11 +68,11 @@ public class ProfileEditCommand implements Command {
                 }
                 request.setAttribute(PASSWORD_UPDATE_ERROR_ATTRIBUTE, !updatePasswordStatus);
             }
-            return new CommandResult(page, commandType);
         } catch (ServiceException e) {
             logger.error("Personal information update error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
+            commandType = CommandType.REDIRECT;
         }
-
+        return new CommandResult(page, commandType);
     }
 }

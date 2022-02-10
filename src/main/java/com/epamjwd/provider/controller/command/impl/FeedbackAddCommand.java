@@ -21,7 +21,6 @@ public class FeedbackAddCommand implements Command {
     private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
 
     @Override
-
     public CommandResult execute(HttpServletRequest request) {
 
         Long userId = (Long) request.getSession().getAttribute(USER_ID_ATTRIBUTE);
@@ -31,12 +30,17 @@ public class FeedbackAddCommand implements Command {
         String currentPage = (String) request.getSession().getAttribute(CURRENT_PAGE_ATTRIBUTE);
 
         FeedbackService feedbackService = ServiceHolder.getInstance().getFeedbackService();
+        String page;
+        CommandType commandType;
         try {
             feedbackService.createNewFeedback(userId, tariffId, rating, feedbackBody);
-            return new CommandResult(currentPage, CommandType.REDIRECT);
+            page=currentPage;
+            commandType=CommandType.REDIRECT;
         } catch (ServiceException e) {
             logger.error("Feedback create error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page=PagePath.ERROR_INTERNAL_PAGE;
+            commandType=CommandType.FORWARD;
         }
+        return new CommandResult(page, commandType);
     }
 }

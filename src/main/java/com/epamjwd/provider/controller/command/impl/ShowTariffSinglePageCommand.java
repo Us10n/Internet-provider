@@ -34,8 +34,8 @@ public class ShowTariffSinglePageCommand implements Command {
         FeedbackService feedbackService = ServiceHolder.getInstance().getFeedbackService();
         Optional<Tariff> tariffOptional;
         List<Feedback> feedbackList;
+        String page;
         try {
-            String page;
             tariffOptional = tariffService.findTariffById(tariffId);
             if (tariffOptional.isEmpty()) {
                 page = PagePath.ERROR_NOT_FOUND_PAGE;
@@ -46,10 +46,10 @@ public class ShowTariffSinglePageCommand implements Command {
                 request.setAttribute(TARIFF_ATTRIBUTE, tariffOptional.get());
                 request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + tariffId);
             }
-            return new CommandResult(page, CommandType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Tariff service error");
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
         }
+        return new CommandResult(page, CommandType.FORWARD);
     }
 }

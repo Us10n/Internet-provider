@@ -24,20 +24,22 @@ public class BalanceRechargeCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-
         String rechargeAmount = request.getParameter(RECHARGE_AMOUNT_PARAMETER);
         Long userId = (Long) session.getAttribute(USER_ID_ATTRIBUTE);
 
         BankAccountService bankAccountService = ServiceHolder.getInstance().getBankAccountService();
+        CommandType commandType;
+        String page;
         try {
             boolean rechargeStatus = bankAccountService.rechargeBalance(userId, rechargeAmount);
-            String page = rechargeStatus ? PROFILE_PAGE : PagePath.BALANCE_RECHARGE_PAGE;
-            CommandType commandType = rechargeStatus ? CommandType.REDIRECT : CommandType.FORWARD;
             request.setAttribute(RECHARGE_ERROR_ATTRIBUTE, !rechargeStatus);
-            return new CommandResult(page, commandType);
+            page = rechargeStatus ? PROFILE_PAGE : PagePath.BALANCE_RECHARGE_PAGE;
+            commandType = rechargeStatus ? CommandType.REDIRECT : CommandType.FORWARD;
         } catch (ServiceException e) {
             logger.error("Recharge balance error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page=PagePath.ERROR_INTERNAL_PAGE;
+            commandType=CommandType.FORWARD;
         }
+        return new CommandResult(page, commandType);
     }
 }

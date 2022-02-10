@@ -3,8 +3,6 @@ package com.epamjwd.provider.model.pool;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 public class ActiveUserPoolTest {
 
     @Test

@@ -34,6 +34,8 @@ public class UserSignUpCommand implements Command {
         String password = request.getParameter(PASSWORD_PARAMETER);
 
         UserService userService = ServiceHolder.getInstance().getUserService();
+        String page;
+        CommandType commandType;
         try {
             boolean registrationStatus = userService.registerUser(firstName, lastName, email, password);
             if (!registrationStatus) {
@@ -43,12 +45,14 @@ public class UserSignUpCommand implements Command {
                 } else {
                     request.setAttribute(USER_EXISTS_ERROR_ATTRIBUTE, true);
                 }
-                return new CommandResult(PagePath.SIGN_UP_PAGE, CommandType.FORWARD);
             }
+            page = registrationStatus ? LOG_IN_PAGE : PagePath.SIGN_UP_PAGE;
+            commandType = registrationStatus ? CommandType.REDIRECT : CommandType.FORWARD;
         } catch (ServiceException e) {
             logger.error("Registration user error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
+            commandType = CommandType.FORWARD;
         }
-        return new CommandResult(LOG_IN_PAGE, CommandType.REDIRECT);
+        return new CommandResult(page, commandType);
     }
 }

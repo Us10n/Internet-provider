@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShowSpecialOfferPageCommand implements Command {
@@ -23,16 +22,18 @@ public class ShowSpecialOfferPageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
         SpecialOfferService specialOfferService = ServiceHolder.getInstance().getSpecialOfferService();
-        List<SpecialOffer> specialOfferList = new ArrayList<>();
+        List<SpecialOffer> specialOfferList;
+
+        String page;
         try {
             specialOfferList = specialOfferService.findAllPromotions();
+            request.setAttribute("offers", specialOfferList);
+            request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE);
+            page = PagePath.PROMOTION_LIST_PAGE;
         } catch (ServiceException e) {
             logger.error("Special offers service error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
         }
-
-        request.setAttribute("offers", specialOfferList);
-        request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE);
-        return new CommandResult(PagePath.PROMOTION_LIST_PAGE, CommandType.FORWARD);
+        return new CommandResult(page, CommandType.FORWARD);
     }
 }

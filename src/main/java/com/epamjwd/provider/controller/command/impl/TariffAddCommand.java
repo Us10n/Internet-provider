@@ -35,6 +35,8 @@ public class TariffAddCommand implements Command {
         String description = request.getParameter(TARIFF_DESCRIPTION_PARAMETER);
 
         TariffService tariffService = ServiceHolder.getInstance().getTariffService();
+        String page;
+        CommandType commandType;
         try {
             boolean creationStatus = tariffService.createNewTariff(name, internetSpeed, price, image, description);
             if (!creationStatus) {
@@ -44,12 +46,14 @@ public class TariffAddCommand implements Command {
                 } else {
                     request.setAttribute(EXISTS_ERROR_ATTRIBUTE, true);
                 }
-                return new CommandResult(PagePath.TARIFF_ADD_PAGE, CommandType.FORWARD);
             }
-            return new CommandResult(TARIFFS_PANEL_PAGE, CommandType.REDIRECT);
+            page = creationStatus ? TARIFFS_PANEL_PAGE : PagePath.TARIFF_ADD_PAGE;
+            commandType = creationStatus ? CommandType.REDIRECT : CommandType.FORWARD;
         } catch (ServiceException e) {
             logger.error("Create new tariff error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page = PagePath.ERROR_INTERNAL_PAGE;
+            commandType = CommandType.FORWARD;
         }
+        return new CommandResult(page, commandType);
     }
 }

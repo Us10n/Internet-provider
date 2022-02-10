@@ -28,11 +28,13 @@ public class ShowTariffListPageCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        List<Tariff> tariffList = new ArrayList<>();
+        List<Tariff> tariffList;
         TariffService tariffService = ServiceHolder.getInstance().getTariffService();
 
         String sortParameter = request.getParameter(CommandName.SORT) == null ?
                 NAME_SORT_PARAMETER : request.getParameter(CommandName.SORT);
+
+        String page;
         try {
             tariffList = switch (sortParameter) {
                 case PRICE_SORT_PARAMETER -> tariffService.findTariffsAndSortByPrice();
@@ -40,12 +42,13 @@ public class ShowTariffListPageCommand implements Command {
                 case SPEED_SORT_PARAMETER -> tariffService.findTariffsAndSortBySpeed();
                 default -> tariffService.findTariffsAndSortByName();
             };
+            request.setAttribute(TARIFF_LIST_ATTRIBUTE, tariffList);
+            request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + sortParameter);
+            page=PagePath.TARIFF_LIST_PAGE;
         } catch (ServiceException e) {
             logger.error("Find and sort tariffs error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page=PagePath.ERROR_INTERNAL_PAGE;
         }
-        request.setAttribute(TARIFF_LIST_ATTRIBUTE, tariffList);
-        request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE + sortParameter);
-        return new CommandResult(PagePath.TARIFF_LIST_PAGE, CommandType.FORWARD);
+        return new CommandResult(page, CommandType.FORWARD);
     }
 }

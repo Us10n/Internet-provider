@@ -3,7 +3,6 @@ package com.epamjwd.provider.model.service.impl;
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.exception.ServiceException;
 import com.epamjwd.provider.model.dao.BankAccountDao;
-import com.epamjwd.provider.model.dao.Dao;
 import com.epamjwd.provider.model.dao.DaoHolder;
 import com.epamjwd.provider.model.dao.UserDao;
 import com.epamjwd.provider.model.entity.BankAccount;

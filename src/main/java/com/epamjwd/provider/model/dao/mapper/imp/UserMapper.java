@@ -2,7 +2,6 @@ package com.epamjwd.provider.model.dao.mapper.imp;
 
 import com.epamjwd.provider.model.dao.mapper.ColumnName;
 import com.epamjwd.provider.model.dao.mapper.RowMapper;
-import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
 import com.epamjwd.provider.model.entity.Role;
 import com.epamjwd.provider.model.entity.User;
 import com.epamjwd.provider.model.entity.UserStatus;

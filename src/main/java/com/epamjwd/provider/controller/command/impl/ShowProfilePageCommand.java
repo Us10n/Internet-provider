@@ -26,8 +26,6 @@ public class ShowProfilePageCommand implements Command {
 
     private static final String USER_ID_ATTRIBUTE = "userId";
     private static final String USER_EMAIL_ATTRIBUTE = "userEmail";
-    private static final String USER_ROLE_ATTRIBUTE = "userRole";
-    private static final String BANK_ACCOUNT_ID = "bankAccountId";
 
     private static final String USER_PARAMETER = "user";
     private static final String BANK_ACCOUNT_PARAMETER = "bankAccount";
@@ -41,6 +39,8 @@ public class ShowProfilePageCommand implements Command {
         Long userId = (Long) session.getAttribute(USER_ID_ATTRIBUTE);
         String email = (String) session.getAttribute(USER_EMAIL_ATTRIBUTE);
 
+        String page;
+        CommandType commandType;
         try {
             BankAccountService bankAccountService = ServiceHolder.getInstance().getBankAccountService();
             BankAccount bankAccount = bankAccountService.findBankAccountByUserId(userId);
@@ -53,17 +53,15 @@ public class ShowProfilePageCommand implements Command {
             }
             UserService userService = ServiceHolder.getInstance().getUserService();
             Optional<User> userOptional = userService.findUserByEmail(email);
-            if (userOptional.isEmpty()) {
-                return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
-            }
             User user = userOptional.get();
             request.setAttribute(USER_PARAMETER, user);
             request.setAttribute(BANK_ACCOUNT_PARAMETER,bankAccount);
+            request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE);
+            page=PagePath.PROFILE_PAGE;
         } catch (ServiceException e) {
             logger.error("Find tariff by id error", e);
-            return new CommandResult(PagePath.ERROR_INTERNAL_PAGE, CommandType.FORWARD);
+            page=PagePath.ERROR_INTERNAL_PAGE;
         }
-        request.getSession().setAttribute(CURRENT_PAGE_ATTRIBUTE, CURRENT_PAGE);
-        return new CommandResult(PagePath.PROFILE_PAGE, CommandType.FORWARD);
+        return new CommandResult(page, CommandType.FORWARD);
     }
 }
