@@ -3,7 +3,7 @@ package com.epamjwd.provider.model.dao.impl;
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.model.dao.AbstractQueryExecutor;
 import com.epamjwd.provider.model.dao.UserDao;
-import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
+import com.epamjwd.provider.model.dao.mapper.RowMapperHolder;
 import com.epamjwd.provider.model.entity.Role;
 import com.epamjwd.provider.model.entity.User;
 import com.epamjwd.provider.model.entity.UserStatus;
@@ -63,7 +63,7 @@ public class UserDaoImpl extends AbstractQueryExecutor<User> implements UserDao 
             WHERE (id=?)""";
 
     public UserDaoImpl() {
-        super(RowMapperFactory.getInstance().getUserRowMapper());
+        super(RowMapperHolder.getInstance().getUserRowMapper());
     }
 
     @Override

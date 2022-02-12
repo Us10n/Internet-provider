@@ -36,7 +36,16 @@ public interface BankAccountDao extends Dao<BankAccount> {
      * @param tariffId      the tariff id
      * @throws DaoException the dao exception
      */
-    void updateTariffId(long bankAccountId, Long tariffId) throws DaoException;
+    void updateTariffIdByBankAccountId(long bankAccountId, Long tariffId) throws DaoException;
+
+    /**
+     * Update tariff id by user id with tariffId value
+     *
+     * @param userId the user id
+     * @param tariffId      the tariff id
+     * @throws DaoException the dao exception
+     */
+    void updateTariffIdByUserId(long userId, Long tariffId) throws DaoException;
 
     /**
      * Unsubscribe bank account from deactivated tariff.

@@ -279,6 +279,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         UserDao userDao = DaoHolder.getInstance().getUserDao();
+        BankAccountDao bankAccountDao = DaoHolder.getInstance().getBankAccountDao();
         try {
             long userIdLong = Long.parseLong(userId);
             Optional<User> optionalUser = userDao.findById(userIdLong);
@@ -286,7 +287,7 @@ public class UserServiceImpl implements UserService {
                 return false;
             }
             userDao.updateStatus(userIdLong, UserStatus.BANNED);
-
+            bankAccountDao.updateTariffIdByUserId(userIdLong, null);
         } catch (NumberFormatException e) {
             logger.error("Number values parse error", e);
             return false;
@@ -303,6 +304,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         UserDao userDao = DaoHolder.getInstance().getUserDao();
+        BankAccountDao bankAccountDao = DaoHolder.getInstance().getBankAccountDao();
         try {
             long userIdLong = Long.parseLong(userId);
             Optional<User> optionalUser = userDao.findById(userIdLong);
@@ -310,6 +312,7 @@ public class UserServiceImpl implements UserService {
                 return false;
             }
             userDao.updateStatus(userIdLong, UserStatus.VERIFIED);
+            bankAccountDao.updateTariffIdByUserId(userIdLong, null);
         } catch (NumberFormatException e) {
             logger.error("Number values parse error", e);
             return false;

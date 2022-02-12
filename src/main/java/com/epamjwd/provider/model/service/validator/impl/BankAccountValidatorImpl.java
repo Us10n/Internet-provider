@@ -16,6 +16,6 @@ public class BankAccountValidatorImpl implements BankAccountValidator {
 
     @Override
     public boolean isRequestedMoneyAmountValid(String amount) {
-        return amount != null && amount.matches(VALID_MONEY_REGEX) && amount.length() <= 11;
+        return amount != null && amount.matches(VALID_MONEY_REGEX) && amount.length() <= 8;
     }
 }

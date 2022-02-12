@@ -24,7 +24,7 @@
                         <input type="text" class="form-control rounded-4" name="rechargeAmount"
                                required min="0"
                                pattern="^[0-9]+(\.[0-9]{1,2})?$"
-                               maxlength="11"
+                               maxlength="8"
                                placeholder="<fmt:message key="lang.amount"/>">
                     </div>
                     <c:if test="${rechargeError eq 'true'}">

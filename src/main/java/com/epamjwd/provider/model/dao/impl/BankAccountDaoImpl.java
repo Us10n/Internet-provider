@@ -3,7 +3,7 @@ package com.epamjwd.provider.model.dao.impl;
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.model.dao.AbstractQueryExecutor;
 import com.epamjwd.provider.model.dao.BankAccountDao;
-import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
+import com.epamjwd.provider.model.dao.mapper.RowMapperHolder;
 import com.epamjwd.provider.model.entity.BankAccount;
 
 import java.math.BigDecimal;
@@ -30,6 +30,8 @@ public class BankAccountDaoImpl extends AbstractQueryExecutor<BankAccount> imple
             UPDATE internetprovider.bankaccounts SET balance = ? WHERE (id = ?)""";
     private static final String UPDATE_TARIFF_ID_BY_ID_QUERY = """
             UPDATE internetprovider.bankaccounts SET tariffs_id = ? WHERE (id = ?)""";
+    private static final String UPDATE_TARIFF_ID_BY_USERS_ID_QUERY = """
+            UPDATE internetprovider.bankaccounts SET tariffs_id = ? WHERE (users_id = ?)""";
     private static final String DELETE_TARIFF_ID_WHERE_TARIFF_IS_DEACTIVATED = """
             UPDATE 
                  internetprovider.bankaccounts
@@ -42,7 +44,7 @@ public class BankAccountDaoImpl extends AbstractQueryExecutor<BankAccount> imple
             WHERE tariffs.status='DEACTIVATED';""";
 
     public BankAccountDaoImpl() {
-        super(RowMapperFactory.getInstance().getBankAccountRowMapper());
+        super(RowMapperHolder.getInstance().getBankAccountRowMapper());
     }
 
     @Override
@@ -74,8 +76,13 @@ public class BankAccountDaoImpl extends AbstractQueryExecutor<BankAccount> imple
     }
 
     @Override
-    public void updateTariffId(long bankAccountId, Long tariffId) throws DaoException {
+    public void updateTariffIdByBankAccountId(long bankAccountId, Long tariffId) throws DaoException {
         executeUpdateQuery(UPDATE_TARIFF_ID_BY_ID_QUERY, tariffId, bankAccountId);
+    }
+
+    @Override
+    public void updateTariffIdByUserId(long userId, Long tariffId) throws DaoException {
+        executeUpdateQuery(UPDATE_TARIFF_ID_BY_USERS_ID_QUERY, tariffId, userId);
     }
 
     @Override

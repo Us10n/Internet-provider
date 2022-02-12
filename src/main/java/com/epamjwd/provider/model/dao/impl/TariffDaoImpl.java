@@ -3,7 +3,7 @@ package com.epamjwd.provider.model.dao.impl;
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.model.dao.AbstractQueryExecutor;
 import com.epamjwd.provider.model.dao.TariffDao;
-import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
+import com.epamjwd.provider.model.dao.mapper.RowMapperHolder;
 import com.epamjwd.provider.model.entity.Tariff;
 
 import java.util.List;
@@ -82,7 +82,7 @@ public class TariffDaoImpl extends AbstractQueryExecutor<Tariff> implements Tari
 
 
     public TariffDaoImpl() {
-        super(RowMapperFactory.getInstance().getTariffRowMapper());
+        super(RowMapperHolder.getInstance().getTariffRowMapper());
     }
 
     @Override

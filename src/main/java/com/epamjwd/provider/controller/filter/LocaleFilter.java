@@ -11,7 +11,7 @@ import java.util.Arrays;
 @WebFilter(urlPatterns = {"/*"})
 public class LocaleFilter implements Filter {
     private static final String AVAILABLE_LANGUAGES_REGEX = "(en-US)|(ru-RU)";
-    private static final String DEFAULT_LOCALE = "en-US";
+    private static final String DEFAULT_LOCALE = "ru-RU";
     private static final String COOKIE_LOCALE_NAME = "lang";
     private static final String LOCALE_PARAMETER = "cookieLocale";
 

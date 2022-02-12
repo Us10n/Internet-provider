@@ -72,7 +72,7 @@ public class CommandAccessFilter implements Filter {
             currentAccessLevel = AccessLevel.LEVEL_GUEST;
         }
         if (command != null) {
-            if (commandAccessMap.get(command) == null ||
+            if (commandAccessMap.get(command) != null &&
                     (!commandAccessMap.get(command).contains(currentAccessLevel) &&
                             !commandAccessMap.get(command).contains(AccessLevel.LEVEL_ANY))) {
                 response.setStatus(FORBIDDEN_STATUS);

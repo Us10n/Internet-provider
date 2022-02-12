@@ -3,7 +3,7 @@ package com.epamjwd.provider.model.dao.impl;
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.model.dao.AbstractQueryExecutor;
 import com.epamjwd.provider.model.dao.SpecialOfferDao;
-import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
+import com.epamjwd.provider.model.dao.mapper.RowMapperHolder;
 import com.epamjwd.provider.model.entity.SpecialOffer;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class SpecialOfferDaoImpl extends AbstractQueryExecutor<SpecialOffer> imp
             SET start_date = ?, expiration_date = ?, discount = ?, image_url = ?, description = ? WHERE title = ?""";
 
     public SpecialOfferDaoImpl() {
-        super(RowMapperFactory.getInstance().getSpecialOfferRowMapper());
+        super(RowMapperHolder.getInstance().getSpecialOfferRowMapper());
     }
 
     @Override

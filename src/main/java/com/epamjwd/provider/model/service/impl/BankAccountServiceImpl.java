@@ -4,9 +4,7 @@ import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.exception.ServiceException;
 import com.epamjwd.provider.model.dao.BankAccountDao;
 import com.epamjwd.provider.model.dao.DaoHolder;
-import com.epamjwd.provider.model.dao.UserDao;
 import com.epamjwd.provider.model.entity.BankAccount;
-import com.epamjwd.provider.model.entity.UserStatus;
 import com.epamjwd.provider.model.service.BankAccountService;
 import com.epamjwd.provider.model.service.validator.BankAccountValidator;
 import com.epamjwd.provider.model.service.validator.impl.BankAccountValidatorImpl;
@@ -59,11 +57,6 @@ public class BankAccountServiceImpl implements BankAccountService {
             BigDecimal oldBalance = bankAccount.getBalance();
             BigDecimal newBalance = new BigDecimal(rechargeAmount).add(oldBalance);
             bankAccountDao.updateBalance(bankAccount.getId(), newBalance);
-            if (oldBalance.compareTo(BigDecimal.ZERO) < 0 &&
-                    newBalance.compareTo(BigDecimal.ZERO) >= 0) {
-                UserDao userDao = DaoHolder.getInstance().getUserDao();
-                userDao.updateStatus(userId, UserStatus.VERIFIED);
-            }
         } catch (DaoException e) {
             logger.error("BankAccount update balance error", e);
             throw new ServiceException("BankAccount update balance error", e);
@@ -84,7 +77,7 @@ public class BankAccountServiceImpl implements BankAccountService {
             }
             long bankAccountId = optionalBankAccount.get().getId();
             long tariffIdLong = Long.parseLong(tariffId);
-            bankAccountDao.updateTariffId(bankAccountId, tariffIdLong);
+            bankAccountDao.updateTariffIdByBankAccountId(bankAccountId, tariffIdLong);
         } catch (DaoException e) {
             logger.error("BankAccount update tariff id error", e);
             throw new ServiceException("BankAccount update tariff id error", e);
@@ -104,7 +97,7 @@ public class BankAccountServiceImpl implements BankAccountService {
                 return false;
             }
             long bankAccountId = optionalBankAccount.get().getId();
-            bankAccountDao.updateTariffId(bankAccountId, null);
+            bankAccountDao.updateTariffIdByBankAccountId(bankAccountId, null);
         } catch (DaoException e) {
             logger.error("BankAccount update tariff id error", e);
             throw new ServiceException("BankAccount update tariff id error", e);

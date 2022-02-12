@@ -1,7 +1,7 @@
 package com.epamjwd.provider.model.dao.mapper.imp;
 
 import com.epamjwd.provider.exception.PoolException;
-import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
+import com.epamjwd.provider.model.dao.mapper.RowMapperHolder;
 import com.epamjwd.provider.model.entity.Identifiable;
 import com.epamjwd.provider.model.entity.Tariff;
 import com.epamjwd.provider.model.pool.ConnectionPool;
@@ -35,7 +35,7 @@ public class TariffMapperTest {
 
             List<Identifiable> tariffs = new ArrayList<>();
             while (resultSet.next()) {
-                tariffs.add(RowMapperFactory.getInstance().getTariffRowMapper().map(resultSet));
+                tariffs.add(RowMapperHolder.getInstance().getTariffRowMapper().map(resultSet));
             }
 
             String actual = ((Tariff) tariffs.get(0)).getName();

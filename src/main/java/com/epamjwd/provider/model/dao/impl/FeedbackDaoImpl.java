@@ -3,7 +3,7 @@ package com.epamjwd.provider.model.dao.impl;
 import com.epamjwd.provider.exception.DaoException;
 import com.epamjwd.provider.model.dao.AbstractQueryExecutor;
 import com.epamjwd.provider.model.dao.FeedbackDao;
-import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
+import com.epamjwd.provider.model.dao.mapper.RowMapperHolder;
 import com.epamjwd.provider.model.entity.Feedback;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class FeedbackDaoImpl extends AbstractQueryExecutor<Feedback> implements 
             VALUES (?, ?, ?, ?)""";
 
     public FeedbackDaoImpl() {
-        super(RowMapperFactory.getInstance().getFeedbackRowMapper());
+        super(RowMapperHolder.getInstance().getFeedbackRowMapper());
     }
 
     @Override

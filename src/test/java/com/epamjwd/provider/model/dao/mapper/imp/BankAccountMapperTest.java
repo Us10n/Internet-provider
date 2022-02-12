@@ -1,7 +1,7 @@
 package com.epamjwd.provider.model.dao.mapper.imp;
 
 import com.epamjwd.provider.exception.PoolException;
-import com.epamjwd.provider.model.dao.mapper.RowMapperFactory;
+import com.epamjwd.provider.model.dao.mapper.RowMapperHolder;
 import com.epamjwd.provider.model.entity.Identifiable;
 import com.epamjwd.provider.model.pool.ConnectionPool;
 import org.testng.Assert;
@@ -29,7 +29,7 @@ public class BankAccountMapperTest {
         ResultSet resultSet = statement.executeQuery()) {
             List<Identifiable> accounts = new ArrayList<>();
             while (resultSet.next()) {
-                accounts.add(RowMapperFactory.getInstance().getBankAccountRowMapper().map(resultSet));
+                accounts.add(RowMapperHolder.getInstance().getBankAccountRowMapper().map(resultSet));
             }
             int actual = accounts.size();
             int expected = 1;

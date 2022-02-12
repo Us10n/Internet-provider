@@ -77,7 +77,7 @@
                                 </div>
                             </c:when>
                             <c:otherwise>
-                                <c:if test="${user.id != userId}">
+                                <c:if test="${user.id != userId && user.role!='ADMIN'}">
                                     <div class="col-1 align-self-center d-flex flex-wrap">
                                         <button type="submit" name="action" value="ban"
                                                 class="nav-link bg-danger text-white">
