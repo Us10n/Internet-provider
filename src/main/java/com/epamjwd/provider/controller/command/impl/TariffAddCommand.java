@@ -23,7 +23,7 @@ public class TariffAddCommand implements Command {
     private static final String TARIFF_DESCRIPTION_PARAMETER = "tariffDescription";
     private static final String ADD_ERROR_ATTRIBUTE = "addError";
     private static final String EXISTS_ERROR_ATTRIBUTE = "existsError";
-    private static final String TARIFFS_PANEL_PAGE = "?command=tariffsPanel";
+    private static final String TARIFFS_PANEL_PAGE = "?command=tariffs";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {

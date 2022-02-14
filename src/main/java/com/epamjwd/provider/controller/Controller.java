@@ -17,7 +17,7 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String commandRedirectPath = "/provider/controller?command=";
+    private static final String commandRedirectPath = "/controller?command=";
     private static final String commandParameterString = "command";
 
     @Override

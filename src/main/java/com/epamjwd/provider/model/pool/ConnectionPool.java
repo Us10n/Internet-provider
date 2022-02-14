@@ -21,10 +21,10 @@ public class ConnectionPool {
     private static final String DATABASE_PROPERTY_PATH = "connection.database";
 
     private static ConnectionPool instance;
-    private static AtomicBoolean isPoolCreated = new AtomicBoolean(false);
+    private static final AtomicBoolean isPoolCreated = new AtomicBoolean(false);
 
-    private BlockingDeque<ProxyConnection> availableConnections;
-    private BlockingDeque<ProxyConnection> usedConnections;
+    private final BlockingDeque<ProxyConnection> availableConnections;
+    private final BlockingDeque<ProxyConnection> usedConnections;
 
     private ConnectionPool() {
         try {
